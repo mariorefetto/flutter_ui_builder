@@ -41,4 +41,7 @@ abstract final class AppIcons {
   static const IconData design = LucideIcons.layoutTemplate;
   static const IconData screens = LucideIcons.layers;
   static const IconData add = LucideIcons.plus;
+  static const IconData codeTab = LucideIcons.squareCode;
+  static const IconData codeBeside = LucideIcons.panelRight;
+  static const IconData codeBelow = LucideIcons.panelBottom;
 }

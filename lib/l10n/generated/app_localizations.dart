@@ -1627,6 +1627,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The tap target is smaller than 48 pixels, which is hard to hit'**
   String get problemSmallTapTarget;
+
+  /// Tooltip: Code as a tab
+  ///
+  /// In en, this message translates to:
+  /// **'Code as a tab'**
+  String get codeAsTab;
+
+  /// Tooltip: Code beside the designer
+  ///
+  /// In en, this message translates to:
+  /// **'Code beside the designer'**
+  String get codeBeside;
+
+  /// Tooltip: Code below the designer
+  ///
+  /// In en, this message translates to:
+  /// **'Code below the designer'**
+  String get codeBelow;
 }
 
 class _AppLocalizationsDelegate

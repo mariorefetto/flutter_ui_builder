@@ -11,6 +11,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/code_edit_
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_screen.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_node.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/editor_canvas.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/scaled_box.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/code/code_view.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag/dashed_outline.dart';
@@ -304,6 +305,32 @@ void main() {
       greaterThanOrEqualTo(statusBar - 1),
       reason: 'app bar $bar, status bar bottom $statusBar',
     );
+  });
+
+  testWidgets('the code can sit beside the designer or below it', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+    expect(find.byType(CodeView).hitTestable(), findsNothing);
+
+    await tester.tap(find.byTooltip('Code beside the designer'));
+    await tester.pumpAndSettle();
+    final design = tester.getRect(find.byType(EditorCanvas));
+    final code = tester.getRect(find.byType(CodeView));
+    expect(code.left, greaterThanOrEqualTo(design.right));
+    expect(code.top, lessThan(design.bottom));
+
+    await tester.tap(find.byTooltip('Code below the designer'));
+    await tester.pumpAndSettle();
+    final below = tester.getRect(find.byType(CodeView));
+    expect(
+      below.top,
+      greaterThanOrEqualTo(tester.getRect(find.byType(EditorCanvas)).bottom),
+    );
+
+    await tester.tap(find.byTooltip('Code as a tab'));
+    await tester.pumpAndSettle();
+    expect(find.byType(CodeView).hitTestable(), findsNothing);
   });
 
   testWidgets('the safe area can be shown over the screen', (tester) async {

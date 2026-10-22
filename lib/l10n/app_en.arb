@@ -1108,5 +1108,17 @@
   "problemSmallTapTarget": "The tap target is smaller than 48 pixels, which is hard to hit",
   "@problemSmallTapTarget": {
     "description": "Problem: The tap target is smaller than 48 pixels, which is hard to hit"
+  },
+  "codeAsTab": "Code as a tab",
+  "@codeAsTab": {
+    "description": "Tooltip: Code as a tab"
+  },
+  "codeBeside": "Code beside the designer",
+  "@codeBeside": {
+    "description": "Tooltip: Code beside the designer"
+  },
+  "codeBelow": "Code below the designer",
+  "@codeBelow": {
+    "description": "Tooltip: Code below the designer"
   }
 }

@@ -18,6 +18,10 @@ enum StatusBarMode {
 /// What the central area shows.
 enum CenterTab { design, code }
 
+/// Where the code sits: as a tab of the central area, or beside or under the
+/// designer so both can be seen at once.
+enum CodePlacement { tab, right, bottom }
+
 /// Smallest and largest width a docked panel can be dragged to.
 const double minPanelWidth = 180;
 const double maxPanelWidth = 480;
@@ -25,6 +29,12 @@ const double maxPanelWidth = 480;
 /// The zoom steps of the designer, from a quarter to double size.
 const List<double> zoomSteps = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2];
 
+/// Smallest and largest size of the code panel along the axis it is resized.
+const double minCodeExtent = 200;
+const double maxCodeExtent = 900;
+
+const double _defaultCodeWidth = 460;
+const double _defaultCodeHeight = 300;
 const double _defaultLeftWidth = 260;
 const double _defaultRightWidth = 320;
 
@@ -38,6 +48,9 @@ abstract class WorkspaceState with _$WorkspaceState {
     @Default(true) bool propertiesVisible,
     @Default(false) bool problemsVisible,
     @Default(CenterTab.design) CenterTab centerTab,
+    @Default(CodePlacement.tab) CodePlacement codePlacement,
+    @Default(_defaultCodeWidth) double codeWidth,
+    @Default(_defaultCodeHeight) double codeHeight,
 
     /// The screen the designer previews the project on.
     @Default(PreviewDevice.phone) PreviewDevice device,

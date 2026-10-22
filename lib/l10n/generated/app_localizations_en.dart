@@ -878,4 +878,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get problemSmallTapTarget =>
       'The tap target is smaller than 48 pixels, which is hard to hit';
+
+  @override
+  String get codeAsTab => 'Code as a tab';
+
+  @override
+  String get codeBeside => 'Code beside the designer';
+
+  @override
+  String get codeBelow => 'Code below the designer';
 }

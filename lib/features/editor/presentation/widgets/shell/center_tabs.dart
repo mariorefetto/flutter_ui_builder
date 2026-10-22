@@ -14,25 +14,76 @@ class CenterTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final current = context.select((WorkspaceCubit c) => c.state.centerTab);
+    final placement = context.select(
+      (WorkspaceCubit c) => c.state.codePlacement,
+    );
     final cubit = context.read<WorkspaceCubit>();
+    final l10n = context.l10n;
     return Material(
       color: context.colorScheme.surfaceContainerHigh,
       child: Row(
         children: [
-          _Tab(
-            label: context.l10n.tabDesign,
-            icon: AppIcons.design,
-            selected: current == CenterTab.design,
-            onTap: () => cubit.showCenterTab(CenterTab.design),
+          if (placement == CodePlacement.tab) ...[
+            _Tab(
+              label: l10n.tabDesign,
+              icon: AppIcons.design,
+              selected: current == CenterTab.design,
+              onTap: () => cubit.showCenterTab(CenterTab.design),
+            ),
+            _Tab(
+              label: l10n.tabCode,
+              icon: AppIcons.code,
+              selected: current == CenterTab.code,
+              onTap: () => cubit.showCenterTab(CenterTab.code),
+            ),
+          ],
+          const Spacer(),
+          _PlacementButton(
+            tooltip: l10n.codeAsTab,
+            icon: AppIcons.codeTab,
+            selected: placement == CodePlacement.tab,
+            onTap: () => cubit.setCodePlacement(CodePlacement.tab),
           ),
-          _Tab(
-            label: context.l10n.tabCode,
-            icon: AppIcons.code,
-            selected: current == CenterTab.code,
-            onTap: () => cubit.showCenterTab(CenterTab.code),
+          _PlacementButton(
+            tooltip: l10n.codeBeside,
+            icon: AppIcons.codeBeside,
+            selected: placement == CodePlacement.right,
+            onTap: () => cubit.setCodePlacement(CodePlacement.right),
+          ),
+          _PlacementButton(
+            tooltip: l10n.codeBelow,
+            icon: AppIcons.codeBelow,
+            selected: placement == CodePlacement.bottom,
+            onTap: () => cubit.setCodePlacement(CodePlacement.bottom),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _PlacementButton extends StatelessWidget {
+  const _PlacementButton({
+    required this.tooltip,
+    required this.icon,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String tooltip;
+  final IconData icon;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      tooltip: tooltip,
+      isSelected: selected,
+      visualDensity: VisualDensity.compact,
+      iconSize: AppConstants.spacingMD,
+      icon: Icon(icon),
+      onPressed: onTap,
     );
   }
 }

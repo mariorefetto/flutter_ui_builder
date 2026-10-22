@@ -21,6 +21,29 @@ class WorkspaceCubit extends Cubit<WorkspaceState> {
 
   void showCenterTab(CenterTab tab) => emit(state.copyWith(centerTab: tab));
 
+  /// Moves the code beside or under the designer, or back to a tab. The tab
+  /// shown goes back to the designer, so that leaving the split never leaves
+  /// the code as the only thing in view by accident.
+  void setCodePlacement(CodePlacement placement) => emit(
+    state.copyWith(
+      codePlacement: placement,
+      centerTab: placement == CodePlacement.tab
+          ? state.centerTab
+          : CenterTab.design,
+    ),
+  );
+
+  /// Widens the code panel docked on the right by [delta].
+  void resizeCodeWidth(double delta) =>
+      emit(state.copyWith(codeWidth: _clampCode(state.codeWidth + delta)));
+
+  /// Heightens the code panel docked at the bottom by [delta].
+  void resizeCodeHeight(double delta) =>
+      emit(state.copyWith(codeHeight: _clampCode(state.codeHeight + delta)));
+
+  double _clampCode(double extent) =>
+      extent.clamp(minCodeExtent, maxCodeExtent);
+
   void setDevice(PreviewDevice device) => emit(state.copyWith(device: device));
 
   void toggleFrame() => emit(state.copyWith(showFrame: !state.showFrame));

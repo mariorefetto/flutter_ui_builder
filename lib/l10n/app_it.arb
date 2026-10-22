@@ -254,5 +254,8 @@
   "propsGroupedArgument": "Nel codice: {argument} di {group}",
   "problemCircleWithRadius": "Un cerchio non ha angoli: il raggio è ignorato e Flutter lo rifiuta",
   "problemLowContrast": "Il colore del testo è troppo vicino allo sfondo per leggerlo bene (le WCAG chiedono 4,5:1)",
-  "problemSmallTapTarget": "Il bersaglio del tocco è più piccolo di 48 pixel e si colpisce con difficoltà"
+  "problemSmallTapTarget": "Il bersaglio del tocco è più piccolo di 48 pixel e si colpisce con difficoltà",
+  "codeAsTab": "Codice in una scheda",
+  "codeBeside": "Codice accanto al designer",
+  "codeBelow": "Codice sotto il designer"
 }

@@ -206,34 +206,71 @@ class _Center extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tab = context.select((WorkspaceCubit c) => c.state.centerTab);
+    final placement = context.select(
+      (WorkspaceCubit c) => c.state.codePlacement,
+    );
+    final workspace = context.read<WorkspaceCubit>();
+    final designer = _Designer(registry: registry);
+    final body = switch (placement) {
+      // Both stay built so the designer keeps its scroll position.
+      CodePlacement.tab => IndexedStack(
+        index: tab.index,
+        children: [designer, const CodeView()],
+      ),
+      CodePlacement.right => Row(
+        children: [
+          Expanded(child: designer),
+          Splitter(onDrag: (delta) => workspace.resizeCodeWidth(-delta)),
+          SizedBox(
+            width: context.select((WorkspaceCubit c) => c.state.codeWidth),
+            child: const CodeView(),
+          ),
+        ],
+      ),
+      CodePlacement.bottom => Column(
+        children: [
+          Expanded(child: designer),
+          Splitter(
+            axis: Axis.horizontal,
+            onDrag: (delta) => workspace.resizeCodeHeight(-delta),
+          ),
+          SizedBox(
+            height: context.select((WorkspaceCubit c) => c.state.codeHeight),
+            child: const CodeView(),
+          ),
+        ],
+      ),
+    };
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const DocumentTab(),
+        Expanded(child: body),
+        const CenterTabs(),
+      ],
+    );
+  }
+}
+
+class _Designer extends StatelessWidget {
+  const _Designer({required this.registry});
+
+  final WidgetRegistry registry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const DesignerToolbar(),
         Expanded(
-          // Both stay built so the designer keeps its scroll position.
-          child: IndexedStack(
-            index: tab.index,
-            children: [
-              Column(
-                children: [
-                  const DesignerToolbar(),
-                  Expanded(
-                    child: ColoredBox(
-                      color: context.colorScheme.surfaceContainerHighest,
-                      child: EditorCanvas(
-                        previews: sl<PreviewRegistry>(),
-                        registry: registry,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const CodeView(),
-            ],
+          child: ColoredBox(
+            color: context.colorScheme.surfaceContainerHighest,
+            child: EditorCanvas(
+              previews: sl<PreviewRegistry>(),
+              registry: registry,
+            ),
           ),
         ),
-        const CenterTabs(),
       ],
     );
   }

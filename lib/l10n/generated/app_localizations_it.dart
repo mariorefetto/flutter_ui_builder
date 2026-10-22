@@ -894,4 +894,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get problemSmallTapTarget =>
       'Il bersaglio del tocco è più piccolo di 48 pixel e si colpisce con difficoltà';
+
+  @override
+  String get codeAsTab => 'Codice in una scheda';
+
+  @override
+  String get codeBeside => 'Codice accanto al designer';
+
+  @override
+  String get codeBelow => 'Codice sotto il designer';
 }
