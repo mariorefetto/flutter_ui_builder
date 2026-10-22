@@ -16,6 +16,9 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_sta
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_use_cases.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/drag_payload.dart';
 
+part 'editor_cubit_screens.dart';
+part 'editor_cubit_structure.dart';
+
 /// Holds the document being edited with its undo history, the selection and
 /// the clipboard.
 class EditorCubit extends Cubit<EditorState> {
@@ -167,99 +170,6 @@ class EditorCubit extends Cubit<EditorState> {
     selectAffected: false,
   );
 
-  /// Moves the selection to the widget before or after it in reading order.
-  void selectNeighbour({required bool next}) {
-    final ids = state.document.root.preorderIds();
-    final selected = state.selectedId;
-    final index = selected == null ? -1 : ids.indexOf(selected);
-    final target = next ? index + 1 : index - 1;
-    if (target >= 0 && target < ids.length) select(ids[target]);
-  }
-
-  /// Moves the selection to the parent of the selected widget.
-  void selectParent() => _withSelection((id) {
-    final parent = state.document.root.parentOf(id);
-    if (parent != null) select(parent.id);
-  });
-
-  /// Moves the selection to the first widget inside the selected one.
-  void selectFirstChild() => _withSelection((id) {
-    final node = state.document.root.find(id);
-    if (node != null && node.children.isNotEmpty) {
-      select(node.children.first.id);
-    }
-  });
-
-  /// Moves the selected widget one place up or down among its siblings.
-  void moveSelectedBy(int step) => _withSelection((id) {
-    final parent = state.document.root.parentOf(id);
-    if (parent == null) return;
-    final index = parent.children.indexWhere((child) => child.id == id);
-    final target = index + step;
-    if (target < 0 || target >= parent.children.length) return;
-    moveNode(nodeId: id, parentId: parent.id, index: target);
-  });
-
-  /// Copies the selected widget with everything inside it.
-  void copy() {
-    final node = _selectedNode();
-    if (node != null) emit(state.copyWith(clipboard: node));
-  }
-
-  /// Copies the selected widget, then removes it.
-  void cut() {
-    if (!canCut) return;
-    copy();
-    removeSelected();
-  }
-
-  bool get hasSelection => state.selectedId != null;
-
-  /// The root cannot be removed, so it cannot be cut either.
-  bool get canCut => hasSelection && state.selectedId != state.document.root.id;
-
-  /// Pastes the clipboard inside or beside the selection.
-  void paste() {
-    final clip = state.clipboard;
-    if (clip == null) return;
-    _applyEdit(_pasteResult(clip), selectAffected: true);
-  }
-
-  bool get canPaste {
-    final clip = state.clipboard;
-    return clip != null && _pasteResult(clip).isRight();
-  }
-
-  void duplicateSelected() => _withSelection(
-    (id) => _applyEdit(
-      _resolver.duplicate(state.document, id),
-      selectAffected: true,
-    ),
-  );
-
-  bool get canDuplicate =>
-      _selectionAllows((id) => _resolver.duplicate(state.document, id));
-
-  /// Puts a new widget of [type] around the selection.
-  void wrapSelected(String type) => _withSelection(
-    (id) => _applyEdit(
-      _resolver.wrap(state.document, id, type),
-      selectAffected: true,
-    ),
-  );
-
-  bool canWrapSelection(String type) =>
-      _selectionAllows((id) => _resolver.wrap(state.document, id, type));
-
-  /// Replaces the selection with the widgets inside it.
-  void unwrapSelected() => _withSelection(
-    (id) =>
-        _applyEdit(_resolver.unwrap(state.document, id), selectAffected: true),
-  );
-
-  bool get canUnwrap =>
-      _selectionAllows((id) => _resolver.unwrap(state.document, id));
-
   /// Sets a property of [nodeId]; a null [value] restores the default.
   void updateProp(String nodeId, String name, Object? value) {
     _applyEdit(
@@ -286,62 +196,6 @@ class EditorCubit extends Cubit<EditorState> {
     ),
   );
 
-  /// Renames the open screen. Widgets that open it follow its new name.
-  void renameDocument(String name) => renameScreen(state.document.name, name);
-
-  // A new name changes no widget, so the selection stays.
-  void renameScreen(String from, String to) => _useCases
-      .renameScreen(ScreenParams(document: state.document, name: from, to: to))
-      .fold(
-        _reportFailure,
-        (document) => _commit(document, selectedId: state.selectedId),
-      );
-
-  /// Adds a screen with a Scaffold and opens it.
-  void addScreen(String name) => _changeScreens(
-    _useCases.addScreen(ScreenParams(document: state.document, name: name)),
-  );
-
-  void deleteScreen(String name) => _changeScreens(
-    _useCases.deleteScreen(ScreenParams(document: state.document, name: name)),
-  );
-
-  void duplicateScreen(String name) => _changeScreens(
-    _useCases.duplicateScreen(
-      ScreenParams(document: state.document, name: name),
-    ),
-  );
-
-  /// Makes [name] the screen the app starts on.
-  void makeHomeScreen(String name) => _changeScreens(
-    _useCases.makeHomeScreen(
-      ScreenParams(document: state.document, name: name),
-    ),
-  );
-
-  /// Opens another screen for editing. It is not an undo step: undo undoes
-  /// edits, not where the user was looking.
-  void openScreen(String name) {
-    if (name == state.document.name) return;
-    _useCases
-        .openScreen(ScreenParams(document: state.document, name: name))
-        .fold(
-          _reportFailure,
-          (document) => emit(
-            state.copyWith(
-              history: state.history.copyWith(present: document),
-              selectedId: null,
-              failure: null,
-            ),
-          ),
-        );
-  }
-
-  // A change to the screens clears the selection: it may belong to a screen
-  // that is no longer open.
-  void _changeScreens(Either<Failure, EditorDocument> result) =>
-      result.fold(_reportFailure, (d) => _commit(d, selectedId: null));
-
   /// Makes the document that code was edited into the current one, as a single
   /// undo step. Widgets that did not move keep their ids, so the selection
   /// stays where it was when it still exists.
@@ -356,6 +210,18 @@ class EditorCubit extends Cubit<EditorState> {
           _commit(document, selectedId: kept ? selected : null);
         });
   }
+
+  // The document with another screen open: not a step of the undo history.
+  void _showDocument(EditorDocument document) => emit(
+    state.copyWith(
+      history: state.history.copyWith(present: document),
+      selectedId: null,
+      failure: null,
+    ),
+  );
+
+  void _keepOnClipboard(WidgetNode node) =>
+      emit(state.copyWith(clipboard: node));
 
   void undo() => _applyHistory(_useCases.undoEdit(state.history));
 
