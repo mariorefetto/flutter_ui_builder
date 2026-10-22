@@ -1,8 +1,10 @@
+import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/import_result.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/identifier_names.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 
 /// Folds code that was edited back into the document it came from.
 ///
@@ -15,9 +17,29 @@ class DocumentReconciler {
   EditorDocument reconcile(EditorDocument previous, ImportResult imported) {
     final root = imported.document.root;
     final fresh = _highestOf(previous.root, root) + 1;
+    final names = const ScreenEditor().namesOf(previous);
     return previous.copyWith(
       name: _name(previous, imported),
-      root: _carryIds(previous.root, root, _Counter(fresh)),
+      root: _retargeted(_carryIds(previous.root, root, _Counter(fresh)), names),
+    );
+  }
+
+  // Code names a screen by its class, so `Settings` stands for the screen
+  // "settings" when the project has one that writes the same class.
+  WidgetNode _retargeted(WidgetNode node, List<String> screens) {
+    final target = node.props[navigateToProp];
+    var props = node.props;
+    if (target is String && target != navigateBack) {
+      final match = screens
+          .where((s) => pascalCase(s) == pascalCase(target))
+          .firstOrNull;
+      if (match != null && match != target) {
+        props = {...props, navigateToProp: match};
+      }
+    }
+    return node.copyWith(
+      props: props,
+      children: [for (final c in node.children) _retargeted(c, screens)],
     );
   }
 

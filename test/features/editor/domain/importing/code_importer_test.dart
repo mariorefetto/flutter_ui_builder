@@ -174,4 +174,45 @@ Container(
     expect(root.type, 'SafeArea');
     expect(root.children, isEmpty);
   });
+
+  group('navigation', () {
+    String button(String callback) =>
+        '''
+class HomeView extends StatelessWidget {
+  const HomeView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [TextButton(onPressed: $callback, child: Text('Go'))]);
+  }
+}
+''';
+
+    Object? targetOf(String callback) => import(
+      button(callback),
+    ).document.root.children.single.props['navigateTo'];
+
+    test('a push of a screen is read as the screen it opens', () {
+      expect(
+        targetOf(
+          '() => Navigator.push(context, MaterialPageRoute<void>('
+          'builder: (_) => const SettingsView()))',
+        ),
+        'Settings',
+      );
+    });
+
+    test('a pop is read as going back', () {
+      expect(targetOf('() => Navigator.pop(context)'), ':back');
+    });
+
+    test('a block with the one call is read the same way', () {
+      expect(targetOf('() { Navigator.pop(context); }'), ':back');
+    });
+
+    test('any other callback is left empty', () {
+      expect(targetOf('() {}'), isNull);
+      expect(targetOf('() => print(1)'), isNull);
+    });
+  });
 }

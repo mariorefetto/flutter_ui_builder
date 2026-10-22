@@ -1,3 +1,4 @@
+import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 
 const String _idPrefix = 'node_';
@@ -40,6 +41,15 @@ extension NodeQueries on WidgetNode {
     id,
     for (final child in children) ...child.preorderIds(),
   ];
+
+  /// The screens that widgets in this subtree open, by name. Going back is
+  /// not a screen.
+  Set<String> navigationTargets() => {
+    if (props[navigateToProp] case final String target
+        when target.isNotEmpty && target != navigateBack)
+      target,
+    for (final child in children) ...child.navigationTargets(),
+  };
 
   /// Number of nodes in this subtree, itself included.
   int countNodes() => children.fold(1, (total, c) => total + c.countNodes());

@@ -6,6 +6,7 @@ import 'package:flutter_ui_builder/features/editor/domain/definitions/builtin_de
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/generated_file.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/document_code_generator.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/identifier_names.dart';
@@ -101,6 +102,95 @@ void main() {
       expect(pascalCase('***'), 'Generated');
       expect(pascalCase('2fast'), 'Generated2fast');
       expect(snakeCase('2fast'), 'generated_2fast');
+    });
+  });
+
+  group('navigation', () {
+    WidgetNode screenWith(String id, String type, Map<String, Object?> props) =>
+        WidgetNode(
+          id: 'node_0',
+          type: 'Column',
+          children: [
+            WidgetNode(
+              id: id,
+              type: type,
+              props: props,
+              children: const [
+                WidgetNode(id: 'node_9', type: 'Text', props: {'text': 'Go'}),
+              ],
+            ),
+          ],
+        );
+
+    String codeFor(String type, Map<String, Object?> props) => generator
+        .generate(
+          EditorDocument(name: 'Home', root: screenWith('node_1', type, props)),
+        )
+        .getOrElse(() => throw StateError('generation failed'))
+        .content;
+
+    test('a button pushes the screen it points at', () {
+      final code = codeFor('ElevatedButton', {'navigateTo': 'Settings'});
+
+      // The formatter may break the call over several lines and add commas.
+      expect(
+        code.replaceAll(RegExp(r'\s+'), ''),
+        contains(
+          'Navigator.push(context,MaterialPageRoute<void>('
+          'builder:(_)=>constSettingsView())',
+        ),
+      );
+      expect(code, contains("import 'settings_view.g.dart';"));
+    });
+
+    test('a button can go back', () {
+      final code = codeFor('TextButton', {'navigateTo': ':back'});
+
+      expect(code, contains('onPressed: () => Navigator.pop(context)'));
+      expect(code, isNot(contains('_view.g.dart')));
+    });
+
+    test('a button that goes nowhere keeps an empty callback', () {
+      expect(codeFor('ElevatedButton', {}), contains('onPressed: () {}'));
+    });
+
+    test('a tap handler can navigate too', () {
+      expect(
+        codeFor('InkWell', {'navigateTo': 'Details'}),
+        contains('onTap: () => Navigator.push('),
+      );
+    });
+
+    test('a screen that opens itself imports nothing', () {
+      expect(
+        codeFor('ElevatedButton', {'navigateTo': 'Home'}),
+        isNot(contains("import 'home_view.g.dart';")),
+      );
+    });
+
+    test('every screen of a project gets a file', () {
+      final files = generator
+          .generateAll(
+            EditorDocument(
+              name: 'Home',
+              root: screenWith('node_1', 'ElevatedButton', const {
+                'navigateTo': 'Settings',
+              }),
+              screens: const [
+                ProjectScreen(
+                  name: 'Settings',
+                  root: WidgetNode(id: 'node_0', type: 'Column'),
+                ),
+              ],
+            ),
+          )
+          .getOrElse(() => throw StateError('generation failed'));
+
+      expect(files.map((f) => f.fileName), [
+        'home_view.g.dart',
+        'settings_view.g.dart',
+      ]);
+      expect(files.last.content, contains('class SettingsView'));
     });
   });
 }

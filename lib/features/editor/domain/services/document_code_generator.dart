@@ -1,17 +1,17 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_ui_builder/core/error/failures.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/generated_file.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/code_formatter.dart';
-import 'package:flutter_ui_builder/features/editor/domain/services/identifier_names.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 
 /// First line of a generated file's marker. Export refuses to overwrite files
 /// that lack it, so hand written code is never replaced.
 const String generatedFileMarker = 'GENERATED CODE - DO NOT MODIFY BY HAND.';
 
-const String _fileSuffix = '_view.g.dart';
-const String _classSuffix = 'View';
 const String _materialLibrary = 'package:flutter/material.dart';
 
 /// Turns a document into a formatted Dart file with one StatelessWidget.
@@ -22,18 +22,34 @@ class DocumentCodeGenerator {
   final CodeFormatter _formatter;
 
   Either<Failure, GeneratedFile> generate(EditorDocument document) {
-    final className = '${pascalCase(document.name)}$_classSuffix';
+    final className = screenClassName(document.name);
     final source = _source(document, className);
     try {
       return Right(
         GeneratedFile(
-          fileName: '${snakeCase(document.name)}$_fileSuffix',
+          fileName: screenFileName(document.name),
           content: _formatter.format(source),
         ),
       );
     } on FormatException catch (e) {
       return Left(CodeGenerationFailure(e.message));
     }
+  }
+
+  /// One file for each screen of the project, in project order.
+  Either<Failure, List<GeneratedFile>> generateAll(EditorDocument document) {
+    final screens = const ScreenEditor().namesOf(document);
+    final files = <GeneratedFile>[];
+    for (final name in screens) {
+      final root = const ScreenEditor().rootOf(document, name);
+      if (root == null) continue;
+      final result = generate(
+        EditorDocument(name: name, root: root, screens: document.screens),
+      );
+      if (result.isLeft()) return result.map((_) => const []);
+      result.map(files.add);
+    }
+    return Right(files);
   }
 
   String _source(EditorDocument document, String className) {
@@ -62,7 +78,21 @@ class $className extends StatelessWidget {
       _materialLibrary,
       ..._registry.importsFor(document.root),
     }.toList()..sort();
-    return libraries.map((library) => "import '$library';").join('\n');
+    // The screens this one opens sit in files of their own, next to it.
+    final screens =
+        document.root
+            .navigationTargets()
+            .where(
+              (name) => screenClassName(name) != screenClassName(document.name),
+            )
+            .map(screenFileName)
+            .toSet()
+            .toList()
+          ..sort();
+    return [
+      ...libraries.map((library) => "import '$library';"),
+      ...screens.map((file) => "import '$file';"),
+    ].join('\n');
   }
 
   // Keeps a document name from breaking out of the one line comment.

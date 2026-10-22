@@ -931,4 +931,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get paletteClickToAdd =>
       'Fai clic per aggiungere, oppure trascina sullo schermo o sulla struttura';
+
+  @override
+  String get errorScreenDuplicate => 'Un\'altra schermata ha già questo nome';
+
+  @override
+  String get errorScreenLast =>
+      'Un progetto ha bisogno di almeno una schermata';
+
+  @override
+  String get errorScreenUnknown => 'Questa schermata non esiste più';
+
+  @override
+  String get problemUnknownScreen =>
+      'Questo widget apre una schermata che non esiste';
 }

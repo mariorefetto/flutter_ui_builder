@@ -231,4 +231,29 @@ void main() {
       isNot(contains(ProblemCode.smallTapTarget)),
     );
   });
+
+  test('a widget that opens a screen that is not there is reported', () {
+    expect(
+      codesOf(
+        const WidgetNode(
+          id: 'node_1',
+          type: 'ElevatedButton',
+          props: {'navigateTo': 'Nowhere'},
+          children: [WidgetNode(id: 'node_2', type: 'Text')],
+        ),
+      ),
+      contains(ProblemCode.unknownScreen),
+    );
+    expect(
+      codesOf(
+        const WidgetNode(
+          id: 'node_1',
+          type: 'ElevatedButton',
+          props: {'navigateTo': ':back'},
+          children: [WidgetNode(id: 'node_2', type: 'Text')],
+        ),
+      ),
+      isNot(contains(ProblemCode.unknownScreen)),
+    );
+  });
 }

@@ -96,11 +96,22 @@ class AnalyzerCodeParser implements CodeParser {
         prefix: prefix.name,
       ),
       SimpleIdentifier(:final name) => CodeIdentifier(name),
-      FunctionExpression() => const CodeFunction(),
+      FunctionExpression(:final body) => CodeFunction(body: _bodyOf(body)),
       MethodInvocation() => _methodCall(expression),
       InstanceCreationExpression() => _creation(expression),
       _ => CodeUnknown(expression.toSource()),
     };
+  }
+
+  // The one expression a closure consists of, or null for a longer body.
+  CodeValue? _bodyOf(FunctionBody body) {
+    if (body is ExpressionFunctionBody) return _toValue(body.expression);
+    if (body is BlockFunctionBody) {
+      final statements = body.block.statements;
+      final only = statements.length == 1 ? statements.first : null;
+      if (only is ExpressionStatement) return _toValue(only.expression);
+    }
+    return null;
   }
 
   CodeValue _negate(CodeValue value, Expression original) => value is CodeNumber

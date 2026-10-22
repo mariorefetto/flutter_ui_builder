@@ -16,6 +16,7 @@ enum ProblemCode {
   circleWithRadius,
   lowContrast,
   smallTapTarget,
+  unknownScreen,
 }
 
 /// Something in the document that will misbehave or be hard to use, found

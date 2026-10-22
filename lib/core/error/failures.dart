@@ -95,6 +95,15 @@ enum DocumentFailureReason {
 
   emptyName,
 
+  /// Another screen already has the name, or one that writes the same class.
+  duplicateScreenName,
+
+  /// A project needs at least one screen.
+  lastScreen,
+
+  /// No screen has the name.
+  unknownScreen,
+
   /// Pasted code that is not valid Dart.
   codeSyntax,
 

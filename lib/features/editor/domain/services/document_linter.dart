@@ -1,9 +1,11 @@
+import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/node_props.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/problem.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/color_contrast.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 
 typedef _Test = bool Function(NodeProps props, WidgetNode node);
 
@@ -160,17 +162,34 @@ class DocumentLinter {
   final WidgetRegistry _registry;
 
   /// The problems of [document], in document order.
-  List<Problem> lint(EditorDocument document) =>
-      _lintNode(document.root, const []).toList();
+  List<Problem> lint(EditorDocument document) => _lintNode(
+    document.root,
+    const [],
+    const ScreenEditor().namesOf(document).toSet(),
+  ).toList();
 
-  Iterable<Problem> _lintNode(WidgetNode node, List<WidgetNode> above) sync* {
-    if (_registry.contains(node.type)) yield* _lintOwn(node, above);
+  Iterable<Problem> _lintNode(
+    WidgetNode node,
+    List<WidgetNode> above,
+    Set<String> screens,
+  ) sync* {
+    if (_registry.contains(node.type)) yield* _lintOwn(node, above, screens);
     for (final child in node.children) {
-      yield* _lintNode(child, [...above, node]);
+      yield* _lintNode(child, [...above, node], screens);
     }
   }
 
-  Iterable<Problem> _lintOwn(WidgetNode node, List<WidgetNode> above) sync* {
+  Iterable<Problem> _lintOwn(
+    WidgetNode node,
+    List<WidgetNode> above,
+    Set<String> screens,
+  ) sync* {
+    final target = node.props[navigateToProp];
+    if (target is String &&
+        target != navigateBack &&
+        !screens.contains(target)) {
+      yield _problem(node, ProblemCode.unknownScreen, ProblemSeverity.warning);
+    }
     final definition = _registry.definitionFor(node.type);
     final props = definition.resolve(node);
     if (definition.requiresChild && node.children.isEmpty) {

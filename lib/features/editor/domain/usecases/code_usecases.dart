@@ -14,7 +14,7 @@ class GenerateCode implements SyncUseCase<List<GeneratedFile>, EditorDocument> {
 
   @override
   Either<Failure, List<GeneratedFile>> call(EditorDocument params) =>
-      _generator.generate(params).map((file) => [file]);
+      _generator.generateAll(params);
 }
 
 class PickExportDirectory implements UseCase<String?, NoParams> {

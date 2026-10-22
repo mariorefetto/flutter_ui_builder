@@ -1,4 +1,6 @@
 import 'package:flutter_ui_builder/features/editor/domain/definitions/code_literals.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/prop_categories.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_definition.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/child_policy.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/generated_child.dart';
@@ -8,6 +10,18 @@ import 'package:flutter_ui_builder/features/editor/domain/entities/prop_schema.d
 const String _childArgument = 'child';
 const String _childrenArgument = 'children';
 const String _missingChild = 'SizedBox.shrink()';
+
+const String _emptyCallback = '() {}';
+
+/// Callbacks that a widget can run to open another screen.
+const List<String> _navigableCallbacks = ['onPressed', 'onTap'];
+
+const PropSchema _navigateToSchema = PropSchema(
+  name: navigateToProp,
+  type: PropType.string,
+  screenPicker: true,
+  category: behaviorGroup,
+);
 
 /// Builds a WidgetDefinition whose code is derived from its property schema:
 /// every property becomes a named argument of [constructor], children become
@@ -32,11 +46,15 @@ WidgetDefinition simpleDefinition({
   Set<String> Function(NodeProps props)? importsWhen,
 }) {
   final name = constructor ?? type;
+  // A widget with an empty callback can be told to open another screen.
+  final callback = _navigableCallbacks
+      .where((argument) => fixedArguments[argument] == _emptyCallback)
+      .firstOrNull;
   return WidgetDefinition(
     type: type,
     label: label ?? type,
     category: category,
-    props: props,
+    props: [...props, if (callback != null) _navigateToSchema],
     childPolicy: childPolicy,
     allowedParents: allowedParents,
     forbiddenParents: forbiddenParents,
@@ -53,6 +71,9 @@ WidgetDefinition simpleDefinition({
     generateCode: (values, children) {
       final arguments = {
         ...fixedArguments,
+        // A widget that goes nowhere keeps its empty callback.
+        ?callback:
+            navigationCallback(values.string(navigateToProp)) ?? _emptyCallback,
         ...propArguments(props, values, groups),
         ..._childArguments(childPolicy, children, childRequired, childArgument),
       };

@@ -1,0 +1,29 @@
+import 'package:flutter_ui_builder/features/editor/data/models/widget_node_model.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'project_screen_model.freezed.dart';
+part 'project_screen_model.g.dart';
+
+/// JSON representation of a ProjectScreen.
+@freezed
+abstract class ProjectScreenModel with _$ProjectScreenModel {
+  @JsonSerializable(explicitToJson: true, checked: true)
+  const factory ProjectScreenModel({
+    required String name,
+    required WidgetNodeModel root,
+  }) = _ProjectScreenModel;
+
+  factory ProjectScreenModel.fromJson(Map<String, dynamic> json) =>
+      _$ProjectScreenModelFromJson(json);
+
+  factory ProjectScreenModel.fromEntity(ProjectScreen screen) =>
+      ProjectScreenModel(
+        name: screen.name,
+        root: WidgetNodeModel.fromEntity(screen.root),
+      );
+
+  const ProjectScreenModel._();
+
+  ProjectScreen toEntity() => ProjectScreen(name: name, root: root.toEntity());
+}

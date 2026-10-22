@@ -20,6 +20,7 @@ class PropSchema {
     this.literals,
     this.category,
     this.iconPicker = false,
+    this.screenPicker = false,
   });
 
   /// Key used in WidgetNode.props.
@@ -67,6 +68,10 @@ class PropSchema {
   /// Group shown in the properties panel. When null it is worked out from the
   /// property name and type by propCategoryOf.
   final String? category;
+
+  /// A string naming a screen of the project, edited by picking from the
+  /// project's screens.
+  final bool screenPicker;
 
   /// A choice of Material icon names, edited with the icon picker rather
   /// than a drop-down.

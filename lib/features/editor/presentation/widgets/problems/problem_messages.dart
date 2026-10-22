@@ -22,4 +22,5 @@ String problemMessage(AppLocalizations l10n, Problem problem) =>
       ProblemCode.circleWithRadius => l10n.problemCircleWithRadius,
       ProblemCode.lowContrast => l10n.problemLowContrast,
       ProblemCode.smallTapTarget => l10n.problemSmallTapTarget,
+      ProblemCode.unknownScreen => l10n.problemUnknownScreen,
     };

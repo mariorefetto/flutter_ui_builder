@@ -53,7 +53,7 @@ void main() {
   });
 
   test('stores the schema version', () {
-    expect(codec.encode(document), contains('"schemaVersion": 1'));
+    expect(codec.encode(document), contains('"schemaVersion": 2'));
   });
 
   test('rejects text that is not a project', () {

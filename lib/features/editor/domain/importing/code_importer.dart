@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_ui_builder/core/error/failures.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_definition.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/child_policy.dart';
@@ -15,7 +16,7 @@ import 'package:flutter_ui_builder/features/editor/domain/services/identifier_na
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
 
 const String _defaultName = 'imported';
-const String _classSuffix = 'View';
+const String _classSuffix = screenClassSuffix;
 const String _scaffold = 'Scaffold';
 const String _column = 'Column';
 const String _placeholder = 'Placeholder';
@@ -121,6 +122,7 @@ class CodeImporter {
       props,
       consumed,
     );
+    _readNavigation(definition, value, props);
     for (final MapEntry(:key, value: argument) in value.named.entries) {
       if (consumed.contains(key) || argument is CodeFunction) continue;
       final child = _childrenOf(definition, key, argument, issues);
@@ -137,6 +139,44 @@ class CodeImporter {
       children: children,
     );
   }
+
+  // A callback that pushes a screen or pops one, as the generator writes it.
+  void _readNavigation(
+    WidgetDefinition definition,
+    CodeCall call,
+    Map<String, Object?> props,
+  ) {
+    if (!definition.props.any((p) => p.name == navigateToProp)) return;
+    for (final callback in call.named.values) {
+      final target = callback is CodeFunction
+          ? _navigationTarget(callback)
+          : null;
+      if (target != null) {
+        props[navigateToProp] = target;
+        return;
+      }
+    }
+  }
+
+  String? _navigationTarget(CodeFunction callback) {
+    final body = callback.body;
+    if (body is! CodeCall || body.name != 'Navigator') return null;
+    if (body.constructor == 'pop') return navigateBack;
+    if (body.constructor != 'push' || body.positional.length < 2) return null;
+    final route = body.positional[1];
+    if (route is! CodeCall || route.name != 'MaterialPageRoute') return null;
+    final builder = route.named['builder'];
+    final screen = builder is CodeFunction ? builder.body : null;
+    if (screen is! CodeCall) return null;
+    return _screenName(screen.name);
+  }
+
+  // `SettingsView` is the screen "Settings".
+  String _screenName(String className) =>
+      className.endsWith(screenClassSuffix) &&
+          className.length > screenClassSuffix.length
+      ? className.substring(0, className.length - screenClassSuffix.length)
+      : className;
 
   // `SizedBox.shrink()` is how the generator writes a missing child.
   WidgetDefinition? _definitionFor(CodeCall call) {

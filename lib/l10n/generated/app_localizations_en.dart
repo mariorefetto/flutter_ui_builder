@@ -915,4 +915,17 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get paletteClickToAdd =>
       'Click to add, or drag onto the screen or the outline';
+
+  @override
+  String get errorScreenDuplicate => 'Another screen already has this name';
+
+  @override
+  String get errorScreenLast => 'A project needs at least one screen';
+
+  @override
+  String get errorScreenUnknown => 'This screen no longer exists';
+
+  @override
+  String get problemUnknownScreen =>
+      'This widget opens a screen that does not exist';
 }

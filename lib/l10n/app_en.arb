@@ -1156,5 +1156,21 @@
   "paletteClickToAdd": "Click to add, or drag onto the screen or the outline",
   "@paletteClickToAdd": {
     "description": "Palette: Click to add, or drag onto the screen or the outline"
+  },
+  "errorScreenDuplicate": "Another screen already has this name",
+  "@errorScreenDuplicate": {
+    "description": "Message: Another screen already has this name"
+  },
+  "errorScreenLast": "A project needs at least one screen",
+  "@errorScreenLast": {
+    "description": "Message: A project needs at least one screen"
+  },
+  "errorScreenUnknown": "This screen no longer exists",
+  "@errorScreenUnknown": {
+    "description": "Message: This screen no longer exists"
+  },
+  "problemUnknownScreen": "This widget opens a screen that does not exist",
+  "@problemUnknownScreen": {
+    "description": "Message: This widget opens a screen that does not exist"
   }
 }

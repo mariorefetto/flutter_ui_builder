@@ -266,5 +266,9 @@
   "paletteTakesNoChild": "Non accetta figli",
   "paletteTakesOneChild": "Accetta un figlio",
   "paletteTakesChildren": "Accetta più figli",
-  "paletteClickToAdd": "Fai clic per aggiungere, oppure trascina sullo schermo o sulla struttura"
+  "paletteClickToAdd": "Fai clic per aggiungere, oppure trascina sullo schermo o sulla struttura",
+  "errorScreenDuplicate": "Un'altra schermata ha già questo nome",
+  "errorScreenLast": "Un progetto ha bisogno di almeno una schermata",
+  "errorScreenUnknown": "Questa schermata non esiste più",
+  "problemUnknownScreen": "Questo widget apre una schermata che non esiste"
 }

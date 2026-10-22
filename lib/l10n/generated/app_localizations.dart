@@ -1699,6 +1699,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Click to add, or drag onto the screen or the outline'**
   String get paletteClickToAdd;
+
+  /// Message: Another screen already has this name
+  ///
+  /// In en, this message translates to:
+  /// **'Another screen already has this name'**
+  String get errorScreenDuplicate;
+
+  /// Message: A project needs at least one screen
+  ///
+  /// In en, this message translates to:
+  /// **'A project needs at least one screen'**
+  String get errorScreenLast;
+
+  /// Message: This screen no longer exists
+  ///
+  /// In en, this message translates to:
+  /// **'This screen no longer exists'**
+  String get errorScreenUnknown;
+
+  /// Message: This widget opens a screen that does not exist
+  ///
+  /// In en, this message translates to:
+  /// **'This widget opens a screen that does not exist'**
+  String get problemUnknownScreen;
 }
 
 class _AppLocalizationsDelegate

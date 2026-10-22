@@ -1,10 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_ui_builder/features/editor/data/services/analyzer_code_parser.dart';
 import 'package:flutter_ui_builder/features/editor/data/services/dart_style_code_formatter.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/builtin_definitions.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_definition.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
@@ -76,7 +76,8 @@ void main() {
   Map<String, Object?> sampleProps(WidgetDefinition definition) => {
     for (final prop in definition.props)
       prop.name: switch (prop.type) {
-        PropType.string => 'x',
+        // Going back needs no other screen to exist.
+        PropType.string => prop.screenPicker ? navigateBack : 'x',
         PropType.number => 2,
         PropType.boolean => !(prop.defaultValue as bool? ?? false),
         PropType.color => 0xFF123456,

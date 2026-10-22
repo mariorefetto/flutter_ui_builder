@@ -59,9 +59,12 @@ final class CodeIdentifier extends CodeValue {
   final String? prefix;
 }
 
-/// A closure or function, whose body is not read.
+/// A closure or function. Only a body that is a single expression is read,
+/// as in `() => Navigator.pop(context)`; any other is left out.
 final class CodeFunction extends CodeValue {
-  const CodeFunction();
+  const CodeFunction({this.body});
+
+  final CodeValue? body;
 }
 
 /// Anything else, kept as source text for the report.
