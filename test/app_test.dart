@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_ui_builder/app.dart';
 import 'package:flutter_ui_builder/core/di/injection.dart';
 import 'package:flutter_ui_builder/core/theme/app_icons.dart';
+import 'package:flutter_ui_builder/core/widgets/app_select.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/code_edit_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
@@ -250,7 +251,7 @@ void main() {
     // A phone is 390 wide with a 12 thick body on each side.
     expect(designer().width, 390 + 2 * 12);
 
-    await tester.tap(find.byType(DropdownButton<PreviewDevice>));
+    await tester.tap(find.byType(AppSelect<PreviewDevice>));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Tablet').last);
     await tester.pumpAndSettle();

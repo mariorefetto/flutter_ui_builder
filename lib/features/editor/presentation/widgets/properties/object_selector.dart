@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ui_builder/core/theme/app_constants.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
+import 'package:flutter_ui_builder/core/widgets/app_select.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 
@@ -24,20 +25,16 @@ class ObjectSelector extends StatelessWidget {
     final cubit = context.read<EditorCubit>();
     return Padding(
       padding: const EdgeInsets.all(AppConstants.spacingSM),
-      child: DropdownButtonFormField<String>(
+      child: AppSelect<String>(
         key: ValueKey(selectedId),
-        initialValue: selectedId,
-        isExpanded: true,
-        decoration: const InputDecoration(isDense: true),
-        hint: Text(context.l10n.propsNoSelectionTitle),
-        items: [
+        value: selectedId,
+        hint: context.l10n.propsNoSelectionTitle,
+        options: [
           for (final entry in _flatten(root, 0))
-            DropdownMenuItem(
+            AppSelectOption(
               value: entry.$1.id,
-              child: Text(
-                '${_indentUnit * entry.$2}${entry.$1.type}  (${entry.$1.id})',
-                overflow: TextOverflow.ellipsis,
-              ),
+              label:
+                  '${_indentUnit * entry.$2}${entry.$1.type}  (${entry.$1.id})',
             ),
         ],
         onChanged: cubit.select,

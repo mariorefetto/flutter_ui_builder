@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
+import 'package:flutter_ui_builder/core/widgets/app_select.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/edge_insets_value.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/node_props.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/prop_schema.dart';
@@ -90,16 +91,15 @@ class PropField extends StatelessWidget {
 
   Widget _choice(BuildContext context) {
     final current = props.choice(schema.name);
-    return DropdownButtonFormField<String?>(
+    return AppSelect<String>(
       key: ValueKey(current),
-      initialValue: current,
-      isExpanded: true,
-      decoration: const InputDecoration(isDense: true),
-      items: [
+      value: current,
+      hint: context.l10n.editorValueUnset,
+      options: [
         if (schema.defaultValue == null)
-          DropdownMenuItem(child: Text(context.l10n.editorValueUnset)),
+          AppSelectOption(value: null, label: context.l10n.editorValueUnset),
         for (final option in schema.options)
-          DropdownMenuItem(value: option, child: Text(option)),
+          AppSelectOption(value: option, label: option),
       ],
       onChanged: onChanged,
     );
