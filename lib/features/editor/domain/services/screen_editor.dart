@@ -24,6 +24,18 @@ class ScreenEditor {
   WidgetNode? rootOf(EditorDocument document, String name) =>
       _all(document).where((s) => s.name == name).firstOrNull?.root;
 
+  /// Whether [a] and [b] hold the same screens in the same order, whichever
+  /// of them is open. Opening another screen changes nothing in the project.
+  bool sameContent(EditorDocument a, EditorDocument b) {
+    final first = _all(a);
+    final second = _all(b);
+    if (first.length != second.length) return false;
+    for (var i = 0; i < first.length; i++) {
+      if (first[i] != second[i]) return false;
+    }
+    return true;
+  }
+
   /// A new screen with a Scaffold, opened for editing.
   Either<Failure, EditorDocument> add(EditorDocument document, String name) =>
       _validName(document, name).map((clean) {

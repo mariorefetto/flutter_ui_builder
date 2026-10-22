@@ -8,6 +8,7 @@ import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_definition.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/prop_schema.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/code_importer.dart';
@@ -231,6 +232,61 @@ void main() {
 
     expect(result.exitCode, 0, reason: '${result.stdout}');
   }
+
+  test('screens that open each other generate valid Dart', () async {
+    final generator = DocumentCodeGenerator(
+      registry,
+      const DartStyleCodeFormatter(),
+    );
+    WidgetNode scaffold(String target) => WidgetNode(
+      id: 'node_0',
+      type: 'Scaffold',
+      children: [
+        WidgetNode(
+          id: 'node_1',
+          type: 'Column',
+          children: [
+            WidgetNode(
+              id: 'node_2',
+              type: 'ElevatedButton',
+              props: {'navigateTo': target},
+              children: const [WidgetNode(id: 'node_3', type: 'Text')],
+            ),
+            const WidgetNode(
+              id: 'node_4',
+              type: 'TextButton',
+              props: {'navigateTo': navigateBack},
+              children: [WidgetNode(id: 'node_5', type: 'Text')],
+            ),
+          ],
+        ),
+      ],
+    );
+    final files = generator
+        .generateAll(
+          EditorDocument(
+            name: 'Home',
+            root: scaffold('Settings'),
+            screens: [ProjectScreen(name: 'Settings', root: scaffold('Home'))],
+          ),
+        )
+        .getOrElse(() => throw StateError('generation failed'));
+    final directory = Directory('lib/tmp_navigation_check')..createSync();
+    addTearDown(() => directory.deleteSync(recursive: true));
+    for (final file in files) {
+      File(
+        '${directory.path}/${file.fileName}',
+      ).writeAsStringSync(file.content);
+    }
+
+    final result = await Process.run('dart', [
+      'analyze',
+      '--fatal-infos',
+      directory.path,
+    ]);
+
+    expect(result.exitCode, 0, reason: '${result.stdout}');
+  }, timeout: const Timeout(Duration(minutes: 3)));
 
   test(
     'the catalog generates valid Dart',

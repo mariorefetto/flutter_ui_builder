@@ -6,6 +6,7 @@ import 'package:flutter_ui_builder/features/editor/data/services/dart_style_code
 import 'package:flutter_ui_builder/features/editor/domain/definitions/builtin_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/repositories/code_export_repository.dart';
 import 'package:flutter_ui_builder/features/editor/domain/repositories/file_dialog_repository.dart';
@@ -51,6 +52,30 @@ void main() {
 
     expect(cubit.state, isA<CodeReady>());
     expect((cubit.state as CodeReady).files, hasLength(1));
+  });
+
+  test('a project gets a file for each screen, the open one first', () {
+    final cubit = build();
+
+    cubit.update(
+      const EditorDocument(
+        name: 'Settings',
+        root: WidgetNode(id: 'node_0', type: 'Column'),
+        screens: [
+          ProjectScreen(
+            name: 'Home',
+            root: WidgetNode(id: 'node_0', type: 'Column'),
+          ),
+        ],
+        activeIndex: 1,
+      ),
+    );
+
+    final files = (cubit.state as CodeReady).files;
+    expect(files.map((f) => f.fileName), [
+      'settings_view.g.dart',
+      'home_view.g.dart',
+    ]);
   });
 
   blocTest<CodeCubit, CodeState>(

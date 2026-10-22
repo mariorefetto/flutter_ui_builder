@@ -742,4 +742,36 @@ class UntitledView extends StatelessWidget {
       ['Image', 'Image'],
     );
   });
+
+  testWidgets('screens have tabs, and a button can open another one', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+    final cubit = editorOf(tester);
+
+    await tester.tap(find.byTooltip('New screen'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).last, 'Settings');
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+    expect(cubit.state.document.name, 'Settings');
+    expect(find.text('Settings'), findsWidgets);
+
+    await tester.tap(find.byTooltip('Open untitled'));
+    await tester.pumpAndSettle();
+    expect(cubit.state.document.name, 'untitled');
+
+    cubit
+      ..addNode(type: 'ElevatedButton', parentId: 'node_2')
+      ..updateProp('node_3', 'navigateTo', 'Settings');
+    await tester.pumpAndSettle();
+    expect(
+      cubit.state.document.root.find('node_3')?.props['navigateTo'],
+      'Settings',
+    );
+
+    await tester.tap(find.byTooltip('Open the target screen'));
+    await tester.pumpAndSettle();
+    expect(cubit.state.document.name, 'Settings');
+  });
 }

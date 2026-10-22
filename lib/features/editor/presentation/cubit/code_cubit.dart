@@ -33,7 +33,22 @@ class CodeCubit extends Cubit<CodeState> {
   }
 
   void generate() {
-    emit(_generateCode(_document).fold(CodeState.failed, CodeState.ready));
+    emit(
+      _generateCode(
+        _document,
+      ).fold(CodeState.failed, (files) => CodeState.ready(_activeFirst(files))),
+    );
+  }
+
+  // The code view shows the first file, which is the open screen's.
+  List<GeneratedFile> _activeFirst(List<GeneratedFile> files) {
+    final active = _document.activeIndex;
+    if (active <= 0 || active >= files.length) return files;
+    return [
+      files[active],
+      for (var i = 0; i < files.length; i++)
+        if (i != active) files[i],
+    ];
   }
 
   Future<void> export() async {

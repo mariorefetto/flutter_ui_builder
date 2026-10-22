@@ -8,6 +8,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/widgets/properti
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/committed_text_field.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/edge_insets_field.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/icon_field.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/screen_field.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/value_format.dart';
 
 /// Editor for the value of one property, chosen by the PropType of its schema.
@@ -30,6 +31,10 @@ class PropField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => switch (schema.type) {
+    PropType.string when schema.screenPicker => ScreenField(
+      value: props.string(schema.name),
+      onChanged: onChanged,
+    ),
     PropType.string => CommittedTextField(
       text: props.string(schema.name) ?? '',
       onCommit: (text) {

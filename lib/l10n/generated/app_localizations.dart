@@ -1723,6 +1723,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This widget opens a screen that does not exist'**
   String get problemUnknownScreen;
+
+  /// Tooltip: add a screen
+  ///
+  /// In en, this message translates to:
+  /// **'New screen'**
+  String get screenNew;
+
+  /// Dialog title: add a screen
+  ///
+  /// In en, this message translates to:
+  /// **'New screen'**
+  String get screenNewTitle;
+
+  /// Hint of the screen name field
+  ///
+  /// In en, this message translates to:
+  /// **'Screen name'**
+  String get screenNameHint;
+
+  /// Suggested name of a new screen
+  ///
+  /// In en, this message translates to:
+  /// **'Screen {number}'**
+  String screenDefaultName(int number);
+
+  /// Tooltip of a screen tab
+  ///
+  /// In en, this message translates to:
+  /// **'Open {name}'**
+  String screenOpenTooltip(String name);
+
+  /// Menu: rename a screen
+  ///
+  /// In en, this message translates to:
+  /// **'Rename screen'**
+  String get screenRename;
+
+  /// Menu: make a screen the first
+  ///
+  /// In en, this message translates to:
+  /// **'Make it the start screen'**
+  String get screenMakeHome;
+
+  /// Menu: delete a screen
+  ///
+  /// In en, this message translates to:
+  /// **'Delete screen'**
+  String get screenDelete;
+
+  /// Option: no navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Does not open a screen'**
+  String get screenNavigateNone;
+
+  /// Option: pop the screen
+  ///
+  /// In en, this message translates to:
+  /// **'Goes back'**
+  String get screenNavigateBack;
+
+  /// Tooltip: go to the screen a widget opens
+  ///
+  /// In en, this message translates to:
+  /// **'Open the target screen'**
+  String get screenOpenTarget;
 }
 
 class _AppLocalizationsDelegate

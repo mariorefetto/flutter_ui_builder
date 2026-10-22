@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ui_builder/core/theme/app_constants.dart';
+import 'package:flutter_ui_builder/core/theme/app_icons.dart';
 import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_state.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/project_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/file/rename_dialog.dart';
 
-/// The tab of the open project, above the designer. A marker shows unsaved
-/// changes and a tap renames the project.
+enum _ScreenAction { rename, duplicate, makeHome, delete }
+
+/// The tabs of the project's screens, above the designer. A tap opens a
+/// screen, a tap on the open one renames it, a right click offers the rest,
+/// and the plus adds a screen. A marker shows unsaved changes.
 class DocumentTab extends StatelessWidget {
   const DocumentTab({super.key});
 
@@ -19,52 +24,185 @@ class DocumentTab extends StatelessWidget {
     final saved = context.select((ProjectCubit c) => c.state.savedDocument);
     return ColoredBox(
       color: colors.surfaceContainerHigh,
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: BlocBuilder<EditorCubit, EditorState>(
-          buildWhen: (previous, current) =>
-              previous.document != current.document,
-          builder: (context, state) {
-            final name = state.document.name;
-            final label = state.document == saved
-                ? name
-                : context.l10n.editorTitleModified(name);
-            return Tooltip(
-              message: context.l10n.editorDocumentTabTooltip,
-              child: InkWell(
-                onTap: () => _rename(context, name),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: colors.surface,
-                    border: Border(
-                      top: BorderSide(
-                        color: colors.primary,
-                        width: AppConstants.borderWidthMedium,
-                      ),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppConstants.spacingMD,
-                      vertical: AppConstants.spacingSM,
-                    ),
-                    child: Text(label, style: context.textTheme.bodyMedium),
+      child: BlocBuilder<EditorCubit, EditorState>(
+        buildWhen: (previous, current) => previous.document != current.document,
+        builder: (context, state) {
+          final document = state.document;
+          final names = const ScreenEditor().namesOf(document);
+          final unsaved = !const ScreenEditor().sameContent(document, saved);
+          return Row(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (final (index, name) in names.indexed)
+                        _ScreenTab(
+                          name: name,
+                          active: index == document.activeIndex,
+                          home: index == 0,
+                          modified: unsaved && index == document.activeIndex,
+                          onlyScreen: names.length == 1,
+                        ),
+                    ],
                   ),
                 ),
               ),
-            );
-          },
+              IconButton(
+                tooltip: context.l10n.screenNew,
+                visualDensity: VisualDensity.compact,
+                icon: const Icon(AppIcons.add),
+                onPressed: () => _add(context, names),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> _add(BuildContext context, List<String> names) async {
+    final cubit = context.read<EditorCubit>();
+    final l10n = context.l10n;
+    final name = await showDialog<String>(
+      context: context,
+      builder: (context) => RenameDialog(
+        initialName: l10n.screenDefaultName(names.length + 1),
+        title: l10n.screenNewTitle,
+        hint: l10n.screenNameHint,
+      ),
+    );
+    if (name != null) cubit.addScreen(name);
+  }
+}
+
+class _ScreenTab extends StatelessWidget {
+  const _ScreenTab({
+    required this.name,
+    required this.active,
+    required this.home,
+    required this.modified,
+    required this.onlyScreen,
+  });
+
+  final String name;
+  final bool active;
+
+  /// The screen the app starts on.
+  final bool home;
+  final bool modified;
+  final bool onlyScreen;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colorScheme;
+    final l10n = context.l10n;
+    final cubit = context.read<EditorCubit>();
+    return GestureDetector(
+      onSecondaryTapUp: (details) =>
+          _menu(context, details.globalPosition, cubit),
+      child: Tooltip(
+        message: active
+            ? l10n.editorDocumentTabTooltip
+            : l10n.screenOpenTooltip(name),
+        child: InkWell(
+          onTap: () =>
+              active ? _rename(context, cubit) : cubit.openScreen(name),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: active ? colors.surface : null,
+              border: Border(
+                top: BorderSide(
+                  color: active ? colors.primary : Colors.transparent,
+                  width: AppConstants.borderWidthMedium,
+                ),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppConstants.spacingMD,
+                vertical: AppConstants.spacingSM,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (home) ...[
+                    Icon(
+                      AppIcons.home,
+                      size: AppConstants.spacingMD,
+                      color: colors.onSurfaceVariant,
+                    ),
+                    const SizedBox(width: AppConstants.spacingSM),
+                  ],
+                  Text(
+                    modified ? l10n.editorTitleModified(name) : name,
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: active ? null : colors.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Future<void> _rename(BuildContext context, String current) async {
-    final cubit = context.read<EditorCubit>();
-    final name = await showDialog<String>(
+  Future<void> _rename(BuildContext context, EditorCubit cubit) async {
+    final to = await showDialog<String>(
       context: context,
-      builder: (context) => RenameDialog(initialName: current),
+      builder: (context) => RenameDialog(initialName: name),
     );
-    if (name != null) cubit.renameDocument(name);
+    if (to != null) cubit.renameScreen(name, to);
+  }
+
+  Future<void> _menu(
+    BuildContext context,
+    Offset position,
+    EditorCubit cubit,
+  ) async {
+    final l10n = context.l10n;
+    final overlay = Overlay.of(context).context.findRenderObject();
+    if (overlay is! RenderBox) return;
+    final action = await showMenu<_ScreenAction>(
+      context: context,
+      position: RelativeRect.fromRect(
+        position & Size.zero,
+        Offset.zero & overlay.size,
+      ),
+      items: [
+        PopupMenuItem(
+          value: _ScreenAction.rename,
+          child: Text(l10n.screenRename),
+        ),
+        PopupMenuItem(
+          value: _ScreenAction.duplicate,
+          child: Text(l10n.menuDuplicate),
+        ),
+        PopupMenuItem(
+          enabled: !home,
+          value: _ScreenAction.makeHome,
+          child: Text(l10n.screenMakeHome),
+        ),
+        PopupMenuItem(
+          enabled: !onlyScreen,
+          value: _ScreenAction.delete,
+          child: Text(l10n.screenDelete),
+        ),
+      ],
+    );
+    if (!context.mounted || action == null) return;
+    switch (action) {
+      case _ScreenAction.rename:
+        await _rename(context, cubit);
+      case _ScreenAction.duplicate:
+        cubit.duplicateScreen(name);
+      case _ScreenAction.makeHome:
+        cubit.makeHomeScreen(name);
+      case _ScreenAction.delete:
+        cubit.deleteScreen(name);
+    }
   }
 }

@@ -7,6 +7,7 @@ import 'package:flutter_ui_builder/features/editor/domain/entities/drop_plan.dar
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/drop_planner.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/tree_editor.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_state.dart';
@@ -367,4 +368,67 @@ void main() {
     verify: (cubit) =>
         expect(cubit.state.document.root.children.single.label, isNull),
   );
+
+  group('screens', () {
+    test('adding a screen opens it and can be undone', () {
+      final cubit = _cubit()..addScreen('Settings');
+
+      expect(cubit.state.document.name, 'Settings');
+      expect(cubit.state.document.screens.single.name, 'untitled');
+      cubit.undo();
+      expect(cubit.state.document.name, 'untitled');
+      expect(cubit.state.document.screens, isEmpty);
+    });
+
+    test('opening a screen is not an undo step', () {
+      final cubit = _cubit()..addScreen('Settings');
+      final steps = cubit.state.history.past.length;
+
+      cubit.openScreen('untitled');
+
+      expect(cubit.state.document.name, 'untitled');
+      expect(cubit.state.history.past, hasLength(steps));
+      expect(cubit.state.selectedId, isNull);
+    });
+
+    test('edits go to the screen that is open', () {
+      final cubit = _cubit()
+        ..addScreen('Settings')
+        // A new screen starts with a Scaffold whose body is node_2.
+        ..addNode(type: 'Text', parentId: 'node_2');
+
+      cubit.openScreen('untitled');
+
+      expect(cubit.state.document.root.children, isEmpty);
+      cubit.openScreen('Settings');
+      expect(
+        cubit.state.document.root.find('node_2')?.children.single.type,
+        'Text',
+      );
+    });
+
+    test('a refused change is reported and changes nothing', () async {
+      final cubit = _cubit();
+      final failures = <Failure>[];
+      final sub = cubit.stream.listen((s) {
+        if (s.failure != null) failures.add(s.failure!);
+      });
+
+      cubit.deleteScreen('untitled');
+      await pumpEventQueue();
+
+      expect(failures, hasLength(1));
+      expect(cubit.state.document.name, 'untitled');
+      await sub.cancel();
+    });
+
+    test('renaming the document renames the open screen', () {
+      final cubit = _cubit()..addScreen('Settings');
+
+      cubit.renameDocument('Preferences');
+
+      expect(cubit.state.document.name, 'Preferences');
+      expect(cubit.state.document.screens.single.name, 'untitled');
+    });
+  });
 }

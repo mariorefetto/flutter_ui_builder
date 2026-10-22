@@ -270,5 +270,16 @@
   "errorScreenDuplicate": "Un'altra schermata ha già questo nome",
   "errorScreenLast": "Un progetto ha bisogno di almeno una schermata",
   "errorScreenUnknown": "Questa schermata non esiste più",
-  "problemUnknownScreen": "Questo widget apre una schermata che non esiste"
+  "problemUnknownScreen": "Questo widget apre una schermata che non esiste",
+  "screenNew": "Nuova schermata",
+  "screenNewTitle": "Nuova schermata",
+  "screenNameHint": "Nome della schermata",
+  "screenDefaultName": "Schermata {number}",
+  "screenOpenTooltip": "Apri {name}",
+  "screenRename": "Rinomina la schermata",
+  "screenMakeHome": "Imposta come schermata iniziale",
+  "screenDelete": "Elimina la schermata",
+  "screenNavigateNone": "Non apre nessuna schermata",
+  "screenNavigateBack": "Torna indietro",
+  "screenOpenTarget": "Apri la schermata di destinazione"
 }

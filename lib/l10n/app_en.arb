@@ -1172,5 +1172,59 @@
   "problemUnknownScreen": "This widget opens a screen that does not exist",
   "@problemUnknownScreen": {
     "description": "Message: This widget opens a screen that does not exist"
+  },
+  "screenNew": "New screen",
+  "@screenNew": {
+    "description": "Tooltip: add a screen"
+  },
+  "screenNewTitle": "New screen",
+  "@screenNewTitle": {
+    "description": "Dialog title: add a screen"
+  },
+  "screenNameHint": "Screen name",
+  "@screenNameHint": {
+    "description": "Hint of the screen name field"
+  },
+  "screenDefaultName": "Screen {number}",
+  "@screenDefaultName": {
+    "description": "Suggested name of a new screen",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "screenOpenTooltip": "Open {name}",
+  "@screenOpenTooltip": {
+    "description": "Tooltip of a screen tab",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "screenRename": "Rename screen",
+  "@screenRename": {
+    "description": "Menu: rename a screen"
+  },
+  "screenMakeHome": "Make it the start screen",
+  "@screenMakeHome": {
+    "description": "Menu: make a screen the first"
+  },
+  "screenDelete": "Delete screen",
+  "@screenDelete": {
+    "description": "Menu: delete a screen"
+  },
+  "screenNavigateNone": "Does not open a screen",
+  "@screenNavigateNone": {
+    "description": "Option: no navigation"
+  },
+  "screenNavigateBack": "Goes back",
+  "@screenNavigateBack": {
+    "description": "Option: pop the screen"
+  },
+  "screenOpenTarget": "Open the target screen",
+  "@screenOpenTarget": {
+    "description": "Tooltip: go to the screen a widget opens"
   }
 }

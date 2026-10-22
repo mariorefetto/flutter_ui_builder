@@ -928,4 +928,41 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get problemUnknownScreen =>
       'This widget opens a screen that does not exist';
+
+  @override
+  String get screenNew => 'New screen';
+
+  @override
+  String get screenNewTitle => 'New screen';
+
+  @override
+  String get screenNameHint => 'Screen name';
+
+  @override
+  String screenDefaultName(int number) {
+    return 'Screen $number';
+  }
+
+  @override
+  String screenOpenTooltip(String name) {
+    return 'Open $name';
+  }
+
+  @override
+  String get screenRename => 'Rename screen';
+
+  @override
+  String get screenMakeHome => 'Make it the start screen';
+
+  @override
+  String get screenDelete => 'Delete screen';
+
+  @override
+  String get screenNavigateNone => 'Does not open a screen';
+
+  @override
+  String get screenNavigateBack => 'Goes back';
+
+  @override
+  String get screenOpenTarget => 'Open the target screen';
 }

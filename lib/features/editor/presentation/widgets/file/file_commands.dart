@@ -3,16 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/new_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/import_result.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/project_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_state.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/import/import_code_dialog.dart';
 
-/// True when the edited document differs from the one on disk.
+/// True when the edited project differs from the one on disk. Which screen
+/// is open does not count.
 bool hasUnsavedChanges(BuildContext context) =>
-    context.read<EditorCubit>().state.document !=
-    context.read<ProjectCubit>().state.savedDocument;
+    !const ScreenEditor().sameContent(
+      context.read<EditorCubit>().state.document,
+      context.read<ProjectCubit>().state.savedDocument,
+    );
 
 Future<void> saveProject(BuildContext context) => context
     .read<ProjectCubit>()

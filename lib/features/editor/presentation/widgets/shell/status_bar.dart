@@ -5,6 +5,7 @@ import 'package:flutter_ui_builder/core/theme/app_icons.dart';
 import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_state.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/problems_cubit.dart';
@@ -33,8 +34,11 @@ class StatusBar extends StatelessWidget {
             vertical: AppConstants.spacingXS,
           ),
           child: BlocBuilder<EditorCubit, EditorState>(
-            builder: (context, state) =>
-                _row(context, state, saved == state.document),
+            builder: (context, state) => _row(
+              context,
+              state,
+              const ScreenEditor().sameContent(saved, state.document),
+            ),
           ),
         ),
       ),

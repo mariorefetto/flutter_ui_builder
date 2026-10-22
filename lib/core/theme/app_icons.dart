@@ -49,4 +49,6 @@ abstract final class AppIcons {
   static const IconData expandAll = LucideIcons.chevronsUpDown;
   static const IconData filter = LucideIcons.listFilter;
   static const IconData recent = LucideIcons.history;
+  static const IconData home = LucideIcons.house;
+  static const IconData goTo = LucideIcons.externalLink;
 }
