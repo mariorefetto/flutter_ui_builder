@@ -965,4 +965,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get screenOpenTarget => 'Open the target screen';
+
+  @override
+  String get designerPrototype =>
+      'Try the navigation: clicking a widget opens its screen';
 }

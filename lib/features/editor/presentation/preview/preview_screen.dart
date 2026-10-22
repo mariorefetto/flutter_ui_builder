@@ -96,11 +96,16 @@ class PreviewScreenScope extends InheritedWidget {
     required this.size,
     required this.insets,
     required super.child,
+    this.cornerRadius = 0,
     super.key,
   });
 
   final Size size;
   final EdgeInsets insets;
+
+  /// How round the corners of the screen are, which is none without the
+  /// device frame.
+  final double cornerRadius;
 
   /// The size in the closest scope, or a phone when there is none.
   static Size sizeOf(BuildContext context) =>
@@ -114,7 +119,16 @@ class PreviewScreenScope extends InheritedWidget {
           ?.insets ??
       EdgeInsets.zero;
 
+  /// The corner radius of the screen in the closest scope, or none.
+  static double cornerRadiusOf(BuildContext context) =>
+      context
+          .dependOnInheritedWidgetOfExactType<PreviewScreenScope>()
+          ?.cornerRadius ??
+      0;
+
   @override
   bool updateShouldNotify(PreviewScreenScope oldWidget) =>
-      size != oldWidget.size || insets != oldWidget.insets;
+      size != oldWidget.size ||
+      insets != oldWidget.insets ||
+      cornerRadius != oldWidget.cornerRadius;
 }

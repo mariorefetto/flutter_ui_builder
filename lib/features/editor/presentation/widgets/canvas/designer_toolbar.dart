@@ -32,6 +32,7 @@ class DesignerToolbar extends StatelessWidget {
             previous.showFrame != current.showFrame ||
             previous.showSafeArea != current.showSafeArea ||
             previous.statusBar != current.statusBar ||
+            previous.prototype != current.prototype ||
             previous.zoom != current.zoom,
         builder: (context, state) => _Scrolling(
           child: Row(
@@ -56,6 +57,13 @@ class DesignerToolbar extends StatelessWidget {
                           ),
                       ],
                     ),
+                  ),
+                  IconButton(
+                    tooltip: l10n.designerPrototype,
+                    visualDensity: VisualDensity.compact,
+                    isSelected: state.prototype,
+                    icon: const Icon(AppIcons.run),
+                    onPressed: cubit.togglePrototype,
                   ),
                   IconButton(
                     tooltip: l10n.designerRotate,

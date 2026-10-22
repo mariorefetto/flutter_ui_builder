@@ -774,4 +774,82 @@ class UntitledView extends StatelessWidget {
     await tester.pumpAndSettle();
     expect(cubit.state.document.name, 'Settings');
   });
+
+  testWidgets('in prototype mode a click follows the navigation', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+    final cubit = editorOf(tester)
+      ..addScreen('Details')
+      ..addNode(type: 'TextButton', parentId: 'node_2')
+      ..updateProp('node_3', 'navigateTo', ':back')
+      ..openScreen('untitled')
+      ..addNode(type: 'ElevatedButton', parentId: 'node_2')
+      ..updateProp('node_3', 'navigateTo', 'Details');
+    await tester.pumpAndSettle();
+
+    await tester.tap(
+      find.byTooltip('Try the navigation: clicking a widget opens its screen'),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(ElevatedButton), warnIfMissed: false);
+    await tester.pumpAndSettle();
+    expect(cubit.state.document.name, 'Details');
+    expect(cubit.state.selectedId, isNull);
+
+    // The editor has text buttons of its own; this one is on the screen.
+    await tester.tap(
+      find.descendant(
+        of: find.byType(EditorCanvas),
+        matching: find.byType(TextButton),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(cubit.state.document.name, 'untitled');
+  });
+
+  group('selection outline', () {
+    Finder outline() => find.byWidgetPredicate((widget) {
+      if (widget is! DecoratedBox) return false;
+      final decoration = widget.decoration;
+      return decoration is BoxDecoration &&
+          decoration.border != null &&
+          decoration.border!.isUniform &&
+          decoration.border!.top.width == 2;
+    });
+
+    testWidgets('an app bar is outlined below the status bar', (tester) async {
+      await pumpApp(tester);
+      editorOf(tester).select('node_1');
+      await tester.pumpAndSettle();
+
+      final statusBottom = tester.getRect(find.text('9:41')).bottom;
+
+      expect(
+        tester.getRect(outline().first).top,
+        greaterThanOrEqualTo(statusBottom),
+      );
+    });
+
+    testWidgets('the screen is outlined with the corners of the device', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      editorOf(tester).select('node_0');
+      await tester.pumpAndSettle();
+
+      final decoration =
+          tester.widget<DecoratedBox>(outline().first).decoration
+              as BoxDecoration;
+
+      expect(decoration.borderRadius, isNotNull);
+
+      await tester.tap(find.byTooltip('Device frame'));
+      await tester.pumpAndSettle();
+      final bare =
+          tester.widget<DecoratedBox>(outline().first).decoration
+              as BoxDecoration;
+      expect(bare.borderRadius, isNull);
+    });
+  });
 }

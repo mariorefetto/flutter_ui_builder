@@ -1789,6 +1789,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open the target screen'**
   String get screenOpenTarget;
+
+  /// Tooltip: prototype mode
+  ///
+  /// In en, this message translates to:
+  /// **'Try the navigation: clicking a widget opens its screen'**
+  String get designerPrototype;
 }
 
 class _AppLocalizationsDelegate

@@ -982,4 +982,8 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get screenOpenTarget => 'Apri la schermata di destinazione';
+
+  @override
+  String get designerPrototype =>
+      'Prova la navigazione: un clic su un widget apre la sua schermata';
 }

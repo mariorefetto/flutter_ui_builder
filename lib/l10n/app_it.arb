@@ -281,5 +281,6 @@
   "screenDelete": "Elimina la schermata",
   "screenNavigateNone": "Non apre nessuna schermata",
   "screenNavigateBack": "Torna indietro",
-  "screenOpenTarget": "Apri la schermata di destinazione"
+  "screenOpenTarget": "Apri la schermata di destinazione",
+  "designerPrototype": "Prova la navigazione: un clic su un widget apre la sua schermata"
 }

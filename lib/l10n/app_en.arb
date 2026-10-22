@@ -1226,5 +1226,9 @@
   "screenOpenTarget": "Open the target screen",
   "@screenOpenTarget": {
     "description": "Tooltip: go to the screen a widget opens"
+  },
+  "designerPrototype": "Try the navigation: clicking a widget opens its screen",
+  "@designerPrototype": {
+    "description": "Tooltip: prototype mode"
   }
 }

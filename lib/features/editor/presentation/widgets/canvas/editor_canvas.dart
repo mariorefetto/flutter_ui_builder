@@ -76,6 +76,7 @@ class EditorCanvas extends StatelessWidget {
               child: PreviewScreenScope(
                 size: screen,
                 insets: insets,
+                cornerRadius: workspace.showFrame ? device.cornerRadius : 0,
                 child: _framed(
                   workspace,
                   appearance,

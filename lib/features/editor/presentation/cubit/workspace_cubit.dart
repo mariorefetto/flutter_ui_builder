@@ -55,6 +55,21 @@ class WorkspaceCubit extends Cubit<WorkspaceState> {
     ),
   );
 
+  void togglePrototype() =>
+      emit(state.copyWith(prototype: !state.prototype, screenTrail: const []));
+
+  /// Notes that the screen [from] was left for another by a click.
+  void trailPush(String from) =>
+      emit(state.copyWith(screenTrail: [...state.screenTrail, from]));
+
+  /// The screen to go back to, which leaves the trail; null at the start.
+  String? trailPop() {
+    final trail = state.screenTrail;
+    if (trail.isEmpty) return null;
+    emit(state.copyWith(screenTrail: trail.sublist(0, trail.length - 1)));
+    return trail.last;
+  }
+
   void setDevice(PreviewDevice device) => emit(state.copyWith(device: device));
 
   void toggleFrame() => emit(state.copyWith(showFrame: !state.showFrame));

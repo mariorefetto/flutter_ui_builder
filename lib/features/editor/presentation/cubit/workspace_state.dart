@@ -66,6 +66,14 @@ abstract class WorkspaceState with _$WorkspaceState {
     /// Tint the areas the system covers, which a SafeArea keeps clear.
     @Default(false) bool showSafeArea,
 
+    /// Try the project as it would run: a widget that opens a screen does so
+    /// when clicked, and nothing is selected or dragged.
+    @Default(false) bool prototype,
+
+    /// The screens opened by clicking in prototype mode, oldest first, so a
+    /// widget that goes back returns to the one before.
+    @Default(<String>[]) List<String> screenTrail,
+
     /// Designer scale: 1 is actual size.
     @Default(1.0) double zoom,
 

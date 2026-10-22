@@ -3,17 +3,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ui_builder/core/theme/app_constants.dart';
 import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/drop_plan.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/drag_session_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/drag_payload.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/editor_dimensions.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_screen.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_context_menu.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag/dashed_outline.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag/drop_label.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag_feedback.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/editor_shortcuts.dart';
+
+/// Bars that sit at the top of the screen, below the status bar.
+const Set<String> _topBars = {'AppBar', 'CupertinoNavigationBar'};
 
 /// Wraps the preview of one node so it can be selected, dragged to a new
 /// place and used as a drop target.
@@ -45,6 +51,9 @@ class _CanvasNodeState extends State<CanvasNode> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<EditorCubit>();
+    if (context.select((WorkspaceCubit c) => c.state.prototype)) {
+      return _prototype(context, cubit);
+    }
     final selected = context.select(
       (EditorCubit c) => c.state.selectedId == widget.node.id,
     );
@@ -72,19 +81,80 @@ class _CanvasNodeState extends State<CanvasNode> {
           context,
           cubit,
           hovered: candidates.isNotEmpty ? candidates.first : null,
-          child: DecoratedBox(
-            position: DecorationPosition.foreground,
-            decoration: _decoration(
+          child: _outlined(
+            context,
+            _decoration(
               context,
               cubit,
               selected: selected,
               hovered: candidates.isNotEmpty ? candidates.first : null,
             ),
-            child: _draggable(_sized(widget.child)),
+            _draggable(_sized(widget.child)),
           ),
         ),
       ),
     );
+  }
+
+  // The outline is drawn over the node. A bar at the top of the screen is
+  // outlined below the status bar, which is not part of it, and the screen's
+  // own widget follows the rounded corners of the device.
+  Widget _outlined(
+    BuildContext context,
+    BoxDecoration decoration,
+    Widget child,
+  ) {
+    final topInset = _topBars.contains(widget.node.type)
+        ? PreviewScreenScope.insetsOf(context).top
+        : 0.0;
+    final radius = widget.isRoot
+        ? PreviewScreenScope.cornerRadiusOf(context)
+        : 0.0;
+    final border = decoration.border;
+    final rounded = radius > 0 && (border == null || border.isUniform);
+    return Stack(
+      fit: StackFit.passthrough,
+      children: [
+        child,
+        Positioned.fill(
+          top: topInset,
+          child: IgnorePointer(
+            child: DecoratedBox(
+              decoration: rounded
+                  ? decoration.copyWith(
+                      borderRadius: BorderRadius.circular(radius),
+                    )
+                  : decoration,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // In prototype mode only the widgets that open a screen react.
+  Widget _prototype(BuildContext context, EditorCubit cubit) {
+    final target = widget.node.props[navigateToProp];
+    if (target is! String || target.isEmpty) return widget.child;
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _follow(context, cubit, target),
+        child: widget.child,
+      ),
+    );
+  }
+
+  void _follow(BuildContext context, EditorCubit cubit, String target) {
+    final workspace = context.read<WorkspaceCubit>();
+    if (target == navigateBack) {
+      final previous = workspace.trailPop();
+      if (previous != null) cubit.openScreen(previous);
+      return;
+    }
+    workspace.trailPush(cubit.state.document.name);
+    cubit.openScreen(target);
   }
 
   // While a drop is over the node, a tag says where it would land and, for a
@@ -182,7 +252,7 @@ class _CanvasNodeState extends State<CanvasNode> {
     _side = offset < 0 ? DropSide.before : DropSide.after;
   }
 
-  Decoration _decoration(
+  BoxDecoration _decoration(
     BuildContext context,
     EditorCubit cubit, {
     required bool selected,
