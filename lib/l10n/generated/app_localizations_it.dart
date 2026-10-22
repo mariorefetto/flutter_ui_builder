@@ -903,4 +903,32 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get codeBelow => 'Codice sotto il designer';
+
+  @override
+  String get outlineCollapseAll => 'Comprimi tutto';
+
+  @override
+  String get outlineExpandAll => 'Espandi tutto';
+
+  @override
+  String get paletteRecent => 'Aggiunti di recente';
+
+  @override
+  String get paletteOnlyFitting => 'Mostra solo ciò che si può aggiungere qui';
+
+  @override
+  String get paletteNoMatches => 'Nessun widget corrisponde alla ricerca';
+
+  @override
+  String get paletteTakesNoChild => 'Non accetta figli';
+
+  @override
+  String get paletteTakesOneChild => 'Accetta un figlio';
+
+  @override
+  String get paletteTakesChildren => 'Accetta più figli';
+
+  @override
+  String get paletteClickToAdd =>
+      'Fai clic per aggiungere, oppure trascina sullo schermo o sulla struttura';
 }

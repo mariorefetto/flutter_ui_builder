@@ -44,4 +44,9 @@ abstract final class AppIcons {
   static const IconData codeTab = LucideIcons.squareCode;
   static const IconData codeBeside = LucideIcons.panelRight;
   static const IconData codeBelow = LucideIcons.panelBottom;
+  static const IconData duplicate = LucideIcons.copyPlus;
+  static const IconData collapseAll = LucideIcons.chevronsDownUp;
+  static const IconData expandAll = LucideIcons.chevronsUpDown;
+  static const IconData filter = LucideIcons.listFilter;
+  static const IconData recent = LucideIcons.history;
 }

@@ -1645,6 +1645,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Code below the designer'**
   String get codeBelow;
+
+  /// Tooltip: Collapse all
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse all'**
+  String get outlineCollapseAll;
+
+  /// Tooltip: Expand all
+  ///
+  /// In en, this message translates to:
+  /// **'Expand all'**
+  String get outlineExpandAll;
+
+  /// Palette: Recently added
+  ///
+  /// In en, this message translates to:
+  /// **'Recently added'**
+  String get paletteRecent;
+
+  /// Palette: Show only what can be added here
+  ///
+  /// In en, this message translates to:
+  /// **'Show only what can be added here'**
+  String get paletteOnlyFitting;
+
+  /// Palette: No widget matches the search
+  ///
+  /// In en, this message translates to:
+  /// **'No widget matches the search'**
+  String get paletteNoMatches;
+
+  /// Palette: Takes no child
+  ///
+  /// In en, this message translates to:
+  /// **'Takes no child'**
+  String get paletteTakesNoChild;
+
+  /// Palette: Takes one child
+  ///
+  /// In en, this message translates to:
+  /// **'Takes one child'**
+  String get paletteTakesOneChild;
+
+  /// Palette: Takes any number of children
+  ///
+  /// In en, this message translates to:
+  /// **'Takes any number of children'**
+  String get paletteTakesChildren;
+
+  /// Palette: Click to add, or drag onto the screen or the outline
+  ///
+  /// In en, this message translates to:
+  /// **'Click to add, or drag onto the screen or the outline'**
+  String get paletteClickToAdd;
 }
 
 class _AppLocalizationsDelegate

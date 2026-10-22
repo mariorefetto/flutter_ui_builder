@@ -17,6 +17,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/s
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/code/code_view.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag/dashed_outline.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/editor_shortcuts.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/tree/tree_row.dart';
 
 void main() {
   setUp(() async {
@@ -83,7 +84,7 @@ void main() {
 
     await tester.tap(find.byTooltip('Document outline'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(ListTile, 'Column'));
+    await tester.tap(find.widgetWithText(TreeRow, 'Column'));
     await tester.pumpAndSettle();
 
     expect(find.text('Scaffold > Column'), findsOneWidget);
@@ -362,14 +363,14 @@ void main() {
         .toList();
     expect(bodyTypes(), ['Text', 'Image']);
 
-    await tester.tap(find.widgetWithText(ListTile, 'Text'));
+    await tester.tap(find.widgetWithText(TreeRow, 'Text'));
     await tester.pumpAndSettle();
     await tester.sendKeyEvent(LogicalKeyboardKey.delete);
     await tester.pumpAndSettle();
     expect(bodyTypes(), ['Image']);
 
     // The key a Mac labels Delete is Backspace.
-    await tester.tap(find.widgetWithText(ListTile, 'Image'));
+    await tester.tap(find.widgetWithText(TreeRow, 'Image'));
     await tester.pumpAndSettle();
     await tester.sendKeyEvent(LogicalKeyboardKey.backspace);
     await tester.pumpAndSettle();
@@ -586,8 +587,8 @@ class UntitledView extends StatelessWidget {
       ..addNode(type: 'Image', parentId: 'node_2');
     await tester.tap(find.byTooltip('Document outline'));
     await tester.pumpAndSettle();
-    expect(find.widgetWithText(ListTile, 'Image'), findsOneWidget);
-    expect(find.widgetWithText(ListTile, 'AppBar'), findsOneWidget);
+    expect(find.widgetWithText(TreeRow, 'Image'), findsOneWidget);
+    expect(find.widgetWithText(TreeRow, 'AppBar'), findsOneWidget);
 
     await tester.enterText(
       find.widgetWithText(TextField, 'Search the outline'),
@@ -596,11 +597,11 @@ class UntitledView extends StatelessWidget {
     await tester.pumpAndSettle();
 
     // The Image, and the Column and Scaffold above it; nothing else.
-    expect(find.widgetWithText(ListTile, 'Image'), findsOneWidget);
-    expect(find.widgetWithText(ListTile, 'Column'), findsOneWidget);
-    expect(find.widgetWithText(ListTile, 'Scaffold'), findsOneWidget);
-    expect(find.widgetWithText(ListTile, 'Text'), findsNothing);
-    expect(find.widgetWithText(ListTile, 'AppBar'), findsNothing);
+    expect(find.widgetWithText(TreeRow, 'Image'), findsOneWidget);
+    expect(find.widgetWithText(TreeRow, 'Column'), findsOneWidget);
+    expect(find.widgetWithText(TreeRow, 'Scaffold'), findsOneWidget);
+    expect(find.widgetWithText(TreeRow, 'Text'), findsNothing);
+    expect(find.widgetWithText(TreeRow, 'AppBar'), findsNothing);
   });
 
   testWidgets(
@@ -610,7 +611,7 @@ class UntitledView extends StatelessWidget {
       final cubit = editorOf(tester)..addNode(type: 'Text', parentId: 'node_2');
       await tester.tap(find.byTooltip('Document outline'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(ListTile, 'Text'));
+      await tester.tap(find.widgetWithText(TreeRow, 'Text'));
       await tester.pumpAndSettle();
 
       await tester.sendKeyEvent(LogicalKeyboardKey.f2);
@@ -620,7 +621,7 @@ class UntitledView extends StatelessWidget {
       await tester.pumpAndSettle();
 
       expect(cubit.state.document.root.find('node_3')?.label, 'Headline');
-      expect(find.text('Headline  (Text)'), findsOneWidget);
+      expect(find.text('Headline  Text', findRichText: true), findsOneWidget);
     },
   );
 
@@ -661,8 +662,8 @@ class UntitledView extends StatelessWidget {
     await tester.tap(find.byTooltip('Document outline'));
     await tester.pumpAndSettle();
 
-    final from = tester.getCenter(find.widgetWithText(ListTile, 'Image'));
-    final text = tester.getRect(find.widgetWithText(ListTile, 'Text'));
+    final from = tester.getCenter(find.widgetWithText(TreeRow, 'Image'));
+    final text = tester.getRect(find.widgetWithText(TreeRow, 'Text'));
     final gesture = await tester.startGesture(from);
     await gesture.moveTo(from + const Offset(0, -10));
     // The top quarter of a row puts the widget before it.
@@ -678,5 +679,67 @@ class UntitledView extends StatelessWidget {
       ['Image', 'Text'],
     );
     expect(find.byType(DashedOutline), findsNothing);
+  });
+
+  testWidgets('the outline closes a widget and counts what it hides', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+    editorOf(tester)
+      ..addNode(type: 'Text', parentId: 'node_2')
+      ..addNode(type: 'Image', parentId: 'node_2')
+      ..select('node_0');
+    await tester.tap(find.byTooltip('Document outline'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(TreeRow, 'Image'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Collapse all'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(TreeRow, 'Image'), findsNothing);
+    expect(find.widgetWithText(TreeRow, 'Scaffold'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Expand all'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(TreeRow, 'Image'), findsOneWidget);
+  });
+
+  testWidgets('selecting a hidden widget opens the way to it', (tester) async {
+    await pumpApp(tester);
+    final cubit = editorOf(tester)..addNode(type: 'Image', parentId: 'node_2');
+    await tester.tap(find.byTooltip('Document outline'));
+    await tester.pumpAndSettle();
+    // The widget just added is selected, which keeps its way open.
+    cubit.select(null);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Collapse all'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(TreeRow, 'Image'), findsNothing);
+
+    cubit.select(cubit.state.document.root.children.last.children.last.id);
+    await tester.pumpAndSettle();
+
+    expect(find.widgetWithText(TreeRow, 'Image'), findsOneWidget);
+  });
+
+  testWidgets('a row offers to duplicate and delete under the pointer', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+    final cubit = editorOf(tester)..addNode(type: 'Image', parentId: 'node_2');
+    await tester.tap(find.byTooltip('Document outline'));
+    await tester.pumpAndSettle();
+
+    final mouse = await tester.createGesture(kind: PointerDeviceKind.mouse);
+    await mouse.addPointer(location: Offset.zero);
+    addTearDown(mouse.removePointer);
+    await mouse.moveTo(tester.getCenter(find.widgetWithText(TreeRow, 'Image')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Duplicate'));
+    await tester.pumpAndSettle();
+
+    expect(
+      cubit.state.document.root.find('node_2')?.children.map((c) => c.type),
+      ['Image', 'Image'],
+    );
   });
 }

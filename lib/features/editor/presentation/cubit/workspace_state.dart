@@ -33,6 +33,9 @@ const List<double> zoomSteps = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2];
 const double minCodeExtent = 200;
 const double maxCodeExtent = 900;
 
+/// How many recently added widgets the palette remembers.
+const int maxRecentWidgets = 6;
+
 const double _defaultCodeWidth = 460;
 const double _defaultCodeHeight = 300;
 const double _defaultLeftWidth = 260;
@@ -65,6 +68,9 @@ abstract class WorkspaceState with _$WorkspaceState {
 
     /// Designer scale: 1 is actual size.
     @Default(1.0) double zoom,
+
+    /// Widget types added lately, newest first.
+    @Default(<String>[]) List<String> recentWidgets,
     @Default(_defaultLeftWidth) double leftWidth,
     @Default(_defaultRightWidth) double rightWidth,
   }) = _WorkspaceState;

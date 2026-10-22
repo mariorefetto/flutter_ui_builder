@@ -44,6 +44,17 @@ class WorkspaceCubit extends Cubit<WorkspaceState> {
   double _clampCode(double extent) =>
       extent.clamp(minCodeExtent, maxCodeExtent);
 
+  /// Remembers that a widget of [type] was added, for the palette's recent
+  /// list: it moves to the front and the oldest drops off.
+  void noteAdded(String type) => emit(
+    state.copyWith(
+      recentWidgets: [
+        type,
+        ...state.recentWidgets.where((t) => t != type),
+      ].take(maxRecentWidgets).toList(),
+    ),
+  );
+
   void setDevice(PreviewDevice device) => emit(state.copyWith(device: device));
 
   void toggleFrame() => emit(state.copyWith(showFrame: !state.showFrame));

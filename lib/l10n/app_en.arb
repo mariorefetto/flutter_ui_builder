@@ -1120,5 +1120,41 @@
   "codeBelow": "Code below the designer",
   "@codeBelow": {
     "description": "Tooltip: Code below the designer"
+  },
+  "outlineCollapseAll": "Collapse all",
+  "@outlineCollapseAll": {
+    "description": "Tooltip: Collapse all"
+  },
+  "outlineExpandAll": "Expand all",
+  "@outlineExpandAll": {
+    "description": "Tooltip: Expand all"
+  },
+  "paletteRecent": "Recently added",
+  "@paletteRecent": {
+    "description": "Palette: Recently added"
+  },
+  "paletteOnlyFitting": "Show only what can be added here",
+  "@paletteOnlyFitting": {
+    "description": "Palette: Show only what can be added here"
+  },
+  "paletteNoMatches": "No widget matches the search",
+  "@paletteNoMatches": {
+    "description": "Palette: No widget matches the search"
+  },
+  "paletteTakesNoChild": "Takes no child",
+  "@paletteTakesNoChild": {
+    "description": "Palette: Takes no child"
+  },
+  "paletteTakesOneChild": "Takes one child",
+  "@paletteTakesOneChild": {
+    "description": "Palette: Takes one child"
+  },
+  "paletteTakesChildren": "Takes any number of children",
+  "@paletteTakesChildren": {
+    "description": "Palette: Takes any number of children"
+  },
+  "paletteClickToAdd": "Click to add, or drag onto the screen or the outline",
+  "@paletteClickToAdd": {
+    "description": "Palette: Click to add, or drag onto the screen or the outline"
   }
 }

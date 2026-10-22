@@ -19,7 +19,8 @@ mixin _$WorkspaceState {
  PreviewDevice get device; bool get landscape;/// Draw the body of the device around the screen, with its status bar.
  bool get showFrame; StatusBarMode get statusBar;/// Tint the areas the system covers, which a SafeArea keeps clear.
  bool get showSafeArea;/// Designer scale: 1 is actual size.
- double get zoom; double get leftWidth; double get rightWidth;
+ double get zoom;/// Widget types added lately, newest first.
+ List<String> get recentWidgets; double get leftWidth; double get rightWidth;
 /// Create a copy of WorkspaceState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,16 +31,16 @@ $WorkspaceStateCopyWith<WorkspaceState> get copyWith => _$WorkspaceStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkspaceState&&(identical(other.leftPanel, leftPanel) || other.leftPanel == leftPanel)&&(identical(other.propertiesVisible, propertiesVisible) || other.propertiesVisible == propertiesVisible)&&(identical(other.problemsVisible, problemsVisible) || other.problemsVisible == problemsVisible)&&(identical(other.centerTab, centerTab) || other.centerTab == centerTab)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.codeWidth, codeWidth) || other.codeWidth == codeWidth)&&(identical(other.codeHeight, codeHeight) || other.codeHeight == codeHeight)&&(identical(other.device, device) || other.device == device)&&(identical(other.landscape, landscape) || other.landscape == landscape)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.zoom, zoom) || other.zoom == zoom)&&(identical(other.leftWidth, leftWidth) || other.leftWidth == leftWidth)&&(identical(other.rightWidth, rightWidth) || other.rightWidth == rightWidth));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkspaceState&&(identical(other.leftPanel, leftPanel) || other.leftPanel == leftPanel)&&(identical(other.propertiesVisible, propertiesVisible) || other.propertiesVisible == propertiesVisible)&&(identical(other.problemsVisible, problemsVisible) || other.problemsVisible == problemsVisible)&&(identical(other.centerTab, centerTab) || other.centerTab == centerTab)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.codeWidth, codeWidth) || other.codeWidth == codeWidth)&&(identical(other.codeHeight, codeHeight) || other.codeHeight == codeHeight)&&(identical(other.device, device) || other.device == device)&&(identical(other.landscape, landscape) || other.landscape == landscape)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.zoom, zoom) || other.zoom == zoom)&&const DeepCollectionEquality().equals(other.recentWidgets, recentWidgets)&&(identical(other.leftWidth, leftWidth) || other.leftWidth == leftWidth)&&(identical(other.rightWidth, rightWidth) || other.rightWidth == rightWidth));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,leftPanel,propertiesVisible,problemsVisible,centerTab,codePlacement,codeWidth,codeHeight,device,landscape,showFrame,statusBar,showSafeArea,zoom,leftWidth,rightWidth);
+int get hashCode => Object.hash(runtimeType,leftPanel,propertiesVisible,problemsVisible,centerTab,codePlacement,codeWidth,codeHeight,device,landscape,showFrame,statusBar,showSafeArea,zoom,const DeepCollectionEquality().hash(recentWidgets),leftWidth,rightWidth);
 
 @override
 String toString() {
-  return 'WorkspaceState(leftPanel: $leftPanel, propertiesVisible: $propertiesVisible, problemsVisible: $problemsVisible, centerTab: $centerTab, codePlacement: $codePlacement, codeWidth: $codeWidth, codeHeight: $codeHeight, device: $device, landscape: $landscape, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, zoom: $zoom, leftWidth: $leftWidth, rightWidth: $rightWidth)';
+  return 'WorkspaceState(leftPanel: $leftPanel, propertiesVisible: $propertiesVisible, problemsVisible: $problemsVisible, centerTab: $centerTab, codePlacement: $codePlacement, codeWidth: $codeWidth, codeHeight: $codeHeight, device: $device, landscape: $landscape, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, zoom: $zoom, recentWidgets: $recentWidgets, leftWidth: $leftWidth, rightWidth: $rightWidth)';
 }
 
 
@@ -50,7 +51,7 @@ abstract mixin class $WorkspaceStateCopyWith<$Res>  {
   factory $WorkspaceStateCopyWith(WorkspaceState value, $Res Function(WorkspaceState) _then) = _$WorkspaceStateCopyWithImpl;
 @useResult
 $Res call({
- LeftPanel? leftPanel, bool propertiesVisible, bool problemsVisible, CenterTab centerTab, CodePlacement codePlacement, double codeWidth, double codeHeight, PreviewDevice device, bool landscape, bool showFrame, StatusBarMode statusBar, bool showSafeArea, double zoom, double leftWidth, double rightWidth
+ LeftPanel? leftPanel, bool propertiesVisible, bool problemsVisible, CenterTab centerTab, CodePlacement codePlacement, double codeWidth, double codeHeight, PreviewDevice device, bool landscape, bool showFrame, StatusBarMode statusBar, bool showSafeArea, double zoom, List<String> recentWidgets, double leftWidth, double rightWidth
 });
 
 
@@ -67,7 +68,7 @@ class _$WorkspaceStateCopyWithImpl<$Res>
 
 /// Create a copy of WorkspaceState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? leftPanel = freezed,Object? propertiesVisible = null,Object? problemsVisible = null,Object? centerTab = null,Object? codePlacement = null,Object? codeWidth = null,Object? codeHeight = null,Object? device = null,Object? landscape = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? zoom = null,Object? leftWidth = null,Object? rightWidth = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? leftPanel = freezed,Object? propertiesVisible = null,Object? problemsVisible = null,Object? centerTab = null,Object? codePlacement = null,Object? codeWidth = null,Object? codeHeight = null,Object? device = null,Object? landscape = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? zoom = null,Object? recentWidgets = null,Object? leftWidth = null,Object? rightWidth = null,}) {
   return _then(_self.copyWith(
 leftPanel: freezed == leftPanel ? _self.leftPanel : leftPanel // ignore: cast_nullable_to_non_nullable
 as LeftPanel?,propertiesVisible: null == propertiesVisible ? _self.propertiesVisible : propertiesVisible // ignore: cast_nullable_to_non_nullable
@@ -82,7 +83,8 @@ as bool,showFrame: null == showFrame ? _self.showFrame : showFrame // ignore: ca
 as bool,statusBar: null == statusBar ? _self.statusBar : statusBar // ignore: cast_nullable_to_non_nullable
 as StatusBarMode,showSafeArea: null == showSafeArea ? _self.showSafeArea : showSafeArea // ignore: cast_nullable_to_non_nullable
 as bool,zoom: null == zoom ? _self.zoom : zoom // ignore: cast_nullable_to_non_nullable
-as double,leftWidth: null == leftWidth ? _self.leftWidth : leftWidth // ignore: cast_nullable_to_non_nullable
+as double,recentWidgets: null == recentWidgets ? _self.recentWidgets : recentWidgets // ignore: cast_nullable_to_non_nullable
+as List<String>,leftWidth: null == leftWidth ? _self.leftWidth : leftWidth // ignore: cast_nullable_to_non_nullable
 as double,rightWidth: null == rightWidth ? _self.rightWidth : rightWidth // ignore: cast_nullable_to_non_nullable
 as double,
   ));
@@ -169,10 +171,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( LeftPanel? leftPanel,  bool propertiesVisible,  bool problemsVisible,  CenterTab centerTab,  CodePlacement codePlacement,  double codeWidth,  double codeHeight,  PreviewDevice device,  bool landscape,  bool showFrame,  StatusBarMode statusBar,  bool showSafeArea,  double zoom,  double leftWidth,  double rightWidth)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( LeftPanel? leftPanel,  bool propertiesVisible,  bool problemsVisible,  CenterTab centerTab,  CodePlacement codePlacement,  double codeWidth,  double codeHeight,  PreviewDevice device,  bool landscape,  bool showFrame,  StatusBarMode statusBar,  bool showSafeArea,  double zoom,  List<String> recentWidgets,  double leftWidth,  double rightWidth)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WorkspaceState() when $default != null:
-return $default(_that.leftPanel,_that.propertiesVisible,_that.problemsVisible,_that.centerTab,_that.codePlacement,_that.codeWidth,_that.codeHeight,_that.device,_that.landscape,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.zoom,_that.leftWidth,_that.rightWidth);case _:
+return $default(_that.leftPanel,_that.propertiesVisible,_that.problemsVisible,_that.centerTab,_that.codePlacement,_that.codeWidth,_that.codeHeight,_that.device,_that.landscape,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.zoom,_that.recentWidgets,_that.leftWidth,_that.rightWidth);case _:
   return orElse();
 
 }
@@ -190,10 +192,10 @@ return $default(_that.leftPanel,_that.propertiesVisible,_that.problemsVisible,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( LeftPanel? leftPanel,  bool propertiesVisible,  bool problemsVisible,  CenterTab centerTab,  CodePlacement codePlacement,  double codeWidth,  double codeHeight,  PreviewDevice device,  bool landscape,  bool showFrame,  StatusBarMode statusBar,  bool showSafeArea,  double zoom,  double leftWidth,  double rightWidth)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( LeftPanel? leftPanel,  bool propertiesVisible,  bool problemsVisible,  CenterTab centerTab,  CodePlacement codePlacement,  double codeWidth,  double codeHeight,  PreviewDevice device,  bool landscape,  bool showFrame,  StatusBarMode statusBar,  bool showSafeArea,  double zoom,  List<String> recentWidgets,  double leftWidth,  double rightWidth)  $default,) {final _that = this;
 switch (_that) {
 case _WorkspaceState():
-return $default(_that.leftPanel,_that.propertiesVisible,_that.problemsVisible,_that.centerTab,_that.codePlacement,_that.codeWidth,_that.codeHeight,_that.device,_that.landscape,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.zoom,_that.leftWidth,_that.rightWidth);case _:
+return $default(_that.leftPanel,_that.propertiesVisible,_that.problemsVisible,_that.centerTab,_that.codePlacement,_that.codeWidth,_that.codeHeight,_that.device,_that.landscape,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.zoom,_that.recentWidgets,_that.leftWidth,_that.rightWidth);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -210,10 +212,10 @@ return $default(_that.leftPanel,_that.propertiesVisible,_that.problemsVisible,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( LeftPanel? leftPanel,  bool propertiesVisible,  bool problemsVisible,  CenterTab centerTab,  CodePlacement codePlacement,  double codeWidth,  double codeHeight,  PreviewDevice device,  bool landscape,  bool showFrame,  StatusBarMode statusBar,  bool showSafeArea,  double zoom,  double leftWidth,  double rightWidth)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( LeftPanel? leftPanel,  bool propertiesVisible,  bool problemsVisible,  CenterTab centerTab,  CodePlacement codePlacement,  double codeWidth,  double codeHeight,  PreviewDevice device,  bool landscape,  bool showFrame,  StatusBarMode statusBar,  bool showSafeArea,  double zoom,  List<String> recentWidgets,  double leftWidth,  double rightWidth)?  $default,) {final _that = this;
 switch (_that) {
 case _WorkspaceState() when $default != null:
-return $default(_that.leftPanel,_that.propertiesVisible,_that.problemsVisible,_that.centerTab,_that.codePlacement,_that.codeWidth,_that.codeHeight,_that.device,_that.landscape,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.zoom,_that.leftWidth,_that.rightWidth);case _:
+return $default(_that.leftPanel,_that.propertiesVisible,_that.problemsVisible,_that.centerTab,_that.codePlacement,_that.codeWidth,_that.codeHeight,_that.device,_that.landscape,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.zoom,_that.recentWidgets,_that.leftWidth,_that.rightWidth);case _:
   return null;
 
 }
@@ -225,7 +227,7 @@ return $default(_that.leftPanel,_that.propertiesVisible,_that.problemsVisible,_t
 
 
 class _WorkspaceState implements WorkspaceState {
-  const _WorkspaceState({this.leftPanel = LeftPanel.toolbox, this.propertiesVisible = true, this.problemsVisible = false, this.centerTab = CenterTab.design, this.codePlacement = CodePlacement.tab, this.codeWidth = _defaultCodeWidth, this.codeHeight = _defaultCodeHeight, this.device = PreviewDevice.phone, this.landscape = false, this.showFrame = true, this.statusBar = StatusBarMode.auto, this.showSafeArea = false, this.zoom = 1.0, this.leftWidth = _defaultLeftWidth, this.rightWidth = _defaultRightWidth});
+  const _WorkspaceState({this.leftPanel = LeftPanel.toolbox, this.propertiesVisible = true, this.problemsVisible = false, this.centerTab = CenterTab.design, this.codePlacement = CodePlacement.tab, this.codeWidth = _defaultCodeWidth, this.codeHeight = _defaultCodeHeight, this.device = PreviewDevice.phone, this.landscape = false, this.showFrame = true, this.statusBar = StatusBarMode.auto, this.showSafeArea = false, this.zoom = 1.0, final  List<String> recentWidgets = const <String>[], this.leftWidth = _defaultLeftWidth, this.rightWidth = _defaultRightWidth}): _recentWidgets = recentWidgets;
   
 
 /// The open left panel, or null when the left dock is collapsed.
@@ -246,6 +248,15 @@ class _WorkspaceState implements WorkspaceState {
 @override@JsonKey() final  bool showSafeArea;
 /// Designer scale: 1 is actual size.
 @override@JsonKey() final  double zoom;
+/// Widget types added lately, newest first.
+ final  List<String> _recentWidgets;
+/// Widget types added lately, newest first.
+@override@JsonKey() List<String> get recentWidgets {
+  if (_recentWidgets is EqualUnmodifiableListView) return _recentWidgets;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_recentWidgets);
+}
+
 @override@JsonKey() final  double leftWidth;
 @override@JsonKey() final  double rightWidth;
 
@@ -259,16 +270,16 @@ _$WorkspaceStateCopyWith<_WorkspaceState> get copyWith => __$WorkspaceStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkspaceState&&(identical(other.leftPanel, leftPanel) || other.leftPanel == leftPanel)&&(identical(other.propertiesVisible, propertiesVisible) || other.propertiesVisible == propertiesVisible)&&(identical(other.problemsVisible, problemsVisible) || other.problemsVisible == problemsVisible)&&(identical(other.centerTab, centerTab) || other.centerTab == centerTab)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.codeWidth, codeWidth) || other.codeWidth == codeWidth)&&(identical(other.codeHeight, codeHeight) || other.codeHeight == codeHeight)&&(identical(other.device, device) || other.device == device)&&(identical(other.landscape, landscape) || other.landscape == landscape)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.zoom, zoom) || other.zoom == zoom)&&(identical(other.leftWidth, leftWidth) || other.leftWidth == leftWidth)&&(identical(other.rightWidth, rightWidth) || other.rightWidth == rightWidth));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkspaceState&&(identical(other.leftPanel, leftPanel) || other.leftPanel == leftPanel)&&(identical(other.propertiesVisible, propertiesVisible) || other.propertiesVisible == propertiesVisible)&&(identical(other.problemsVisible, problemsVisible) || other.problemsVisible == problemsVisible)&&(identical(other.centerTab, centerTab) || other.centerTab == centerTab)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.codeWidth, codeWidth) || other.codeWidth == codeWidth)&&(identical(other.codeHeight, codeHeight) || other.codeHeight == codeHeight)&&(identical(other.device, device) || other.device == device)&&(identical(other.landscape, landscape) || other.landscape == landscape)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.zoom, zoom) || other.zoom == zoom)&&const DeepCollectionEquality().equals(other._recentWidgets, _recentWidgets)&&(identical(other.leftWidth, leftWidth) || other.leftWidth == leftWidth)&&(identical(other.rightWidth, rightWidth) || other.rightWidth == rightWidth));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,leftPanel,propertiesVisible,problemsVisible,centerTab,codePlacement,codeWidth,codeHeight,device,landscape,showFrame,statusBar,showSafeArea,zoom,leftWidth,rightWidth);
+int get hashCode => Object.hash(runtimeType,leftPanel,propertiesVisible,problemsVisible,centerTab,codePlacement,codeWidth,codeHeight,device,landscape,showFrame,statusBar,showSafeArea,zoom,const DeepCollectionEquality().hash(_recentWidgets),leftWidth,rightWidth);
 
 @override
 String toString() {
-  return 'WorkspaceState(leftPanel: $leftPanel, propertiesVisible: $propertiesVisible, problemsVisible: $problemsVisible, centerTab: $centerTab, codePlacement: $codePlacement, codeWidth: $codeWidth, codeHeight: $codeHeight, device: $device, landscape: $landscape, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, zoom: $zoom, leftWidth: $leftWidth, rightWidth: $rightWidth)';
+  return 'WorkspaceState(leftPanel: $leftPanel, propertiesVisible: $propertiesVisible, problemsVisible: $problemsVisible, centerTab: $centerTab, codePlacement: $codePlacement, codeWidth: $codeWidth, codeHeight: $codeHeight, device: $device, landscape: $landscape, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, zoom: $zoom, recentWidgets: $recentWidgets, leftWidth: $leftWidth, rightWidth: $rightWidth)';
 }
 
 
@@ -279,7 +290,7 @@ abstract mixin class _$WorkspaceStateCopyWith<$Res> implements $WorkspaceStateCo
   factory _$WorkspaceStateCopyWith(_WorkspaceState value, $Res Function(_WorkspaceState) _then) = __$WorkspaceStateCopyWithImpl;
 @override @useResult
 $Res call({
- LeftPanel? leftPanel, bool propertiesVisible, bool problemsVisible, CenterTab centerTab, CodePlacement codePlacement, double codeWidth, double codeHeight, PreviewDevice device, bool landscape, bool showFrame, StatusBarMode statusBar, bool showSafeArea, double zoom, double leftWidth, double rightWidth
+ LeftPanel? leftPanel, bool propertiesVisible, bool problemsVisible, CenterTab centerTab, CodePlacement codePlacement, double codeWidth, double codeHeight, PreviewDevice device, bool landscape, bool showFrame, StatusBarMode statusBar, bool showSafeArea, double zoom, List<String> recentWidgets, double leftWidth, double rightWidth
 });
 
 
@@ -296,7 +307,7 @@ class __$WorkspaceStateCopyWithImpl<$Res>
 
 /// Create a copy of WorkspaceState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? leftPanel = freezed,Object? propertiesVisible = null,Object? problemsVisible = null,Object? centerTab = null,Object? codePlacement = null,Object? codeWidth = null,Object? codeHeight = null,Object? device = null,Object? landscape = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? zoom = null,Object? leftWidth = null,Object? rightWidth = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? leftPanel = freezed,Object? propertiesVisible = null,Object? problemsVisible = null,Object? centerTab = null,Object? codePlacement = null,Object? codeWidth = null,Object? codeHeight = null,Object? device = null,Object? landscape = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? zoom = null,Object? recentWidgets = null,Object? leftWidth = null,Object? rightWidth = null,}) {
   return _then(_WorkspaceState(
 leftPanel: freezed == leftPanel ? _self.leftPanel : leftPanel // ignore: cast_nullable_to_non_nullable
 as LeftPanel?,propertiesVisible: null == propertiesVisible ? _self.propertiesVisible : propertiesVisible // ignore: cast_nullable_to_non_nullable
@@ -311,7 +322,8 @@ as bool,showFrame: null == showFrame ? _self.showFrame : showFrame // ignore: ca
 as bool,statusBar: null == statusBar ? _self.statusBar : statusBar // ignore: cast_nullable_to_non_nullable
 as StatusBarMode,showSafeArea: null == showSafeArea ? _self.showSafeArea : showSafeArea // ignore: cast_nullable_to_non_nullable
 as bool,zoom: null == zoom ? _self.zoom : zoom // ignore: cast_nullable_to_non_nullable
-as double,leftWidth: null == leftWidth ? _self.leftWidth : leftWidth // ignore: cast_nullable_to_non_nullable
+as double,recentWidgets: null == recentWidgets ? _self._recentWidgets : recentWidgets // ignore: cast_nullable_to_non_nullable
+as List<String>,leftWidth: null == leftWidth ? _self.leftWidth : leftWidth // ignore: cast_nullable_to_non_nullable
 as double,rightWidth: null == rightWidth ? _self.rightWidth : rightWidth // ignore: cast_nullable_to_non_nullable
 as double,
   ));

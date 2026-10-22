@@ -16,6 +16,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_
 import 'package:flutter_ui_builder/features/editor/presentation/preview/builtin_previews.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_registry.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/editor_canvas.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/palette/palette_item.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/palette/widget_palette.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/prop_row.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/properties_panel.dart';
@@ -83,11 +84,11 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     await pumpEditor(tester);
-    await tester.tap(find.text('Text'));
+    await tester.tap(find.text('TEXT'));
     await tester.pumpAndSettle();
 
     final gesture = await tester.startGesture(
-      tester.getCenter(find.widgetWithText(ListTile, 'Text').last),
+      tester.getCenter(find.widgetWithText(PaletteItem, 'Text').last),
     );
     await gesture.moveTo(tester.getCenter(find.byType(EditorCanvas)) / 2);
     await tester.pump();
@@ -105,10 +106,7 @@ void main() {
     tester,
   ) async {
     await pumpEditor(tester);
-    await tester.tap(find.text('Layout'));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.widgetWithText(ListTile, 'Row'));
+    await tester.tap(find.widgetWithText(PaletteItem, 'Row'));
     await tester.pumpAndSettle();
 
     expect(cubit.state.document.root.children.map((c) => c.type), ['Row']);
@@ -264,5 +262,58 @@ void main() {
       findsOneWidget,
     );
     expect(find.textContaining('In the code: fontSize'), findsOneWidget);
+  });
+
+  testWidgets('a category header closes and opens its widgets', (tester) async {
+    await pumpEditor(tester);
+    expect(find.widgetWithText(PaletteItem, 'Row'), findsOneWidget);
+
+    await tester.tap(find.text('LAYOUT'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(PaletteItem, 'Row'), findsNothing);
+
+    await tester.tap(find.text('LAYOUT'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(PaletteItem, 'Row'), findsOneWidget);
+  });
+
+  testWidgets('a search opens the groups and bolds what it matched', (
+    tester,
+  ) async {
+    await pumpEditor(tester);
+
+    await tester.enterText(find.byType(TextField).first, 'slid');
+    await tester.pumpAndSettle();
+
+    expect(find.text('Slider', findRichText: true), findsOneWidget);
+    expect(find.text('Row', findRichText: true), findsNothing);
+  });
+
+  testWidgets('a widget added is listed under recently added', (tester) async {
+    await pumpEditor(tester);
+    expect(find.text('RECENTLY ADDED'), findsNothing);
+
+    await tester.tap(find.widgetWithText(PaletteItem, 'Row'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('RECENTLY ADDED'), findsOneWidget);
+    expect(find.widgetWithText(PaletteItem, 'Row'), findsNWidgets(2));
+  });
+
+  testWidgets('the filter lists only what fits where the selection is', (
+    tester,
+  ) async {
+    await pumpEditor(tester);
+    cubit
+      ..addNode(type: 'Text', parentId: 'node_0')
+      ..select('node_1');
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Show only what can be added here'));
+    await tester.pumpAndSettle();
+
+    // A Text takes no children, so it can only get a sibling: a Scaffold
+    // cannot be one.
+    expect(find.widgetWithText(PaletteItem, 'Scaffold'), findsNothing);
+    expect(find.widgetWithText(PaletteItem, 'Row'), findsOneWidget);
   });
 }

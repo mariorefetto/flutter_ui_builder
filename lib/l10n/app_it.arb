@@ -257,5 +257,14 @@
   "problemSmallTapTarget": "Il bersaglio del tocco è più piccolo di 48 pixel e si colpisce con difficoltà",
   "codeAsTab": "Codice in una scheda",
   "codeBeside": "Codice accanto al designer",
-  "codeBelow": "Codice sotto il designer"
+  "codeBelow": "Codice sotto il designer",
+  "outlineCollapseAll": "Comprimi tutto",
+  "outlineExpandAll": "Espandi tutto",
+  "paletteRecent": "Aggiunti di recente",
+  "paletteOnlyFitting": "Mostra solo ciò che si può aggiungere qui",
+  "paletteNoMatches": "Nessun widget corrisponde alla ricerca",
+  "paletteTakesNoChild": "Non accetta figli",
+  "paletteTakesOneChild": "Accetta un figlio",
+  "paletteTakesChildren": "Accetta più figli",
+  "paletteClickToAdd": "Fai clic per aggiungere, oppure trascina sullo schermo o sulla struttura"
 }

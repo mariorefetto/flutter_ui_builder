@@ -35,3 +35,14 @@ const double dropTintOpacity = 0.1;
 const double iconPickerWidth = 520;
 const double iconPickerHeight = 420;
 const double iconTileSize = 56;
+
+/// Outline rows: height, the indent of each level and the size of their icons.
+const double treeRowHeight = 28;
+const double treeIndent = 16;
+const double treeIconSize = 16;
+
+/// Opacity of the tint under the pointer on a row.
+const double hoverTintOpacity = 0.06;
+
+/// Opacity of a palette entry that cannot be added where the selection is.
+const double disabledOpacity = 0.5;

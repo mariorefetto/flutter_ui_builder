@@ -887,4 +887,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get codeBelow => 'Code below the designer';
+
+  @override
+  String get outlineCollapseAll => 'Collapse all';
+
+  @override
+  String get outlineExpandAll => 'Expand all';
+
+  @override
+  String get paletteRecent => 'Recently added';
+
+  @override
+  String get paletteOnlyFitting => 'Show only what can be added here';
+
+  @override
+  String get paletteNoMatches => 'No widget matches the search';
+
+  @override
+  String get paletteTakesNoChild => 'Takes no child';
+
+  @override
+  String get paletteTakesOneChild => 'Takes one child';
+
+  @override
+  String get paletteTakesChildren => 'Takes any number of children';
+
+  @override
+  String get paletteClickToAdd =>
+      'Click to add, or drag onto the screen or the outline';
 }
