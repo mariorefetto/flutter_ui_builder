@@ -1,0 +1,111 @@
+include: package:flutter_lints/flutter.yaml
+
+formatter:
+  page_width: 80
+  
+# Analisi e regole personalizzate per mantenere standard di codice elevati
+linter:
+  rules:
+    unreachable_from_main: true
+    # === CONSISTENZA E PERFORMANCE ===
+    prefer_const_constructors: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_literals_to_create_immutables: true
+    prefer_const_declarations: true
+    prefer_final_fields: true
+    prefer_final_locals: true
+    unnecessary_final: false
+    avoid_redundant_argument_values: true
+    avoid_unnecessary_containers: true
+    use_super_parameters: true
+
+    # === NOMI E STILE ===
+    always_use_package_imports: true
+    avoid_relative_lib_imports: true
+    sort_child_properties_last: true
+    sort_constructors_first: true
+    sort_unnamed_constructors_first: true
+    use_named_constants: true
+    constant_identifier_names: false # mantieni flessibilità per API e costanti esterne
+    non_constant_identifier_names: true # per gestire naming da JSON o DB
+    
+    # === NULL-SAFETY E TYPE-SAFETY ===
+    # avoid_dynamic_calls: true
+    avoid_type_to_string: true
+    prefer_typing_uninitialized_variables: true
+    unnecessary_nullable_for_final_variable_declarations: true
+
+    # === BEST PRACTICE FLUTTER ===
+    use_key_in_widget_constructors: true
+    prefer_single_quotes: true
+    sized_box_for_whitespace: true
+    avoid_print: true # usa debugPrint o logger custom
+    avoid_bool_literals_in_conditional_expressions: true
+
+    # === CODE QUALITY ===
+    directives_ordering: true
+    require_trailing_commas: true
+    unnecessary_lambdas: true
+    prefer_expression_function_bodies: false
+    prefer_interpolation_to_compose_strings: true
+    use_rethrow_when_possible: true
+    prefer_relative_imports: false
+    depend_on_referenced_packages: true
+    use_enums: true
+    unawaited_futures: true
+    avoid_empty_else: true
+    always_put_required_named_parameters_first: true
+    unnecessary_await_in_return: true
+    unnecessary_late: true
+    avoid_classes_with_only_static_members: false # utile per classi di utility
+    # cascade_invocations: true
+
+# -------------------------------------------------
+# DART CODE METRICS (preset + override)
+# -------------------------------------------------
+dart_code_metrics:
+  extends:
+    - package:dart_code_metrics_presets/flutter.yaml
+    - package:dart_code_metrics_presets/recommended.yaml
+
+  rules:
+    # esempi di override mirati
+    - avoid-nested-conditional-expressions: false
+    - prefer-trailing-comma: true
+    - no-magic-number:
+        allowed: [0, 1]
+
+  metrics:
+    cyclomatic-complexity: 20
+    maximum-nesting-level: 5
+    number-of-parameters: 5
+    source-lines-of-code: 300
+
+  metrics-exclude:
+    - test/**
+    - lib/**/generated/**
+
+# -------------------------------------------------
+# ANALYZER
+# -------------------------------------------------
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+
+  exclude:
+    - lib/**/*.g.dart
+    - lib/**/*.gr.dart
+    - lib/**/*.freezed.dart
+    - lib/**/*.mocks.dart
+    - test/**/*.mocks.dart
+    - build/**
+    - macos/**
+
+  errors:
+    invalid_annotation_target: ignore
+    constant_identifier_names: ignore
+    library_private_types_in_public_api: ignore
+    avoid_print: warning
+    todo: info
+    fixme: warning
