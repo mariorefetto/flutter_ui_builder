@@ -101,6 +101,8 @@ analyzer:
     - test/**/*.mocks.dart
     - build/**
     - macos/**
+    - windows/**
+    - linux/**
 
   errors:
     invalid_annotation_target: ignore
