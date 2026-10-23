@@ -1,0 +1,114 @@
+name: Release
+
+# A tag such as v0.0.1 builds the release version for each desktop platform and
+# publishes them in a GitHub release. The tag must match the version in
+# pubspec.yaml.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+env:
+  FLUTTER_VERSION: 3.47.7
+
+jobs:
+  check:
+    name: Verify the tag, analyze and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: The tag matches the version of the app
+        run: |
+          version=$(sed -n 's/^version: \([0-9.]*\).*/\1/p' pubspec.yaml)
+          if [ "v$version" != "${GITHUB_REF_NAME}" ]; then
+            echo "The tag ${GITHUB_REF_NAME} does not match the version $version in pubspec.yaml"
+            exit 1
+          fi
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+
+  build:
+    name: Build (${{ matrix.name }})
+    needs: check
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - name: macOS
+            os: macos-latest
+            command: flutter build macos --release
+            archive: FlutterUIBuilder-${{ github.ref_name }}-macos.zip
+          - name: Windows
+            os: windows-latest
+            command: flutter build windows --release
+            archive: FlutterUIBuilder-${{ github.ref_name }}-windows.zip
+          - name: Linux
+            os: ubuntu-latest
+            command: flutter build linux --release
+            archive: FlutterUIBuilder-${{ github.ref_name }}-linux.tar.gz
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - name: Install the Linux build tools
+        if: matrix.name == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev
+      - run: flutter pub get
+      - run: ${{ matrix.command }}
+      - name: Package (macOS)
+        if: matrix.name == 'macOS'
+        run: |
+          cd build/macos/Build/Products/Release
+          ditto -c -k --keepParent "Flutter UI Builder.app" "$GITHUB_WORKSPACE/${{ matrix.archive }}"
+      - name: Package (Windows)
+        if: matrix.name == 'Windows'
+        shell: pwsh
+        run: Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath "${{ matrix.archive }}"
+      - name: Package (Linux)
+        if: matrix.name == 'Linux'
+        run: tar -czf "${{ matrix.archive }}" -C build/linux/x64/release/bundle .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.archive }}
+          path: ${{ matrix.archive }}
+          if-no-files-found: error
+
+  publish:
+    name: Publish the release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Checksums
+        run: cd dist && sha256sum * > SHA256SUMS.txt
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: Flutter UI Builder ${{ github.ref_name }}
+          generate_release_notes: true
+          prerelease: ${{ startsWith(github.ref_name, 'v0.') }}
+          files: dist/*
+          body: |
+            Desktop builds of Flutter UI Builder, for noncommercial use under the
+            PolyForm Noncommercial License 1.0.0 (see LICENSE).
+
+            The builds are not signed. On macOS, open the app with a right click
+            and choose Open the first time. On Windows, SmartScreen may ask for
+            confirmation. On Linux, extract the archive and run
+            `flutter_ui_builder`; the file dialogs need `zenity` or `kdialog`.
