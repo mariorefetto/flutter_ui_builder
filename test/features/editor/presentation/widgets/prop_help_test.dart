@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/builtin_definitions.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/project_theme_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/prop_schema.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/prop_help.dart';
 import 'package:flutter_ui_builder/l10n/generated/app_localizations.dart';
@@ -12,10 +13,12 @@ void main() {
     l10n = await AppLocalizations.delegate.load(const Locale('en'));
   });
 
-  test('every explained property exists on some widget', () {
+  test('every explained property exists on some widget or theme', () {
     final names = {
       for (final definition in builtinDefinitions)
         for (final prop in definition.props) prop.name,
+      for (final part in themeParts)
+        for (final prop in part.props) prop.name,
     };
 
     expect(describedProps.where((name) => !names.contains(name)), isEmpty);

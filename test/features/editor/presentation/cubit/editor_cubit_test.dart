@@ -452,4 +452,49 @@ void main() {
       expect(cubit.state.document.assets, isEmpty);
     });
   });
+
+  group('theme', () {
+    test('a value of the theme is set and is an undo step', () {
+      final cubit = _cubit()..setThemeValue('card', 'elevation', 4.0);
+
+      expect(cubit.state.document.theme.parts['card'], {'elevation': 4.0});
+      cubit.undo();
+      expect(cubit.state.document.theme.isDefault, isTrue);
+    });
+
+    test(
+      'a value the theme does not take is refused and changes nothing',
+      () async {
+        final cubit = _cubit();
+        final failures = <Failure>[];
+        final sub = cubit.stream.listen((s) {
+          if (s.failure != null) failures.add(s.failure!);
+        });
+
+        cubit.setThemeValue('card', 'elevation', 'much');
+        await pumpEventQueue();
+
+        expect(failures, hasLength(1));
+        expect(cubit.state.document.theme.isDefault, isTrue);
+        await sub.cancel();
+      },
+    );
+
+    test('a part is put back to the defaults', () {
+      final cubit = _cubit()
+        ..setThemeValue('card', 'elevation', 4.0)
+        ..setThemeValue('appBar', 'centerTitle', true)
+        ..resetThemePart('card');
+
+      expect(cubit.state.document.theme.parts.keys, ['appBar']);
+    });
+
+    test('opening another screen keeps the theme', () {
+      final cubit = _cubit()
+        ..setThemeValue('card', 'elevation', 4.0)
+        ..addScreen('Settings');
+
+      expect(cubit.state.document.theme.parts['card'], {'elevation': 4.0});
+    });
+  });
 }

@@ -9,7 +9,9 @@ import 'package:flutter_ui_builder/core/theme/app_icons.dart';
 import 'package:flutter_ui_builder/core/widgets/app_select.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/screen_templates.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/cubit/code_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/code_edit_cubit.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/cubit/code_state.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_screen.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_node.dart';
@@ -1275,5 +1277,79 @@ class UntitledView extends StatelessWidget {
     await tester.tap(find.text('Where is my project saved?'));
     await tester.pumpAndSettle();
     expect(find.textContaining('Save writes a JSON file'), findsOneWidget);
+  });
+
+  group('theme', () {
+    testWidgets('the screens are drawn with the theme of the project', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      Theme theme() => tester.widget<Theme>(
+        find
+            .ancestor(of: find.byType(AppBar), matching: find.byType(Theme))
+            .first,
+      );
+      expect(theme().data.appBarTheme.backgroundColor, isNull);
+
+      editorOf(tester).setThemeValue('appBar', 'backgroundColor', 0xFF112233);
+      await tester.pumpAndSettle();
+
+      expect(theme().data.appBarTheme.backgroundColor, const Color(0xFF112233));
+    });
+
+    testWidgets('a dark theme makes the preview dark, not the editor', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      final editorBrightness = Theme.of(
+        tester.element(find.byType(MenuBar)),
+      ).brightness;
+
+      editorOf(tester).setThemeValue('scheme', 'brightness', 'dark');
+      await tester.pumpAndSettle();
+
+      final preview = Theme.of(tester.element(find.byType(AppBar)));
+      expect(preview.brightness, Brightness.dark);
+      expect(
+        Theme.of(tester.element(find.byType(MenuBar))).brightness,
+        editorBrightness,
+      );
+    });
+
+    testWidgets('the Theme panel edits the theme and resets a part', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester);
+
+      await tester.tap(find.byTooltip('Theme').first);
+      await tester.pumpAndSettle();
+      expect(find.text('Colours and fonts'), findsOneWidget);
+
+      await tester.tap(find.text('light'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('dark').last);
+      await tester.pumpAndSettle();
+      expect(cubit.state.document.theme.parts['scheme'], {
+        'brightness': 'dark',
+      });
+
+      await tester.tap(find.byTooltip('Back to the defaults'));
+      await tester.pumpAndSettle();
+      expect(cubit.state.document.theme.isDefault, isTrue);
+    });
+
+    testWidgets('the theme file is part of the exported code', (tester) async {
+      await pumpApp(tester);
+      editorOf(tester).setThemeValue('scheme', 'seedColor', 0xFF009688);
+      await tester.pumpAndSettle();
+
+      final code =
+          (tester.element(find.byType(MenuBar)).read<CodeCubit>().state
+                  as CodeReady)
+              .files;
+
+      expect(code.map((f) => f.fileName), contains('app_theme.g.dart'));
+    });
   });
 }

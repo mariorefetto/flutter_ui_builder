@@ -7,6 +7,15 @@ const int _shownOptions = 8;
 
 /// The properties that have a written explanation.
 const List<String> describedProps = [
+  'seedColor',
+  'brightness',
+  'useMaterial3',
+  'filled',
+  'fillColor',
+  'thickness',
+  'iconColor',
+  'textColor',
+  'tileColor',
   'width',
   'height',
   'padding',
@@ -65,6 +74,15 @@ const List<String> describedProps = [
 
 /// The sentence that explains a property, for the commonly used ones, or null.
 String? propHelp(AppLocalizations l10n, String name) => switch (name) {
+  'seedColor' => l10n.propHelpSeedColor,
+  'brightness' => l10n.propHelpBrightness,
+  'useMaterial3' => l10n.propHelpUseMaterial3,
+  'filled' => l10n.propHelpFilled,
+  'fillColor' => l10n.propHelpFillColor,
+  'thickness' => l10n.propHelpThickness,
+  'iconColor' => l10n.propHelpIconColor,
+  'textColor' => l10n.propHelpTextColor,
+  'tileColor' => l10n.propHelpTileColor,
   'width' => l10n.propHelpWidth,
   'height' => l10n.propHelpHeight,
   'padding' => l10n.propHelpPadding,

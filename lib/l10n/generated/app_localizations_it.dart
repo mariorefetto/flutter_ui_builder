@@ -1497,4 +1497,77 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get faqUndoAnswer =>
       'Con il pulsante annulla o Cmd/Ctrl+Z, e ripeti con Cmd/Ctrl+Shift+Z. Aprire un\'altra schermata non è una modifica e non si annulla.';
+
+  @override
+  String get panelTheme => 'Tema';
+
+  @override
+  String get themeIntro =>
+      'I colori e i caratteri di tutta l\'app, e l\'aspetto di ogni tipo di widget. Le schermate sono disegnate con questo tema e il codice lo riceve come buildAppTheme.';
+
+  @override
+  String get themeReset => 'Torna ai valori predefiniti';
+
+  @override
+  String get themeScheme => 'Colori e caratteri';
+
+  @override
+  String get themeAppBar => 'Barra superiore';
+
+  @override
+  String get themeElevatedButton => 'Pulsante in rilievo';
+
+  @override
+  String get themeFilledButton => 'Pulsante pieno';
+
+  @override
+  String get themeOutlinedButton => 'Pulsante con bordo';
+
+  @override
+  String get themeTextButton => 'Pulsante di testo';
+
+  @override
+  String get themeCard => 'Card';
+
+  @override
+  String get themeInput => 'Campi di testo';
+
+  @override
+  String get themeFab => 'Pulsante flottante';
+
+  @override
+  String get themeListTile => 'Riga di elenco';
+
+  @override
+  String get themeDivider => 'Divisore';
+
+  @override
+  String get propHelpSeedColor =>
+      'Il colore da cui è ricavato tutto lo schema di colori: Flutter ne deriva i colori primario, secondario e di superficie.';
+
+  @override
+  String get propHelpBrightness => 'Se il tema è chiaro o scuro.';
+
+  @override
+  String get propHelpUseMaterial3 =>
+      'Usa l\'attuale design Material 3 invece del vecchio Material 2.';
+
+  @override
+  String get propHelpFilled => 'Riempie il campo con un colore.';
+
+  @override
+  String get propHelpFillColor =>
+      'Il colore con cui è riempito un campo pieno.';
+
+  @override
+  String get propHelpThickness => 'Quanto è spessa la linea.';
+
+  @override
+  String get propHelpIconColor => 'Il colore delle icone.';
+
+  @override
+  String get propHelpTextColor => 'Il colore del testo.';
+
+  @override
+  String get propHelpTileColor => 'Il colore dietro la riga.';
 }

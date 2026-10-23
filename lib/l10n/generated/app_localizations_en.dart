@@ -1475,4 +1475,76 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get faqUndoAnswer =>
       'With the undo button or Cmd/Ctrl+Z, and redo with Cmd/Ctrl+Shift+Z. Opening another screen is not a change and is not undone.';
+
+  @override
+  String get panelTheme => 'Theme';
+
+  @override
+  String get themeIntro =>
+      'The colours and fonts of the whole app, and how each kind of widget looks. The screens are drawn with this theme, and the code gets it as buildAppTheme.';
+
+  @override
+  String get themeReset => 'Back to the defaults';
+
+  @override
+  String get themeScheme => 'Colours and fonts';
+
+  @override
+  String get themeAppBar => 'App bar';
+
+  @override
+  String get themeElevatedButton => 'Elevated button';
+
+  @override
+  String get themeFilledButton => 'Filled button';
+
+  @override
+  String get themeOutlinedButton => 'Outlined button';
+
+  @override
+  String get themeTextButton => 'Text button';
+
+  @override
+  String get themeCard => 'Card';
+
+  @override
+  String get themeInput => 'Text fields';
+
+  @override
+  String get themeFab => 'Floating button';
+
+  @override
+  String get themeListTile => 'List tile';
+
+  @override
+  String get themeDivider => 'Divider';
+
+  @override
+  String get propHelpSeedColor =>
+      'The colour the whole colour scheme is made from: Flutter derives the primary, secondary and surface colours from it.';
+
+  @override
+  String get propHelpBrightness => 'Whether the theme is light or dark.';
+
+  @override
+  String get propHelpUseMaterial3 =>
+      'Uses the current Material 3 design rather than the older Material 2 one.';
+
+  @override
+  String get propHelpFilled => 'Fills the field with a colour.';
+
+  @override
+  String get propHelpFillColor => 'The colour a filled field is filled with.';
+
+  @override
+  String get propHelpThickness => 'How thick the line is.';
+
+  @override
+  String get propHelpIconColor => 'The colour of the icons.';
+
+  @override
+  String get propHelpTextColor => 'The colour of the text.';
+
+  @override
+  String get propHelpTileColor => 'The colour behind the row.';
 }

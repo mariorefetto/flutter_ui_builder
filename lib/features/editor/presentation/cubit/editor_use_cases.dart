@@ -3,6 +3,7 @@ import 'package:flutter_ui_builder/features/editor/domain/importing/document_rec
 import 'package:flutter_ui_builder/features/editor/domain/services/drop_planner.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/media_editor.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/theme_editor.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/tree_editor.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/component_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/edit_usecases.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_ui_builder/features/editor/domain/usecases/media_usecase
 import 'package:flutter_ui_builder/features/editor/domain/usecases/plan_drop.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/project_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/screen_usecases.dart';
+import 'package:flutter_ui_builder/features/editor/domain/usecases/theme_usecases.dart';
 
 /// Every use case the editor cubit works with, so the cubit takes one
 /// dependency instead of a dozen.
@@ -42,6 +44,8 @@ class EditorUseCases {
     required this.detachComponent,
     required this.addAssets,
     required this.removeAsset,
+    required this.setThemeValue,
+    required this.resetThemePart,
   });
 
   /// Builds the use cases over one tree editor and one drop planner.
@@ -75,6 +79,8 @@ class EditorUseCases {
     detachComponent: const DetachComponent(ScreenEditor()),
     addAssets: const AddAssets(MediaEditor()),
     removeAsset: const RemoveAsset(MediaEditor()),
+    setThemeValue: const SetThemeValue(ThemeEditor()),
+    resetThemePart: const ResetThemePart(ThemeEditor()),
   );
 
   final AddNode addNode;
@@ -102,4 +108,6 @@ class EditorUseCases {
   final DetachComponent detachComponent;
   final AddAssets addAssets;
   final RemoveAsset removeAsset;
+  final SetThemeValue setThemeValue;
+  final ResetThemePart resetThemePart;
 }

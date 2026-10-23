@@ -40,6 +40,10 @@ _EditorDocumentModel _$EditorDocumentModelFromJson(Map<String, dynamic> json) =>
                   .toList() ??
               const <MediaAssetModel>[],
         ),
+        theme: $checkedConvert(
+          'theme',
+          (v) => v as Map<String, dynamic>? ?? const <String, dynamic>{},
+        ),
         schemaVersion: $checkedConvert(
           'schemaVersion',
           (v) => (v as num?)?.toInt() ?? currentSchemaVersion,
@@ -57,5 +61,6 @@ Map<String, dynamic> _$EditorDocumentModelToJson(
   'activeIndex': instance.activeIndex,
   'component': instance.component,
   'assets': instance.assets.map((e) => e.toJson()).toList(),
+  'theme': instance.theme,
   'schemaVersion': instance.schemaVersion,
 };

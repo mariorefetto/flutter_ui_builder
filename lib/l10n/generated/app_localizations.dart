@@ -2677,6 +2677,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'With the undo button or Cmd/Ctrl+Z, and redo with Cmd/Ctrl+Shift+Z. Opening another screen is not a change and is not undone.'**
   String get faqUndoAnswer;
+
+  /// Theme panel: Theme
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get panelTheme;
+
+  /// Theme panel: The colours and fonts of the whole app, and how ea
+  ///
+  /// In en, this message translates to:
+  /// **'The colours and fonts of the whole app, and how each kind of widget looks. The screens are drawn with this theme, and the code gets it as buildAppTheme.'**
+  String get themeIntro;
+
+  /// Theme panel: Back to the defaults
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the defaults'**
+  String get themeReset;
+
+  /// Theme panel: Colours and fonts
+  ///
+  /// In en, this message translates to:
+  /// **'Colours and fonts'**
+  String get themeScheme;
+
+  /// Theme panel: App bar
+  ///
+  /// In en, this message translates to:
+  /// **'App bar'**
+  String get themeAppBar;
+
+  /// Theme panel: Elevated button
+  ///
+  /// In en, this message translates to:
+  /// **'Elevated button'**
+  String get themeElevatedButton;
+
+  /// Theme panel: Filled button
+  ///
+  /// In en, this message translates to:
+  /// **'Filled button'**
+  String get themeFilledButton;
+
+  /// Theme panel: Outlined button
+  ///
+  /// In en, this message translates to:
+  /// **'Outlined button'**
+  String get themeOutlinedButton;
+
+  /// Theme panel: Text button
+  ///
+  /// In en, this message translates to:
+  /// **'Text button'**
+  String get themeTextButton;
+
+  /// Theme panel: Card
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get themeCard;
+
+  /// Theme panel: Text fields
+  ///
+  /// In en, this message translates to:
+  /// **'Text fields'**
+  String get themeInput;
+
+  /// Theme panel: Floating button
+  ///
+  /// In en, this message translates to:
+  /// **'Floating button'**
+  String get themeFab;
+
+  /// Theme panel: List tile
+  ///
+  /// In en, this message translates to:
+  /// **'List tile'**
+  String get themeListTile;
+
+  /// Theme panel: Divider
+  ///
+  /// In en, this message translates to:
+  /// **'Divider'**
+  String get themeDivider;
+
+  /// Tooltip of the property seedColor
+  ///
+  /// In en, this message translates to:
+  /// **'The colour the whole colour scheme is made from: Flutter derives the primary, secondary and surface colours from it.'**
+  String get propHelpSeedColor;
+
+  /// Tooltip of the property brightness
+  ///
+  /// In en, this message translates to:
+  /// **'Whether the theme is light or dark.'**
+  String get propHelpBrightness;
+
+  /// Tooltip of the property useMaterial3
+  ///
+  /// In en, this message translates to:
+  /// **'Uses the current Material 3 design rather than the older Material 2 one.'**
+  String get propHelpUseMaterial3;
+
+  /// Tooltip of the property filled
+  ///
+  /// In en, this message translates to:
+  /// **'Fills the field with a colour.'**
+  String get propHelpFilled;
+
+  /// Tooltip of the property fillColor
+  ///
+  /// In en, this message translates to:
+  /// **'The colour a filled field is filled with.'**
+  String get propHelpFillColor;
+
+  /// Tooltip of the property thickness
+  ///
+  /// In en, this message translates to:
+  /// **'How thick the line is.'**
+  String get propHelpThickness;
+
+  /// Tooltip of the property iconColor
+  ///
+  /// In en, this message translates to:
+  /// **'The colour of the icons.'**
+  String get propHelpIconColor;
+
+  /// Tooltip of the property textColor
+  ///
+  /// In en, this message translates to:
+  /// **'The colour of the text.'**
+  String get propHelpTextColor;
+
+  /// Tooltip of the property tileColor
+  ///
+  /// In en, this message translates to:
+  /// **'The colour behind the row.'**
+  String get propHelpTileColor;
 }
 
 class _AppLocalizationsDelegate

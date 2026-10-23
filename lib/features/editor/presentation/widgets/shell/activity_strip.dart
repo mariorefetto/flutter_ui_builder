@@ -35,6 +35,12 @@ class ActivityStrip extends StatelessWidget {
               onPressed: () => cubit.toggleLeftPanel(LeftPanel.outline),
             ),
             _StripButton(
+              icon: AppIcons.theme,
+              tooltip: context.l10n.panelTheme,
+              selected: open == LeftPanel.theme,
+              onPressed: () => cubit.toggleLeftPanel(LeftPanel.theme),
+            ),
+            _StripButton(
               icon: AppIcons.media,
               tooltip: context.l10n.panelMedia,
               selected: open == LeftPanel.media,

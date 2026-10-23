@@ -95,4 +95,27 @@ extension EditorScreens on EditorCubit {
         _reportFailure,
         (document) => _commit(document, selectedId: state.selectedId),
       );
+
+  /// Sets a value of the theme of the app; null puts the default back.
+  void setThemeValue(String part, String name, Object? value) => _useCases
+      .setThemeValue(
+        ThemeParams(
+          document: state.document,
+          part: part,
+          name: name,
+          value: value,
+        ),
+      )
+      .fold(
+        _reportFailure,
+        (document) => _commit(document, selectedId: state.selectedId),
+      );
+
+  /// Puts a part of the theme back to the defaults.
+  void resetThemePart(String part) => _useCases
+      .resetThemePart(ThemeParams(document: state.document, part: part))
+      .fold(
+        _reportFailure,
+        (document) => _commit(document, selectedId: state.selectedId),
+      );
 }

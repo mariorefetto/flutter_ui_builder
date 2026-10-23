@@ -36,6 +36,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/ed
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/editor_toolbar.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/splitter.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/status_bar.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/theme/theme_panel.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/tree/widget_tree_panel.dart';
 
 /// The editor window, laid out like an IDE: menu bar and toolbar on top, a
@@ -197,6 +198,11 @@ class _Workspace extends StatelessWidget {
         title: l10n.panelOutline,
         onClose: close,
         child: const WidgetTreePanel(),
+      ),
+      LeftPanel.theme => DockPanel(
+        title: l10n.panelTheme,
+        onClose: close,
+        child: const ThemePanel(),
       ),
       LeftPanel.media => DockPanel(
         title: l10n.panelMedia,

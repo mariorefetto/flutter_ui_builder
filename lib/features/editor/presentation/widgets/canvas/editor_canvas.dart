@@ -2,7 +2,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ui_builder/core/theme/app_constants.dart';
-import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/child_policy.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
@@ -13,6 +12,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_registry.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_screen.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/project_scopes.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/preview/project_theme_data.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/status_bar_appearance.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_context_menu.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_node.dart';
@@ -55,7 +55,7 @@ class EditorCanvas extends StatelessWidget {
     final appearance = statusBarAppearance(
       state.document,
       workspace.statusBar,
-      themeIsDark: context.isDarkMode,
+      themeIsDark: themeIsDark(state.document.theme),
     );
     final insets = device.insets(
       landscape: workspace.landscape,

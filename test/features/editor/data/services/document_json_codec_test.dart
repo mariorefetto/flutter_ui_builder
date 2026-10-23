@@ -5,6 +5,7 @@ import 'package:flutter_ui_builder/features/editor/data/services/document_json_c
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/media_asset.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/project_theme.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 
 void main() {
@@ -115,5 +116,29 @@ void main() {
     );
 
     expect(codec.decode(codec.encode(project)), project);
+  });
+
+  test('the theme of a project survives a save and an open', () {
+    const project = EditorDocument(
+      name: 'Home',
+      root: WidgetNode(id: 'node_0', type: 'Column'),
+      theme: ProjectTheme(
+        parts: {
+          'scheme': {'seedColor': 4278190080, 'brightness': 'dark'},
+          'card': {'elevation': 2.0},
+        },
+      ),
+    );
+
+    expect(codec.decode(codec.encode(project)), project);
+  });
+
+  test('a theme of the wrong shape is dropped, not fatal', () {
+    final decoded = codec.decode(
+      '{"name":"Old","root":{"id":"node_0","type":"Column"},'
+      '"theme":{"scheme":3,"card":{"elevation":1}}}',
+    );
+
+    expect(decoded.theme.parts.keys, ['card']);
   });
 }

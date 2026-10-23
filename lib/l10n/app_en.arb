@@ -1861,5 +1861,97 @@
   "faqUndoAnswer": "With the undo button or Cmd/Ctrl+Z, and redo with Cmd/Ctrl+Shift+Z. Opening another screen is not a change and is not undone.",
   "@faqUndoAnswer": {
     "description": "FAQ: With the undo button or Cmd/Ctrl+Z, and redo with "
+  },
+  "panelTheme": "Theme",
+  "@panelTheme": {
+    "description": "Theme panel: Theme"
+  },
+  "themeIntro": "The colours and fonts of the whole app, and how each kind of widget looks. The screens are drawn with this theme, and the code gets it as buildAppTheme.",
+  "@themeIntro": {
+    "description": "Theme panel: The colours and fonts of the whole app, and how ea"
+  },
+  "themeReset": "Back to the defaults",
+  "@themeReset": {
+    "description": "Theme panel: Back to the defaults"
+  },
+  "themeScheme": "Colours and fonts",
+  "@themeScheme": {
+    "description": "Theme panel: Colours and fonts"
+  },
+  "themeAppBar": "App bar",
+  "@themeAppBar": {
+    "description": "Theme panel: App bar"
+  },
+  "themeElevatedButton": "Elevated button",
+  "@themeElevatedButton": {
+    "description": "Theme panel: Elevated button"
+  },
+  "themeFilledButton": "Filled button",
+  "@themeFilledButton": {
+    "description": "Theme panel: Filled button"
+  },
+  "themeOutlinedButton": "Outlined button",
+  "@themeOutlinedButton": {
+    "description": "Theme panel: Outlined button"
+  },
+  "themeTextButton": "Text button",
+  "@themeTextButton": {
+    "description": "Theme panel: Text button"
+  },
+  "themeCard": "Card",
+  "@themeCard": {
+    "description": "Theme panel: Card"
+  },
+  "themeInput": "Text fields",
+  "@themeInput": {
+    "description": "Theme panel: Text fields"
+  },
+  "themeFab": "Floating button",
+  "@themeFab": {
+    "description": "Theme panel: Floating button"
+  },
+  "themeListTile": "List tile",
+  "@themeListTile": {
+    "description": "Theme panel: List tile"
+  },
+  "themeDivider": "Divider",
+  "@themeDivider": {
+    "description": "Theme panel: Divider"
+  },
+  "propHelpSeedColor": "The colour the whole colour scheme is made from: Flutter derives the primary, secondary and surface colours from it.",
+  "@propHelpSeedColor": {
+    "description": "Tooltip of the property seedColor"
+  },
+  "propHelpBrightness": "Whether the theme is light or dark.",
+  "@propHelpBrightness": {
+    "description": "Tooltip of the property brightness"
+  },
+  "propHelpUseMaterial3": "Uses the current Material 3 design rather than the older Material 2 one.",
+  "@propHelpUseMaterial3": {
+    "description": "Tooltip of the property useMaterial3"
+  },
+  "propHelpFilled": "Fills the field with a colour.",
+  "@propHelpFilled": {
+    "description": "Tooltip of the property filled"
+  },
+  "propHelpFillColor": "The colour a filled field is filled with.",
+  "@propHelpFillColor": {
+    "description": "Tooltip of the property fillColor"
+  },
+  "propHelpThickness": "How thick the line is.",
+  "@propHelpThickness": {
+    "description": "Tooltip of the property thickness"
+  },
+  "propHelpIconColor": "The colour of the icons.",
+  "@propHelpIconColor": {
+    "description": "Tooltip of the property iconColor"
+  },
+  "propHelpTextColor": "The colour of the text.",
+  "@propHelpTextColor": {
+    "description": "Tooltip of the property textColor"
+  },
+  "propHelpTileColor": "The colour behind the row.",
+  "@propHelpTileColor": {
+    "description": "Tooltip of the property tileColor"
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter_ui_builder/features/editor/data/models/media_asset_model
 import 'package:flutter_ui_builder/features/editor/data/models/project_screen_model.dart';
 import 'package:flutter_ui_builder/features/editor/data/models/widget_node_model.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/project_theme.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'editor_document_model.freezed.dart';
@@ -20,6 +21,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
     @Default(0) int activeIndex,
     @Default(false) bool component,
     @Default(<MediaAssetModel>[]) List<MediaAssetModel> assets,
+    @Default(<String, dynamic>{}) Map<String, dynamic> theme,
     @Default(currentSchemaVersion) int schemaVersion,
   }) = _EditorDocumentModel;
 
@@ -34,6 +36,10 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
         activeIndex: document.activeIndex,
         component: document.component,
         assets: document.assets.map(MediaAssetModel.fromEntity).toList(),
+        theme: {
+          for (final entry in document.theme.parts.entries)
+            if (entry.value.isNotEmpty) entry.key: entry.value,
+        },
         schemaVersion: document.schemaVersion,
       );
 
@@ -47,6 +53,15 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
     activeIndex: activeIndex.clamp(0, screens.length),
     component: component,
     assets: assets.map((a) => a.toEntity()).toList(),
+    theme: ProjectTheme(parts: _themeParts(theme)),
     schemaVersion: schemaVersion,
   );
 }
+
+// The theme as saved: a map of parts, each a map of values. Anything of
+// another shape is dropped rather than failing the whole file.
+Map<String, Map<String, Object?>> _themeParts(Map<String, dynamic> saved) => {
+  for (final entry in saved.entries)
+    if (entry.value case final Map<String, dynamic> values)
+      entry.key: {...values},
+};
