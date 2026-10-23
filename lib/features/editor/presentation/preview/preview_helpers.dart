@@ -6,6 +6,7 @@ import 'package:flutter_ui_builder/features/editor/domain/entities/node_props.da
 import 'package:flutter_ui_builder/features/editor/presentation/preview/icon_table.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_builder.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_values.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/preview/prototype_scope.dart';
 
 /// FontWeight constants addressable by the names in fontWeightOptions.
 const Map<String, FontWeight> fontWeightsByName = {
@@ -44,8 +45,9 @@ Widget requiredChild(List<PreviewChild> children) =>
     firstChild(children) ?? const SizedBox.shrink();
 
 /// Keeps a control from reacting to the pointer, so a tap on it selects the
-/// node on the canvas instead of pressing the control.
-Widget inert(Widget child) => IgnorePointer(child: child);
+/// node on the canvas instead of pressing the control, except in prototype
+/// mode.
+Widget inert(Widget child) => Inert(child: child);
 
 /// Text node used for properties such as a title or a label.
 Widget? textOf(NodeProps props, String name) =>

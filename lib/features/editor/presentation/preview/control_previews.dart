@@ -1,13 +1,11 @@
 import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/node_props.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_builder.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_helpers.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/preview/prototype_scope.dart';
 
 void _noop() {}
-
-void _noopChanged(Object? value) {}
 
 typedef _StyleFrom =
     ButtonStyle Function({
@@ -29,7 +27,9 @@ PreviewBuilder _button(
     elevation: props.number('elevation'),
     shape: shapeOf(props, 'borderRadius'),
   );
-  return inert(create(style, requiredChild(children)));
+  // Pressing a button does nothing in the designer, in prototype mode too:
+  // what it may do is open a screen, which the canvas takes care of.
+  return IgnorePointer(child: create(style, requiredChild(children)));
 };
 
 /// Previews of the buttons and of the input controls.
@@ -53,8 +53,8 @@ final Map<String, PreviewBuilder> controlPreviews = {
     (style, child) => TextButton(onPressed: _noop, style: style, child: child),
     TextButton.styleFrom,
   ),
-  'IconButton': (context, props, children) => inert(
-    IconButton(
+  'IconButton': (context, props, children) => IgnorePointer(
+    child: IconButton(
       onPressed: _noop,
       icon: Icon(iconOf(props, 'icon')),
       iconSize: props.requiredNumber('iconSize'),
@@ -64,30 +64,33 @@ final Map<String, PreviewBuilder> controlPreviews = {
     ),
   ),
   'TextField': _textField,
-  'Checkbox': (context, props, children) => inert(
-    Checkbox(
-      value: props.boolean('value') ?? false,
+  'Checkbox': (context, props, children) => LiveValue<bool>(
+    initial: props.boolean('value') ?? false,
+    builder: (value, change) => Checkbox(
+      value: value,
       activeColor: colorOf(props, 'activeColor'),
       checkColor: colorOf(props, 'checkColor'),
-      onChanged: _noopChanged,
+      onChanged: (v) => change(v ?? false),
     ),
   ),
-  'Switch': (context, props, children) => inert(
-    Switch(
-      value: props.boolean('value') ?? false,
+  'Switch': (context, props, children) => LiveValue<bool>(
+    initial: props.boolean('value') ?? false,
+    builder: (value, change) => Switch(
+      value: value,
       activeThumbColor: colorOf(props, 'activeThumbColor'),
       activeTrackColor: colorOf(props, 'activeTrackColor'),
       inactiveThumbColor: colorOf(props, 'inactiveThumbColor'),
       inactiveTrackColor: colorOf(props, 'inactiveTrackColor'),
-      onChanged: _noopChanged,
+      onChanged: change,
     ),
   ),
   'Slider': _slider,
-  'CheckboxListTile': (context, props, children) => inert(
-    CheckboxListTile(
+  'CheckboxListTile': (context, props, children) => LiveValue<bool>(
+    initial: props.boolean('value') ?? false,
+    builder: (value, change) => CheckboxListTile(
       title: textOf(props, 'title'),
       subtitle: textOf(props, 'subtitle'),
-      value: props.boolean('value') ?? false,
+      value: value,
       activeColor: colorOf(props, 'activeColor'),
       dense: props.boolean('dense'),
       controlAffinity: enumOf(
@@ -95,14 +98,15 @@ final Map<String, PreviewBuilder> controlPreviews = {
         props,
         'controlAffinity',
       ),
-      onChanged: _noopChanged,
+      onChanged: (v) => change(v ?? false),
     ),
   ),
-  'SwitchListTile': (context, props, children) => inert(
-    SwitchListTile(
+  'SwitchListTile': (context, props, children) => LiveValue<bool>(
+    initial: props.boolean('value') ?? false,
+    builder: (value, change) => SwitchListTile(
       title: textOf(props, 'title'),
       subtitle: textOf(props, 'subtitle'),
-      value: props.boolean('value') ?? false,
+      value: value,
       activeThumbColor: colorOf(props, 'activeThumbColor'),
       dense: props.boolean('dense'),
       controlAffinity: enumOf(
@@ -110,7 +114,7 @@ final Map<String, PreviewBuilder> controlPreviews = {
         props,
         'controlAffinity',
       ),
-      onChanged: _noopChanged,
+      onChanged: change,
     ),
   ),
 };
@@ -166,16 +170,17 @@ Widget _slider(
   // Slider asserts that min < max and min <= value <= max.
   final max = math.max(props.requiredNumber('max'), min + 1);
   final divisions = props.number('divisions')?.round();
-  return inert(
-    Slider(
-      value: props.requiredNumber('value').clamp(min, max),
+  return LiveValue<double>(
+    initial: props.requiredNumber('value').clamp(min, max),
+    builder: (value, change) => Slider(
+      value: value.clamp(min, max),
       min: min,
       max: max,
       divisions: divisions != null && divisions > 0 ? divisions : null,
       label: props.string('label'),
       activeColor: colorOf(props, 'activeColor'),
       inactiveColor: colorOf(props, 'inactiveColor'),
-      onChanged: _noopChanged,
+      onChanged: change,
     ),
   );
 }

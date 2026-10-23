@@ -1465,4 +1465,86 @@ class UntitledView extends StatelessWidget {
       expect(find.textContaining('ListView.builder'), findsOneWidget);
     });
   });
+
+  group('live controls', () {
+    const tryIt = 'Try the navigation: clicking a widget opens its screen';
+    // The properties panel has switches of its own; this one is the screen's.
+    Finder onScreen(Finder finder) =>
+        find.descendant(of: find.byType(EditorCanvas), matching: finder);
+    bool switchValue(WidgetTester tester) =>
+        tester.widget<Switch>(onScreen(find.byType(Switch))).value;
+
+    testWidgets('a switch is only drawn outside prototype mode', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..addNode(type: 'Switch', parentId: 'node_2');
+      await tester.pumpAndSettle();
+
+      await tester.tap(onScreen(find.byType(Switch)), warnIfMissed: false);
+      await tester.pumpAndSettle();
+
+      expect(switchValue(tester), isFalse);
+      // The tap selected the widget instead.
+      expect(cubit.state.selectedId, 'node_3');
+    });
+
+    testWidgets('in prototype mode a switch turns and a slider moves', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      editorOf(tester)
+        ..addNode(type: 'Switch', parentId: 'node_2')
+        ..addNode(type: 'Slider', parentId: 'node_2');
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip(tryIt));
+      await tester.pumpAndSettle();
+
+      await tester.tap(onScreen(find.byType(Switch)));
+      await tester.pumpAndSettle();
+      expect(switchValue(tester), isTrue);
+
+      final before = tester.widget<Slider>(onScreen(find.byType(Slider))).value;
+      await tester.drag(onScreen(find.byType(Slider)), const Offset(60, 0));
+      await tester.pumpAndSettle();
+      expect(
+        tester.widget<Slider>(onScreen(find.byType(Slider))).value,
+        isNot(before),
+      );
+    });
+
+    testWidgets('leaving prototype mode puts the controls back as designed', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      editorOf(tester).addNode(type: 'Switch', parentId: 'node_2');
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip(tryIt));
+      await tester.pumpAndSettle();
+      await tester.tap(onScreen(find.byType(Switch)));
+      await tester.pumpAndSettle();
+      expect(switchValue(tester), isTrue);
+
+      await tester.tap(find.byTooltip(tryIt));
+      await tester.pumpAndSettle();
+
+      expect(switchValue(tester), isFalse);
+    });
+
+    testWidgets('a field takes what is typed in prototype mode', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      editorOf(tester).addNode(type: 'TextField', parentId: 'node_2');
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip(tryIt));
+      await tester.pumpAndSettle();
+
+      await tester.enterText(onScreen(find.byType(TextField)), 'typed words');
+      await tester.pumpAndSettle();
+
+      expect(find.text('typed words'), findsOneWidget);
+    });
+  });
 }

@@ -192,10 +192,7 @@ void main() {
 
         final list = imported.document.root.children.single;
         expect(list.type, type);
-        expect(
-          list.props['sampleCount'],
-          5.0 == 5 && type == 'ListView' ? 5 : 6,
-        );
+        expect(list.props['sampleCount'], count);
         expect(list.children.single.props['title'], 'Item {n}');
         expect(codeOf(imported.document.copyWith(name: doc.name)), codeOf(doc));
         expect(imported.issues, isEmpty);

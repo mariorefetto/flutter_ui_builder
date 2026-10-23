@@ -14,6 +14,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_screen.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/project_scopes.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/project_theme_data.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/preview/prototype_scope.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/status_bar_appearance.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_context_menu.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_node.dart';
@@ -118,21 +119,24 @@ class EditorCanvas extends StatelessWidget {
     final rootId = state.document.root.id;
     return SizedBox(
       width: screen.width,
-      child: ProjectScopes(
-        document: state.document,
-        previews: previews,
-        builder: (context) => previews.build(
-          context,
-          // A component being edited is drawn with its parameters at their
-          // defaults, so a bound property still shows a value.
-          state.document.component
-              ? bindArguments(state.document.root, state.document.params, {})
-              : state.document.root,
-          wrapper: (context, node, built) => CanvasNode(
-            node: node,
-            isRoot: node.id == rootId,
-            isEmptyContainer: _isEmptyContainer(node),
-            child: built,
+      child: PrototypeScope(
+        prototype: context.select((WorkspaceCubit c) => c.state.prototype),
+        child: ProjectScopes(
+          document: state.document,
+          previews: previews,
+          builder: (context) => previews.build(
+            context,
+            // A component being edited is drawn with its parameters at their
+            // defaults, so a bound property still shows a value.
+            state.document.component
+                ? bindArguments(state.document.root, state.document.params, {})
+                : state.document.root,
+            wrapper: (context, node, built) => CanvasNode(
+              node: node,
+              isRoot: node.id == rootId,
+              isEmptyContainer: _isEmptyContainer(node),
+              child: built,
+            ),
           ),
         ),
       ),
