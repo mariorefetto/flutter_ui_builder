@@ -1343,5 +1343,41 @@
   "commonClose": "Close",
   "@commonClose": {
     "description": "Label: Close"
+  },
+  "menuShortcuts": "Keyboard shortcuts",
+  "@menuShortcuts": {
+    "description": "Label: Keyboard shortcuts"
+  },
+  "menuHelp": "Help",
+  "@menuHelp": {
+    "description": "Label: Help"
+  },
+  "shortcutsStructure": "Structure",
+  "@shortcutsStructure": {
+    "description": "Label: Structure"
+  },
+  "shortcutSelectNext": "Select the next widget",
+  "@shortcutSelectNext": {
+    "description": "Label: Select the next widget"
+  },
+  "shortcutSelectPrevious": "Select the previous widget",
+  "@shortcutSelectPrevious": {
+    "description": "Label: Select the previous widget"
+  },
+  "shortcutSelectParent": "Select the parent widget",
+  "@shortcutSelectParent": {
+    "description": "Label: Select the parent widget"
+  },
+  "shortcutSelectFirstChild": "Select the first child",
+  "@shortcutSelectFirstChild": {
+    "description": "Label: Select the first child"
+  },
+  "shortcutMoveDown": "Move the widget down",
+  "@shortcutMoveDown": {
+    "description": "Label: Move the widget down"
+  },
+  "shortcutMoveUp": "Move the widget up",
+  "@shortcutMoveUp": {
+    "description": "Label: Move the widget up"
   }
 }

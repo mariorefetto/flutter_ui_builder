@@ -1054,4 +1054,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonClose => 'Close';
+
+  @override
+  String get menuShortcuts => 'Keyboard shortcuts';
+
+  @override
+  String get menuHelp => 'Help';
+
+  @override
+  String get shortcutsStructure => 'Structure';
+
+  @override
+  String get shortcutSelectNext => 'Select the next widget';
+
+  @override
+  String get shortcutSelectPrevious => 'Select the previous widget';
+
+  @override
+  String get shortcutSelectParent => 'Select the parent widget';
+
+  @override
+  String get shortcutSelectFirstChild => 'Select the first child';
+
+  @override
+  String get shortcutMoveDown => 'Move the widget down';
+
+  @override
+  String get shortcutMoveUp => 'Move the widget up';
 }

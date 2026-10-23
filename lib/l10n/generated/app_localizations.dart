@@ -1957,6 +1957,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close'**
   String get commonClose;
+
+  /// Label: Keyboard shortcuts
+  ///
+  /// In en, this message translates to:
+  /// **'Keyboard shortcuts'**
+  String get menuShortcuts;
+
+  /// Label: Help
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get menuHelp;
+
+  /// Label: Structure
+  ///
+  /// In en, this message translates to:
+  /// **'Structure'**
+  String get shortcutsStructure;
+
+  /// Label: Select the next widget
+  ///
+  /// In en, this message translates to:
+  /// **'Select the next widget'**
+  String get shortcutSelectNext;
+
+  /// Label: Select the previous widget
+  ///
+  /// In en, this message translates to:
+  /// **'Select the previous widget'**
+  String get shortcutSelectPrevious;
+
+  /// Label: Select the parent widget
+  ///
+  /// In en, this message translates to:
+  /// **'Select the parent widget'**
+  String get shortcutSelectParent;
+
+  /// Label: Select the first child
+  ///
+  /// In en, this message translates to:
+  /// **'Select the first child'**
+  String get shortcutSelectFirstChild;
+
+  /// Label: Move the widget down
+  ///
+  /// In en, this message translates to:
+  /// **'Move the widget down'**
+  String get shortcutMoveDown;
+
+  /// Label: Move the widget up
+  ///
+  /// In en, this message translates to:
+  /// **'Move the widget up'**
+  String get shortcutMoveUp;
 }
 
 class _AppLocalizationsDelegate

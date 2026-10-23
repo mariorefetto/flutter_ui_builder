@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/code_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_cubit.dart';
-import 'package:flutter_ui_builder/features/editor/presentation/shortcuts.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/editor_command.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/file/file_commands.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/help/shortcuts_dialog.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/rename_widget.dart';
+import 'package:flutter_ui_builder/features/settings/presentation/widgets/open_settings.dart';
 
 /// Keyboard shortcuts of the whole window: file commands, undo and redo, the
 /// clipboard and delete.
@@ -56,39 +58,41 @@ class _EditorShortcutsState extends State<EditorShortcuts> {
   Map<SingleActivator, VoidCallback> _bindings(BuildContext context) {
     final editor = context.read<EditorCubit>();
     final workspace = context.read<WorkspaceCubit>();
+    final actions = <EditorCommand, VoidCallback>{
+      EditorCommand.newProject: () => newProject(context),
+      EditorCommand.openProject: () => openProject(context),
+      EditorCommand.saveProject: () => saveProject(context),
+      EditorCommand.saveProjectAs: () => saveProjectAs(context),
+      EditorCommand.importCode: () => importCode(context),
+      EditorCommand.exportCode: () => context.read<CodeCubit>().export(),
+      EditorCommand.openSettings: () => openSettings(context),
+      EditorCommand.undo: editor.undo,
+      EditorCommand.redo: editor.redo,
+      EditorCommand.cut: editor.cut,
+      EditorCommand.copy: editor.copy,
+      EditorCommand.paste: editor.paste,
+      EditorCommand.duplicate: editor.duplicateSelected,
+      EditorCommand.delete: editor.removeSelected,
+      EditorCommand.rename: () => renameSelectedWidget(context),
+      EditorCommand.selectNext: () => editor.selectNeighbour(next: true),
+      EditorCommand.selectPrevious: () => editor.selectNeighbour(next: false),
+      EditorCommand.selectParent: editor.selectParent,
+      EditorCommand.selectFirstChild: editor.selectFirstChild,
+      EditorCommand.moveDown: () => editor.moveSelectedBy(1),
+      EditorCommand.moveUp: () => editor.moveSelectedBy(-1),
+      EditorCommand.zoomIn: workspace.zoomIn,
+      EditorCommand.zoomOut: workspace.zoomOut,
+      EditorCommand.zoomReset: workspace.resetZoom,
+      EditorCommand.showShortcuts: () => showShortcuts(context),
+    };
+    // Every command must have an action, or its keys would do nothing.
+    assert(
+      EditorCommand.values.every(actions.containsKey),
+      'a command has no action',
+    );
     return {
-      commandKey(LogicalKeyboardKey.keyN): () => newProject(context),
-      commandKey(LogicalKeyboardKey.keyO): () => openProject(context),
-      commandKey(LogicalKeyboardKey.keyS): () => saveProject(context),
-      commandKey(LogicalKeyboardKey.keyI): () => importCode(context),
-      commandKey(LogicalKeyboardKey.keyS, shift: true): () =>
-          saveProjectAs(context),
-      commandKey(LogicalKeyboardKey.keyE): () =>
-          context.read<CodeCubit>().export(),
-      commandKey(LogicalKeyboardKey.keyZ): editor.undo,
-      commandKey(LogicalKeyboardKey.keyZ, shift: true): editor.redo,
-      commandKey(LogicalKeyboardKey.keyX): editor.cut,
-      commandKey(LogicalKeyboardKey.keyC): editor.copy,
-      commandKey(LogicalKeyboardKey.keyV): editor.paste,
-      commandKey(LogicalKeyboardKey.keyD): editor.duplicateSelected,
-      // The key a Mac labels Delete sends Backspace.
-      const SingleActivator(LogicalKeyboardKey.delete): editor.removeSelected,
-      const SingleActivator(LogicalKeyboardKey.backspace):
-          editor.removeSelected,
-      const SingleActivator(LogicalKeyboardKey.arrowDown): () =>
-          editor.selectNeighbour(next: true),
-      const SingleActivator(LogicalKeyboardKey.arrowUp): () =>
-          editor.selectNeighbour(next: false),
-      const SingleActivator(LogicalKeyboardKey.arrowLeft): editor.selectParent,
-      const SingleActivator(LogicalKeyboardKey.arrowRight):
-          editor.selectFirstChild,
-      commandKey(LogicalKeyboardKey.arrowDown): () => editor.moveSelectedBy(1),
-      commandKey(LogicalKeyboardKey.arrowUp): () => editor.moveSelectedBy(-1),
-      const SingleActivator(LogicalKeyboardKey.f2): () =>
-          renameSelectedWidget(context),
-      commandKey(LogicalKeyboardKey.equal): workspace.zoomIn,
-      commandKey(LogicalKeyboardKey.minus): workspace.zoomOut,
-      commandKey(LogicalKeyboardKey.digit0): workspace.resetZoom,
+      for (final MapEntry(:key, :value) in actions.entries)
+        for (final activator in key.activators) activator: value,
     };
   }
 

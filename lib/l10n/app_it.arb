@@ -309,5 +309,14 @@
   "settingsShowSafeArea": "Mostra l'area sicura",
   "settingsCodePlacement": "Pannello del codice",
   "menuSettings": "Impostazioni...",
-  "commonClose": "Chiudi"
+  "commonClose": "Chiudi",
+  "menuShortcuts": "Scorciatoie da tastiera",
+  "menuHelp": "Aiuto",
+  "shortcutsStructure": "Struttura",
+  "shortcutSelectNext": "Seleziona il widget successivo",
+  "shortcutSelectPrevious": "Seleziona il widget precedente",
+  "shortcutSelectParent": "Seleziona il widget genitore",
+  "shortcutSelectFirstChild": "Seleziona il primo figlio",
+  "shortcutMoveDown": "Sposta il widget in basso",
+  "shortcutMoveUp": "Sposta il widget in alto"
 }

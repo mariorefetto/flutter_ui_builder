@@ -943,4 +943,25 @@ class UntitledView extends StatelessWidget {
       expect(find.text('Before'), findsNothing);
     });
   });
+
+  testWidgets(
+    'F1 lists the shortcuts and the Settings key opens the settings',
+    (tester) async {
+      await pumpApp(tester);
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.f1);
+      await tester.pumpAndSettle();
+      expect(find.text('Keyboard shortcuts'), findsOneWidget);
+      expect(find.text('Select the next widget'), findsOneWidget);
+      await tester.tap(find.text('Close'));
+      await tester.pumpAndSettle();
+
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.meta);
+      await tester.sendKeyEvent(LogicalKeyboardKey.comma);
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.meta);
+      await tester.pumpAndSettle();
+      expect(find.text('Settings'), findsWidgets);
+      expect(find.text('Language'), findsOneWidget);
+    },
+  );
 }
