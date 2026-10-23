@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'media_asset.dart';
@@ -9,6 +9,7 @@ part of 'media_asset.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $MediaAssetCopyWith<MediaAsset> get copyWith => _$MediaAssetCopyWithImpl<MediaAs
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MediaAsset&&(identical(other.name, name) || other.name == name)&&(identical(other.sourcePath, sourcePath) || other.sourcePath == sourcePath));
+  final _this = this as MediaAsset;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MediaAsset&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.sourcePath, _this.sourcePath) || other.sourcePath == _this.sourcePath));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,sourcePath);
+int get hashCode {
+  final _this = this as MediaAsset;
+  return Object.hash(runtimeType,_this.name,_this.sourcePath);
+}
 
 @override
 String toString() {
-  return 'MediaAsset(name: $name, sourcePath: $sourcePath)';
+  final _this = this as MediaAsset;
+  return 'MediaAsset(name: ${_this.name}, sourcePath: ${_this.sourcePath})';
 }
 
 
@@ -63,7 +69,7 @@ class _$MediaAssetCopyWithImpl<$Res>
 /// Create a copy of MediaAsset
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? sourcePath = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(MediaAsset(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,sourcePath: freezed == sourcePath ? _self.sourcePath : sourcePath // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -223,16 +229,18 @@ _$MediaAssetCopyWith<_MediaAsset> get copyWith => __$MediaAssetCopyWithImpl<_Med
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MediaAsset&&(identical(other.name, name) || other.name == name)&&(identical(other.sourcePath, sourcePath) || other.sourcePath == sourcePath));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MediaAsset&&(identical(other.name, name) || other.name == name)&&(identical(other.sourcePath, sourcePath) || other.sourcePath == sourcePath));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,sourcePath);
+int get hashCode {
+    return Object.hash(runtimeType,name,sourcePath);
+}
 
 @override
 String toString() {
-  return 'MediaAsset(name: $name, sourcePath: $sourcePath)';
+    return 'MediaAsset(name: $name, sourcePath: $sourcePath)';
 }
 
 

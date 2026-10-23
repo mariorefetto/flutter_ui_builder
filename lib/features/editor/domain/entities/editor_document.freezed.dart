@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'editor_document.dart';
@@ -9,6 +9,7 @@ part of 'editor_document.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -33,16 +34,21 @@ $EditorDocumentCopyWith<EditorDocument> get copyWith => _$EditorDocumentCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditorDocument&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&const DeepCollectionEquality().equals(other.screens, screens)&&(identical(other.activeIndex, activeIndex) || other.activeIndex == activeIndex)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other.params, params)&&const DeepCollectionEquality().equals(other.assets, assets)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.namedRoutes, namedRoutes) || other.namedRoutes == namedRoutes)&&(identical(other.schemaVersion, schemaVersion) || other.schemaVersion == schemaVersion));
+  final _this = this as EditorDocument;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditorDocument&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.root, _this.root) || other.root == _this.root)&&const DeepCollectionEquality().equals(other.screens, _this.screens)&&(identical(other.activeIndex, _this.activeIndex) || other.activeIndex == _this.activeIndex)&&(identical(other.component, _this.component) || other.component == _this.component)&&const DeepCollectionEquality().equals(other.params, _this.params)&&const DeepCollectionEquality().equals(other.assets, _this.assets)&&(identical(other.theme, _this.theme) || other.theme == _this.theme)&&(identical(other.namedRoutes, _this.namedRoutes) || other.namedRoutes == _this.namedRoutes)&&(identical(other.schemaVersion, _this.schemaVersion) || other.schemaVersion == _this.schemaVersion));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,root,const DeepCollectionEquality().hash(screens),activeIndex,component,const DeepCollectionEquality().hash(params),const DeepCollectionEquality().hash(assets),theme,namedRoutes,schemaVersion);
+int get hashCode {
+  final _this = this as EditorDocument;
+  return Object.hash(runtimeType,_this.name,_this.root,const DeepCollectionEquality().hash(_this.screens),_this.activeIndex,_this.component,const DeepCollectionEquality().hash(_this.params),const DeepCollectionEquality().hash(_this.assets),_this.theme,_this.namedRoutes,_this.schemaVersion);
+}
 
 @override
 String toString() {
-  return 'EditorDocument(name: $name, root: $root, screens: $screens, activeIndex: $activeIndex, component: $component, params: $params, assets: $assets, theme: $theme, namedRoutes: $namedRoutes, schemaVersion: $schemaVersion)';
+  final _this = this as EditorDocument;
+  return 'EditorDocument(name: ${_this.name}, root: ${_this.root}, screens: ${_this.screens}, activeIndex: ${_this.activeIndex}, component: ${_this.component}, params: ${_this.params}, assets: ${_this.assets}, theme: ${_this.theme}, namedRoutes: ${_this.namedRoutes}, schemaVersion: ${_this.schemaVersion})';
 }
 
 
@@ -71,7 +77,7 @@ class _$EditorDocumentCopyWithImpl<$Res>
 /// Create a copy of EditorDocument
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? root = null,Object? screens = null,Object? activeIndex = null,Object? component = null,Object? params = null,Object? assets = null,Object? theme = null,Object? namedRoutes = null,Object? schemaVersion = null,}) {
-  return _then(_self.copyWith(
+  return _then(EditorDocument(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,root: null == root ? _self.root : root // ignore: cast_nullable_to_non_nullable
 as WidgetNode,screens: null == screens ? _self.screens : screens // ignore: cast_nullable_to_non_nullable
@@ -241,7 +247,7 @@ return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.comp
 
 
 class _EditorDocument implements EditorDocument {
-  const _EditorDocument({required this.name, required this.root, final  List<ProjectScreen> screens = const <ProjectScreen>[], this.activeIndex = 0, this.component = false, final  List<ComponentParam> params = const <ComponentParam>[], final  List<MediaAsset> assets = const <MediaAsset>[], this.theme = const ProjectTheme(), this.namedRoutes = false, this.schemaVersion = currentSchemaVersion}): _screens = screens,_params = params,_assets = assets;
+  const _EditorDocument({required this.name, required this.root,  List<ProjectScreen> screens = const <ProjectScreen>[], this.activeIndex = 0, this.component = false,  List<ComponentParam> params = const <ComponentParam>[],  List<MediaAsset> assets = const <MediaAsset>[], this.theme = const ProjectTheme(), this.namedRoutes = false, this.schemaVersion = currentSchemaVersion}): _screens = screens,_params = params,_assets = assets;
   
 
 @override final  String name;
@@ -294,16 +300,18 @@ _$EditorDocumentCopyWith<_EditorDocument> get copyWith => __$EditorDocumentCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EditorDocument&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&const DeepCollectionEquality().equals(other._screens, _screens)&&(identical(other.activeIndex, activeIndex) || other.activeIndex == activeIndex)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other._params, _params)&&const DeepCollectionEquality().equals(other._assets, _assets)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.namedRoutes, namedRoutes) || other.namedRoutes == namedRoutes)&&(identical(other.schemaVersion, schemaVersion) || other.schemaVersion == schemaVersion));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _EditorDocument&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&const DeepCollectionEquality().equals(other.screens, _screens)&&(identical(other.activeIndex, activeIndex) || other.activeIndex == activeIndex)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other.params, _params)&&const DeepCollectionEquality().equals(other.assets, _assets)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.namedRoutes, namedRoutes) || other.namedRoutes == namedRoutes)&&(identical(other.schemaVersion, schemaVersion) || other.schemaVersion == schemaVersion));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,root,const DeepCollectionEquality().hash(_screens),activeIndex,component,const DeepCollectionEquality().hash(_params),const DeepCollectionEquality().hash(_assets),theme,namedRoutes,schemaVersion);
+int get hashCode {
+    return Object.hash(runtimeType,name,root,const DeepCollectionEquality().hash(_screens),activeIndex,component,const DeepCollectionEquality().hash(_params),const DeepCollectionEquality().hash(_assets),theme,namedRoutes,schemaVersion);
+}
 
 @override
 String toString() {
-  return 'EditorDocument(name: $name, root: $root, screens: $screens, activeIndex: $activeIndex, component: $component, params: $params, assets: $assets, theme: $theme, namedRoutes: $namedRoutes, schemaVersion: $schemaVersion)';
+    return 'EditorDocument(name: $name, root: $root, screens: $screens, activeIndex: $activeIndex, component: $component, params: $params, assets: $assets, theme: $theme, namedRoutes: $namedRoutes, schemaVersion: $schemaVersion)';
 }
 
 

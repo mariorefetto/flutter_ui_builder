@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'drag_session_state.dart';
@@ -9,6 +9,7 @@ part of 'drag_session_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -29,16 +30,21 @@ $DragSessionStateCopyWith<DragSessionState> get copyWith => _$DragSessionStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DragSessionState&&(identical(other.draggedId, draggedId) || other.draggedId == draggedId)&&(identical(other.active, active) || other.active == active)&&(identical(other.targetId, targetId) || other.targetId == targetId));
+  final _this = this as DragSessionState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DragSessionState&&(identical(other.draggedId, _this.draggedId) || other.draggedId == _this.draggedId)&&(identical(other.active, _this.active) || other.active == _this.active)&&(identical(other.targetId, _this.targetId) || other.targetId == _this.targetId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,draggedId,active,targetId);
+int get hashCode {
+  final _this = this as DragSessionState;
+  return Object.hash(runtimeType,_this.draggedId,_this.active,_this.targetId);
+}
 
 @override
 String toString() {
-  return 'DragSessionState(draggedId: $draggedId, active: $active, targetId: $targetId)';
+  final _this = this as DragSessionState;
+  return 'DragSessionState(draggedId: ${_this.draggedId}, active: ${_this.active}, targetId: ${_this.targetId})';
 }
 
 
@@ -67,7 +73,7 @@ class _$DragSessionStateCopyWithImpl<$Res>
 /// Create a copy of DragSessionState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? draggedId = freezed,Object? active = null,Object? targetId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(DragSessionState(
 draggedId: freezed == draggedId ? _self.draggedId : draggedId // ignore: cast_nullable_to_non_nullable
 as String?,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
 as bool,targetId: freezed == targetId ? _self.targetId : targetId // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ _$DragSessionStateCopyWith<_DragSessionState> get copyWith => __$DragSessionStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DragSessionState&&(identical(other.draggedId, draggedId) || other.draggedId == draggedId)&&(identical(other.active, active) || other.active == active)&&(identical(other.targetId, targetId) || other.targetId == targetId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DragSessionState&&(identical(other.draggedId, draggedId) || other.draggedId == draggedId)&&(identical(other.active, active) || other.active == active)&&(identical(other.targetId, targetId) || other.targetId == targetId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,draggedId,active,targetId);
+int get hashCode {
+    return Object.hash(runtimeType,draggedId,active,targetId);
+}
 
 @override
 String toString() {
-  return 'DragSessionState(draggedId: $draggedId, active: $active, targetId: $targetId)';
+    return 'DragSessionState(draggedId: $draggedId, active: $active, targetId: $targetId)';
 }
 
 

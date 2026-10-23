@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'project_screen_model.dart';
@@ -9,6 +9,7 @@ part of 'project_screen_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $ProjectScreenModelCopyWith<ProjectScreenModel> get copyWith => _$ProjectScreenM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectScreenModel&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other.params, params));
+  final _this = this as ProjectScreenModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectScreenModel&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.root, _this.root) || other.root == _this.root)&&(identical(other.component, _this.component) || other.component == _this.component)&&const DeepCollectionEquality().equals(other.params, _this.params));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,root,component,const DeepCollectionEquality().hash(params));
+int get hashCode {
+  final _this = this as ProjectScreenModel;
+  return Object.hash(runtimeType,_this.name,_this.root,_this.component,const DeepCollectionEquality().hash(_this.params));
+}
 
 @override
 String toString() {
-  return 'ProjectScreenModel(name: $name, root: $root, component: $component, params: $params)';
+  final _this = this as ProjectScreenModel;
+  return 'ProjectScreenModel(name: ${_this.name}, root: ${_this.root}, component: ${_this.component}, params: ${_this.params})';
 }
 
 
@@ -66,7 +72,7 @@ class _$ProjectScreenModelCopyWithImpl<$Res>
 /// Create a copy of ProjectScreenModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? root = null,Object? component = null,Object? params = null,}) {
-  return _then(_self.copyWith(
+  return _then(ProjectScreenModel(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,root: null == root ? _self.root : root // ignore: cast_nullable_to_non_nullable
 as WidgetNodeModel,component: null == component ? _self.component : component // ignore: cast_nullable_to_non_nullable
@@ -221,7 +227,7 @@ return $default(_that.name,_that.root,_that.component,_that.params);case _:
 
 @JsonSerializable(explicitToJson: true, checked: true)
 class _ProjectScreenModel extends ProjectScreenModel {
-  const _ProjectScreenModel({required this.name, required this.root, this.component = false, final  List<Map<String, dynamic>> params = const <Map<String, dynamic>>[]}): _params = params,super._();
+  const _ProjectScreenModel({required this.name, required this.root, this.component = false,  List<Map<String, dynamic>> params = const <Map<String, dynamic>>[]}): _params = params,super._();
   factory _ProjectScreenModel.fromJson(Map<String, dynamic> json) => _$ProjectScreenModelFromJson(json);
 
 @override final  String name;
@@ -248,16 +254,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProjectScreenModel&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other._params, _params));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProjectScreenModel&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other.params, _params));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,root,component,const DeepCollectionEquality().hash(_params));
+int get hashCode {
+    return Object.hash(runtimeType,name,root,component,const DeepCollectionEquality().hash(_params));
+}
 
 @override
 String toString() {
-  return 'ProjectScreenModel(name: $name, root: $root, component: $component, params: $params)';
+    return 'ProjectScreenModel(name: $name, root: $root, component: $component, params: $params)';
 }
 
 

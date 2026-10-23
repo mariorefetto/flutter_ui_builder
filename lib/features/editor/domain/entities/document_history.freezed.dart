@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'document_history.dart';
@@ -9,6 +9,7 @@ part of 'document_history.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $DocumentHistoryCopyWith<DocumentHistory> get copyWith => _$DocumentHistoryCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DocumentHistory&&(identical(other.present, present) || other.present == present)&&const DeepCollectionEquality().equals(other.past, past)&&const DeepCollectionEquality().equals(other.future, future));
+  final _this = this as DocumentHistory;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DocumentHistory&&(identical(other.present, _this.present) || other.present == _this.present)&&const DeepCollectionEquality().equals(other.past, _this.past)&&const DeepCollectionEquality().equals(other.future, _this.future));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,present,const DeepCollectionEquality().hash(past),const DeepCollectionEquality().hash(future));
+int get hashCode {
+  final _this = this as DocumentHistory;
+  return Object.hash(runtimeType,_this.present,const DeepCollectionEquality().hash(_this.past),const DeepCollectionEquality().hash(_this.future));
+}
 
 @override
 String toString() {
-  return 'DocumentHistory(present: $present, past: $past, future: $future)';
+  final _this = this as DocumentHistory;
+  return 'DocumentHistory(present: ${_this.present}, past: ${_this.past}, future: ${_this.future})';
 }
 
 
@@ -63,7 +69,7 @@ class _$DocumentHistoryCopyWithImpl<$Res>
 /// Create a copy of DocumentHistory
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? present = null,Object? past = null,Object? future = null,}) {
-  return _then(_self.copyWith(
+  return _then(DocumentHistory(
 present: null == present ? _self.present : present // ignore: cast_nullable_to_non_nullable
 as EditorDocument,past: null == past ? _self.past : past // ignore: cast_nullable_to_non_nullable
 as List<EditorDocument>,future: null == future ? _self.future : future // ignore: cast_nullable_to_non_nullable
@@ -217,7 +223,7 @@ return $default(_that.present,_that.past,_that.future);case _:
 
 
 class _DocumentHistory extends DocumentHistory {
-  const _DocumentHistory({required this.present, final  List<EditorDocument> past = const <EditorDocument>[], final  List<EditorDocument> future = const <EditorDocument>[]}): _past = past,_future = future,super._();
+  const _DocumentHistory({required this.present,  List<EditorDocument> past = const <EditorDocument>[],  List<EditorDocument> future = const <EditorDocument>[]}): _past = past,_future = future,super._();
   
 
 @override final  EditorDocument present;
@@ -246,16 +252,18 @@ _$DocumentHistoryCopyWith<_DocumentHistory> get copyWith => __$DocumentHistoryCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DocumentHistory&&(identical(other.present, present) || other.present == present)&&const DeepCollectionEquality().equals(other._past, _past)&&const DeepCollectionEquality().equals(other._future, _future));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DocumentHistory&&(identical(other.present, present) || other.present == present)&&const DeepCollectionEquality().equals(other.past, _past)&&const DeepCollectionEquality().equals(other.future, _future));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,present,const DeepCollectionEquality().hash(_past),const DeepCollectionEquality().hash(_future));
+int get hashCode {
+    return Object.hash(runtimeType,present,const DeepCollectionEquality().hash(_past),const DeepCollectionEquality().hash(_future));
+}
 
 @override
 String toString() {
-  return 'DocumentHistory(present: $present, past: $past, future: $future)';
+    return 'DocumentHistory(present: $present, past: $past, future: $future)';
 }
 
 

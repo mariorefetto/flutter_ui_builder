@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'edge_insets_value.dart';
@@ -9,6 +9,7 @@ part of 'edge_insets_value.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $EdgeInsetsValueCopyWith<EdgeInsetsValue> get copyWith => _$EdgeInsetsValueCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EdgeInsetsValue&&(identical(other.left, left) || other.left == left)&&(identical(other.top, top) || other.top == top)&&(identical(other.right, right) || other.right == right)&&(identical(other.bottom, bottom) || other.bottom == bottom));
+  final _this = this as EdgeInsetsValue;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EdgeInsetsValue&&(identical(other.left, _this.left) || other.left == _this.left)&&(identical(other.top, _this.top) || other.top == _this.top)&&(identical(other.right, _this.right) || other.right == _this.right)&&(identical(other.bottom, _this.bottom) || other.bottom == _this.bottom));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,left,top,right,bottom);
+int get hashCode {
+  final _this = this as EdgeInsetsValue;
+  return Object.hash(runtimeType,_this.left,_this.top,_this.right,_this.bottom);
+}
 
 @override
 String toString() {
-  return 'EdgeInsetsValue(left: $left, top: $top, right: $right, bottom: $bottom)';
+  final _this = this as EdgeInsetsValue;
+  return 'EdgeInsetsValue(left: ${_this.left}, top: ${_this.top}, right: ${_this.right}, bottom: ${_this.bottom})';
 }
 
 
@@ -63,7 +69,7 @@ class _$EdgeInsetsValueCopyWithImpl<$Res>
 /// Create a copy of EdgeInsetsValue
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? left = null,Object? top = null,Object? right = null,Object? bottom = null,}) {
-  return _then(_self.copyWith(
+  return _then(EdgeInsetsValue(
 left: null == left ? _self.left : left // ignore: cast_nullable_to_non_nullable
 as double,top: null == top ? _self.top : top // ignore: cast_nullable_to_non_nullable
 as double,right: null == right ? _self.right : right // ignore: cast_nullable_to_non_nullable
@@ -227,16 +233,18 @@ _$EdgeInsetsValueCopyWith<_EdgeInsetsValue> get copyWith => __$EdgeInsetsValueCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EdgeInsetsValue&&(identical(other.left, left) || other.left == left)&&(identical(other.top, top) || other.top == top)&&(identical(other.right, right) || other.right == right)&&(identical(other.bottom, bottom) || other.bottom == bottom));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _EdgeInsetsValue&&(identical(other.left, left) || other.left == left)&&(identical(other.top, top) || other.top == top)&&(identical(other.right, right) || other.right == right)&&(identical(other.bottom, bottom) || other.bottom == bottom));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,left,top,right,bottom);
+int get hashCode {
+    return Object.hash(runtimeType,left,top,right,bottom);
+}
 
 @override
 String toString() {
-  return 'EdgeInsetsValue(left: $left, top: $top, right: $right, bottom: $bottom)';
+    return 'EdgeInsetsValue(left: $left, top: $top, right: $right, bottom: $bottom)';
 }
 
 

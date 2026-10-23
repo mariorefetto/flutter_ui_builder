@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'problems_state.dart';
@@ -9,6 +9,7 @@ part of 'problems_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $ProblemsStateCopyWith<ProblemsState> get copyWith => _$ProblemsStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProblemsState&&const DeepCollectionEquality().equals(other.problems, problems));
+  final _this = this as ProblemsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProblemsState&&const DeepCollectionEquality().equals(other.problems, _this.problems));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(problems));
+int get hashCode {
+  final _this = this as ProblemsState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.problems));
+}
 
 @override
 String toString() {
-  return 'ProblemsState(problems: $problems)';
+  final _this = this as ProblemsState;
+  return 'ProblemsState(problems: ${_this.problems})';
 }
 
 
@@ -63,7 +69,7 @@ class _$ProblemsStateCopyWithImpl<$Res>
 /// Create a copy of ProblemsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? problems = null,}) {
-  return _then(_self.copyWith(
+  return _then(ProblemsState(
 problems: null == problems ? _self.problems : problems // ignore: cast_nullable_to_non_nullable
 as List<Problem>,
   ));
@@ -206,7 +212,7 @@ return $default(_that.problems);case _:
 
 
 class _ProblemsState extends ProblemsState {
-  const _ProblemsState({final  List<Problem> problems = const <Problem>[]}): _problems = problems,super._();
+  const _ProblemsState({ List<Problem> problems = const <Problem>[]}): _problems = problems,super._();
   
 
  final  List<Problem> _problems;
@@ -227,16 +233,18 @@ _$ProblemsStateCopyWith<_ProblemsState> get copyWith => __$ProblemsStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProblemsState&&const DeepCollectionEquality().equals(other._problems, _problems));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProblemsState&&const DeepCollectionEquality().equals(other.problems, _problems));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_problems));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_problems));
+}
 
 @override
 String toString() {
-  return 'ProblemsState(problems: $problems)';
+    return 'ProblemsState(problems: $problems)';
 }
 
 

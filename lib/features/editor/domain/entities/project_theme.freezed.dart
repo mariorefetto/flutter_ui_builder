@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'project_theme.dart';
@@ -9,6 +9,7 @@ part of 'project_theme.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $ProjectThemeCopyWith<ProjectTheme> get copyWith => _$ProjectThemeCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectTheme&&const DeepCollectionEquality().equals(other.parts, parts));
+  final _this = this as ProjectTheme;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectTheme&&const DeepCollectionEquality().equals(other.parts, _this.parts));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(parts));
+int get hashCode {
+  final _this = this as ProjectTheme;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.parts));
+}
 
 @override
 String toString() {
-  return 'ProjectTheme(parts: $parts)';
+  final _this = this as ProjectTheme;
+  return 'ProjectTheme(parts: ${_this.parts})';
 }
 
 
@@ -63,7 +69,7 @@ class _$ProjectThemeCopyWithImpl<$Res>
 /// Create a copy of ProjectTheme
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? parts = null,}) {
-  return _then(_self.copyWith(
+  return _then(ProjectTheme(
 parts: null == parts ? _self.parts : parts // ignore: cast_nullable_to_non_nullable
 as Map<String, Map<String, Object?>>,
   ));
@@ -206,7 +212,7 @@ return $default(_that.parts);case _:
 
 
 class _ProjectTheme extends ProjectTheme {
-  const _ProjectTheme({final  Map<String, Map<String, Object?>> parts = const <String, Map<String, Object?>>{}}): _parts = parts,super._();
+  const _ProjectTheme({ Map<String, Map<String, Object?>> parts = const <String, Map<String, Object?>>{}}): _parts = parts,super._();
   
 
  final  Map<String, Map<String, Object?>> _parts;
@@ -227,16 +233,18 @@ _$ProjectThemeCopyWith<_ProjectTheme> get copyWith => __$ProjectThemeCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProjectTheme&&const DeepCollectionEquality().equals(other._parts, _parts));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProjectTheme&&const DeepCollectionEquality().equals(other.parts, _parts));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_parts));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_parts));
+}
 
 @override
 String toString() {
-  return 'ProjectTheme(parts: $parts)';
+    return 'ProjectTheme(parts: $parts)';
 }
 
 

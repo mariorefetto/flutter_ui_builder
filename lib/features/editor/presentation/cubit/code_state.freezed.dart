@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'code_state.dart';
@@ -9,6 +9,7 @@ part of 'code_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$CodeState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CodeState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CodeState);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CodeState()';
+    return 'CodeState()';
 }
 
 
@@ -193,7 +194,7 @@ return exportFailed(_that.files,_that.failure);case _:
 
 
 class CodeReady implements CodeState {
-  const CodeReady(final  List<GeneratedFile> files): _files = files;
+  const CodeReady( List<GeneratedFile> files): _files = files;
   
 
  final  List<GeneratedFile> _files;
@@ -214,16 +215,18 @@ $CodeReadyCopyWith<CodeReady> get copyWith => _$CodeReadyCopyWithImpl<CodeReady>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CodeReady&&const DeepCollectionEquality().equals(other._files, _files));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CodeReady&&const DeepCollectionEquality().equals(other.files, _files));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_files));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_files));
+}
 
 @override
 String toString() {
-  return 'CodeState.ready(files: $files)';
+    return 'CodeState.ready(files: $files)';
 }
 
 
@@ -280,16 +283,18 @@ $CodeFailedCopyWith<CodeFailed> get copyWith => _$CodeFailedCopyWithImpl<CodeFai
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CodeFailed&&(identical(other.failure, failure) || other.failure == failure));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CodeFailed&&(identical(other.failure, failure) || other.failure == failure));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,failure);
+int get hashCode {
+    return Object.hash(runtimeType,failure);
+}
 
 @override
 String toString() {
-  return 'CodeState.failed(failure: $failure)';
+    return 'CodeState.failed(failure: $failure)';
 }
 
 
@@ -331,7 +336,7 @@ as Failure,
 
 
 class CodeExporting implements CodeState {
-  const CodeExporting(final  List<GeneratedFile> files): _files = files;
+  const CodeExporting( List<GeneratedFile> files): _files = files;
   
 
  final  List<GeneratedFile> _files;
@@ -352,16 +357,18 @@ $CodeExportingCopyWith<CodeExporting> get copyWith => _$CodeExportingCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CodeExporting&&const DeepCollectionEquality().equals(other._files, _files));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CodeExporting&&const DeepCollectionEquality().equals(other.files, _files));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_files));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_files));
+}
 
 @override
 String toString() {
-  return 'CodeState.exporting(files: $files)';
+    return 'CodeState.exporting(files: $files)';
 }
 
 
@@ -403,7 +410,7 @@ as List<GeneratedFile>,
 
 
 class CodeExported implements CodeState {
-  const CodeExported(final  List<GeneratedFile> files, this.count): _files = files;
+  const CodeExported( List<GeneratedFile> files, this.count): _files = files;
   
 
  final  List<GeneratedFile> _files;
@@ -425,16 +432,18 @@ $CodeExportedCopyWith<CodeExported> get copyWith => _$CodeExportedCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CodeExported&&const DeepCollectionEquality().equals(other._files, _files)&&(identical(other.count, count) || other.count == count));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CodeExported&&const DeepCollectionEquality().equals(other.files, _files)&&(identical(other.count, count) || other.count == count));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_files),count);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_files),count);
+}
 
 @override
 String toString() {
-  return 'CodeState.exported(files: $files, count: $count)';
+    return 'CodeState.exported(files: $files, count: $count)';
 }
 
 
@@ -477,7 +486,7 @@ as int,
 
 
 class CodeExportFailed implements CodeState {
-  const CodeExportFailed(final  List<GeneratedFile> files, this.failure): _files = files;
+  const CodeExportFailed( List<GeneratedFile> files, this.failure): _files = files;
   
 
  final  List<GeneratedFile> _files;
@@ -499,16 +508,18 @@ $CodeExportFailedCopyWith<CodeExportFailed> get copyWith => _$CodeExportFailedCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CodeExportFailed&&const DeepCollectionEquality().equals(other._files, _files)&&(identical(other.failure, failure) || other.failure == failure));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CodeExportFailed&&const DeepCollectionEquality().equals(other.files, _files)&&(identical(other.failure, failure) || other.failure == failure));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_files),failure);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_files),failure);
+}
 
 @override
 String toString() {
-  return 'CodeState.exportFailed(files: $files, failure: $failure)';
+    return 'CodeState.exportFailed(files: $files, failure: $failure)';
 }
 
 

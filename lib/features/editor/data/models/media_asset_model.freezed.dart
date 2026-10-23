@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'media_asset_model.dart';
@@ -9,6 +9,7 @@ part of 'media_asset_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $MediaAssetModelCopyWith<MediaAssetModel> get copyWith => _$MediaAssetModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MediaAssetModel&&(identical(other.name, name) || other.name == name)&&(identical(other.sourcePath, sourcePath) || other.sourcePath == sourcePath));
+  final _this = this as MediaAssetModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MediaAssetModel&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.sourcePath, _this.sourcePath) || other.sourcePath == _this.sourcePath));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,sourcePath);
+int get hashCode {
+  final _this = this as MediaAssetModel;
+  return Object.hash(runtimeType,_this.name,_this.sourcePath);
+}
 
 @override
 String toString() {
-  return 'MediaAssetModel(name: $name, sourcePath: $sourcePath)';
+  final _this = this as MediaAssetModel;
+  return 'MediaAssetModel(name: ${_this.name}, sourcePath: ${_this.sourcePath})';
 }
 
 
@@ -66,7 +72,7 @@ class _$MediaAssetModelCopyWithImpl<$Res>
 /// Create a copy of MediaAssetModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? sourcePath = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(MediaAssetModel(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,sourcePath: freezed == sourcePath ? _self.sourcePath : sourcePath // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -229,16 +235,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MediaAssetModel&&(identical(other.name, name) || other.name == name)&&(identical(other.sourcePath, sourcePath) || other.sourcePath == sourcePath));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MediaAssetModel&&(identical(other.name, name) || other.name == name)&&(identical(other.sourcePath, sourcePath) || other.sourcePath == sourcePath));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,sourcePath);
+int get hashCode {
+    return Object.hash(runtimeType,name,sourcePath);
+}
 
 @override
 String toString() {
-  return 'MediaAssetModel(name: $name, sourcePath: $sourcePath)';
+    return 'MediaAssetModel(name: $name, sourcePath: $sourcePath)';
 }
 
 

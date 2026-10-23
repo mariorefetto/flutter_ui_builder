@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'import_state.dart';
@@ -9,6 +9,7 @@ part of 'import_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -29,16 +30,21 @@ $ImportStateCopyWith<ImportState> get copyWith => _$ImportStateCopyWithImpl<Impo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ImportState&&(identical(other.result, result) || other.result == result)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.fileText, fileText) || other.fileText == fileText)&&(identical(other.fileRevision, fileRevision) || other.fileRevision == fileRevision));
+  final _this = this as ImportState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ImportState&&(identical(other.result, _this.result) || other.result == _this.result)&&(identical(other.failure, _this.failure) || other.failure == _this.failure)&&(identical(other.fileText, _this.fileText) || other.fileText == _this.fileText)&&(identical(other.fileRevision, _this.fileRevision) || other.fileRevision == _this.fileRevision));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,result,failure,fileText,fileRevision);
+int get hashCode {
+  final _this = this as ImportState;
+  return Object.hash(runtimeType,_this.result,_this.failure,_this.fileText,_this.fileRevision);
+}
 
 @override
 String toString() {
-  return 'ImportState(result: $result, failure: $failure, fileText: $fileText, fileRevision: $fileRevision)';
+  final _this = this as ImportState;
+  return 'ImportState(result: ${_this.result}, failure: ${_this.failure}, fileText: ${_this.fileText}, fileRevision: ${_this.fileRevision})';
 }
 
 
@@ -67,7 +73,7 @@ class _$ImportStateCopyWithImpl<$Res>
 /// Create a copy of ImportState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? result = freezed,Object? failure = freezed,Object? fileText = freezed,Object? fileRevision = null,}) {
-  return _then(_self.copyWith(
+  return _then(ImportState(
 result: freezed == result ? _self.result : result // ignore: cast_nullable_to_non_nullable
 as ImportResult?,failure: freezed == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
 as Failure?,fileText: freezed == fileText ? _self.fileText : fileText // ignore: cast_nullable_to_non_nullable
@@ -235,16 +241,18 @@ _$ImportStateCopyWith<_ImportState> get copyWith => __$ImportStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ImportState&&(identical(other.result, result) || other.result == result)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.fileText, fileText) || other.fileText == fileText)&&(identical(other.fileRevision, fileRevision) || other.fileRevision == fileRevision));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ImportState&&(identical(other.result, result) || other.result == result)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.fileText, fileText) || other.fileText == fileText)&&(identical(other.fileRevision, fileRevision) || other.fileRevision == fileRevision));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,result,failure,fileText,fileRevision);
+int get hashCode {
+    return Object.hash(runtimeType,result,failure,fileText,fileRevision);
+}
 
 @override
 String toString() {
-  return 'ImportState(result: $result, failure: $failure, fileText: $fileText, fileRevision: $fileRevision)';
+    return 'ImportState(result: $result, failure: $failure, fileText: $fileText, fileRevision: $fileRevision)';
 }
 
 

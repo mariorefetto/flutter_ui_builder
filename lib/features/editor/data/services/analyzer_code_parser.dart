@@ -185,15 +185,15 @@ class AnalyzerCodeParser implements CodeParser {
   CodeValue _call({
     required String name,
     required String? constructor,
-    required List<Expression> arguments,
+    required List<Argument> arguments,
   }) {
     final positional = <CodeValue>[];
     final named = <String, CodeValue>{};
     for (final argument in arguments) {
-      if (argument is NamedExpression) {
-        named[argument.name.label.name] = _toValue(argument.expression);
+      if (argument is NamedArgument) {
+        named[argument.name.lexeme] = _toValue(argument.argumentExpression);
       } else {
-        positional.add(_toValue(argument));
+        positional.add(_toValue(argument.argumentExpression));
       }
     }
     return CodeCall(

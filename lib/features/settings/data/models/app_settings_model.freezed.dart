@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'app_settings_model.dart';
@@ -9,6 +9,7 @@ part of 'app_settings_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $AppSettingsModelCopyWith<AppSettingsModel> get copyWith => _$AppSettingsModelCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettingsModel&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode)&&(identical(other.device, device) || other.device == device)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.paletteGrid, paletteGrid) || other.paletteGrid == paletteGrid)&&(identical(other.tourSeen, tourSeen) || other.tourSeen == tourSeen));
+  final _this = this as AppSettingsModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettingsModel&&(identical(other.theme, _this.theme) || other.theme == _this.theme)&&(identical(other.languageCode, _this.languageCode) || other.languageCode == _this.languageCode)&&(identical(other.device, _this.device) || other.device == _this.device)&&(identical(other.showFrame, _this.showFrame) || other.showFrame == _this.showFrame)&&(identical(other.statusBar, _this.statusBar) || other.statusBar == _this.statusBar)&&(identical(other.showSafeArea, _this.showSafeArea) || other.showSafeArea == _this.showSafeArea)&&(identical(other.codePlacement, _this.codePlacement) || other.codePlacement == _this.codePlacement)&&(identical(other.paletteGrid, _this.paletteGrid) || other.paletteGrid == _this.paletteGrid)&&(identical(other.tourSeen, _this.tourSeen) || other.tourSeen == _this.tourSeen));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,theme,languageCode,device,showFrame,statusBar,showSafeArea,codePlacement,paletteGrid,tourSeen);
+int get hashCode {
+  final _this = this as AppSettingsModel;
+  return Object.hash(runtimeType,_this.theme,_this.languageCode,_this.device,_this.showFrame,_this.statusBar,_this.showSafeArea,_this.codePlacement,_this.paletteGrid,_this.tourSeen);
+}
 
 @override
 String toString() {
-  return 'AppSettingsModel(theme: $theme, languageCode: $languageCode, device: $device, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, codePlacement: $codePlacement, paletteGrid: $paletteGrid, tourSeen: $tourSeen)';
+  final _this = this as AppSettingsModel;
+  return 'AppSettingsModel(theme: ${_this.theme}, languageCode: ${_this.languageCode}, device: ${_this.device}, showFrame: ${_this.showFrame}, statusBar: ${_this.statusBar}, showSafeArea: ${_this.showSafeArea}, codePlacement: ${_this.codePlacement}, paletteGrid: ${_this.paletteGrid}, tourSeen: ${_this.tourSeen})';
 }
 
 
@@ -66,7 +72,7 @@ class _$AppSettingsModelCopyWithImpl<$Res>
 /// Create a copy of AppSettingsModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? theme = null,Object? languageCode = freezed,Object? device = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? codePlacement = null,Object? paletteGrid = null,Object? tourSeen = null,}) {
-  return _then(_self.copyWith(
+  return _then(AppSettingsModel(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as String,languageCode: freezed == languageCode ? _self.languageCode : languageCode // ignore: cast_nullable_to_non_nullable
 as String?,device: null == device ? _self.device : device // ignore: cast_nullable_to_non_nullable
@@ -243,16 +249,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettingsModel&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode)&&(identical(other.device, device) || other.device == device)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.paletteGrid, paletteGrid) || other.paletteGrid == paletteGrid)&&(identical(other.tourSeen, tourSeen) || other.tourSeen == tourSeen));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettingsModel&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode)&&(identical(other.device, device) || other.device == device)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.paletteGrid, paletteGrid) || other.paletteGrid == paletteGrid)&&(identical(other.tourSeen, tourSeen) || other.tourSeen == tourSeen));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,theme,languageCode,device,showFrame,statusBar,showSafeArea,codePlacement,paletteGrid,tourSeen);
+int get hashCode {
+    return Object.hash(runtimeType,theme,languageCode,device,showFrame,statusBar,showSafeArea,codePlacement,paletteGrid,tourSeen);
+}
 
 @override
 String toString() {
-  return 'AppSettingsModel(theme: $theme, languageCode: $languageCode, device: $device, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, codePlacement: $codePlacement, paletteGrid: $paletteGrid, tourSeen: $tourSeen)';
+    return 'AppSettingsModel(theme: $theme, languageCode: $languageCode, device: $device, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, codePlacement: $codePlacement, paletteGrid: $paletteGrid, tourSeen: $tourSeen)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'workspace_state.dart';
@@ -9,6 +9,7 @@ part of 'workspace_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -37,16 +38,21 @@ $WorkspaceStateCopyWith<WorkspaceState> get copyWith => _$WorkspaceStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkspaceState&&(identical(other.leftPanel, leftPanel) || other.leftPanel == leftPanel)&&(identical(other.propertiesVisible, propertiesVisible) || other.propertiesVisible == propertiesVisible)&&(identical(other.problemsVisible, problemsVisible) || other.problemsVisible == problemsVisible)&&(identical(other.centerTab, centerTab) || other.centerTab == centerTab)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.codeWidth, codeWidth) || other.codeWidth == codeWidth)&&(identical(other.codeHeight, codeHeight) || other.codeHeight == codeHeight)&&(identical(other.device, device) || other.device == device)&&(identical(other.landscape, landscape) || other.landscape == landscape)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.prototype, prototype) || other.prototype == prototype)&&(identical(other.darkTheme, darkTheme) || other.darkTheme == darkTheme)&&(identical(other.showGuidelines, showGuidelines) || other.showGuidelines == showGuidelines)&&const DeepCollectionEquality().equals(other.screenTrail, screenTrail)&&(identical(other.zoom, zoom) || other.zoom == zoom)&&const DeepCollectionEquality().equals(other.recentWidgets, recentWidgets)&&(identical(other.leftWidth, leftWidth) || other.leftWidth == leftWidth)&&(identical(other.rightWidth, rightWidth) || other.rightWidth == rightWidth));
+  final _this = this as WorkspaceState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkspaceState&&(identical(other.leftPanel, _this.leftPanel) || other.leftPanel == _this.leftPanel)&&(identical(other.propertiesVisible, _this.propertiesVisible) || other.propertiesVisible == _this.propertiesVisible)&&(identical(other.problemsVisible, _this.problemsVisible) || other.problemsVisible == _this.problemsVisible)&&(identical(other.centerTab, _this.centerTab) || other.centerTab == _this.centerTab)&&(identical(other.codePlacement, _this.codePlacement) || other.codePlacement == _this.codePlacement)&&(identical(other.codeWidth, _this.codeWidth) || other.codeWidth == _this.codeWidth)&&(identical(other.codeHeight, _this.codeHeight) || other.codeHeight == _this.codeHeight)&&(identical(other.device, _this.device) || other.device == _this.device)&&(identical(other.landscape, _this.landscape) || other.landscape == _this.landscape)&&(identical(other.showFrame, _this.showFrame) || other.showFrame == _this.showFrame)&&(identical(other.statusBar, _this.statusBar) || other.statusBar == _this.statusBar)&&(identical(other.showSafeArea, _this.showSafeArea) || other.showSafeArea == _this.showSafeArea)&&(identical(other.prototype, _this.prototype) || other.prototype == _this.prototype)&&(identical(other.darkTheme, _this.darkTheme) || other.darkTheme == _this.darkTheme)&&(identical(other.showGuidelines, _this.showGuidelines) || other.showGuidelines == _this.showGuidelines)&&const DeepCollectionEquality().equals(other.screenTrail, _this.screenTrail)&&(identical(other.zoom, _this.zoom) || other.zoom == _this.zoom)&&const DeepCollectionEquality().equals(other.recentWidgets, _this.recentWidgets)&&(identical(other.leftWidth, _this.leftWidth) || other.leftWidth == _this.leftWidth)&&(identical(other.rightWidth, _this.rightWidth) || other.rightWidth == _this.rightWidth));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,leftPanel,propertiesVisible,problemsVisible,centerTab,codePlacement,codeWidth,codeHeight,device,landscape,showFrame,statusBar,showSafeArea,prototype,darkTheme,showGuidelines,const DeepCollectionEquality().hash(screenTrail),zoom,const DeepCollectionEquality().hash(recentWidgets),leftWidth,rightWidth]);
+int get hashCode {
+  final _this = this as WorkspaceState;
+  return Object.hashAll([runtimeType,_this.leftPanel,_this.propertiesVisible,_this.problemsVisible,_this.centerTab,_this.codePlacement,_this.codeWidth,_this.codeHeight,_this.device,_this.landscape,_this.showFrame,_this.statusBar,_this.showSafeArea,_this.prototype,_this.darkTheme,_this.showGuidelines,const DeepCollectionEquality().hash(_this.screenTrail),_this.zoom,const DeepCollectionEquality().hash(_this.recentWidgets),_this.leftWidth,_this.rightWidth]);
+}
 
 @override
 String toString() {
-  return 'WorkspaceState(leftPanel: $leftPanel, propertiesVisible: $propertiesVisible, problemsVisible: $problemsVisible, centerTab: $centerTab, codePlacement: $codePlacement, codeWidth: $codeWidth, codeHeight: $codeHeight, device: $device, landscape: $landscape, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, prototype: $prototype, darkTheme: $darkTheme, showGuidelines: $showGuidelines, screenTrail: $screenTrail, zoom: $zoom, recentWidgets: $recentWidgets, leftWidth: $leftWidth, rightWidth: $rightWidth)';
+  final _this = this as WorkspaceState;
+  return 'WorkspaceState(leftPanel: ${_this.leftPanel}, propertiesVisible: ${_this.propertiesVisible}, problemsVisible: ${_this.problemsVisible}, centerTab: ${_this.centerTab}, codePlacement: ${_this.codePlacement}, codeWidth: ${_this.codeWidth}, codeHeight: ${_this.codeHeight}, device: ${_this.device}, landscape: ${_this.landscape}, showFrame: ${_this.showFrame}, statusBar: ${_this.statusBar}, showSafeArea: ${_this.showSafeArea}, prototype: ${_this.prototype}, darkTheme: ${_this.darkTheme}, showGuidelines: ${_this.showGuidelines}, screenTrail: ${_this.screenTrail}, zoom: ${_this.zoom}, recentWidgets: ${_this.recentWidgets}, leftWidth: ${_this.leftWidth}, rightWidth: ${_this.rightWidth})';
 }
 
 
@@ -75,7 +81,7 @@ class _$WorkspaceStateCopyWithImpl<$Res>
 /// Create a copy of WorkspaceState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? leftPanel = freezed,Object? propertiesVisible = null,Object? problemsVisible = null,Object? centerTab = null,Object? codePlacement = null,Object? codeWidth = null,Object? codeHeight = null,Object? device = null,Object? landscape = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? prototype = null,Object? darkTheme = null,Object? showGuidelines = null,Object? screenTrail = null,Object? zoom = null,Object? recentWidgets = null,Object? leftWidth = null,Object? rightWidth = null,}) {
-  return _then(_self.copyWith(
+  return _then(WorkspaceState(
 leftPanel: freezed == leftPanel ? _self.leftPanel : leftPanel // ignore: cast_nullable_to_non_nullable
 as LeftPanel?,propertiesVisible: null == propertiesVisible ? _self.propertiesVisible : propertiesVisible // ignore: cast_nullable_to_non_nullable
 as bool,problemsVisible: null == problemsVisible ? _self.problemsVisible : problemsVisible // ignore: cast_nullable_to_non_nullable
@@ -237,7 +243,7 @@ return $default(_that.leftPanel,_that.propertiesVisible,_that.problemsVisible,_t
 
 
 class _WorkspaceState implements WorkspaceState {
-  const _WorkspaceState({this.leftPanel = LeftPanel.toolbox, this.propertiesVisible = true, this.problemsVisible = false, this.centerTab = CenterTab.design, this.codePlacement = CodePlacement.tab, this.codeWidth = _defaultCodeWidth, this.codeHeight = _defaultCodeHeight, this.device = PreviewDevice.phone, this.landscape = false, this.showFrame = true, this.statusBar = StatusBarMode.auto, this.showSafeArea = false, this.prototype = false, this.darkTheme = false, this.showGuidelines = false, final  List<String> screenTrail = const <String>[], this.zoom = 1.0, final  List<String> recentWidgets = const <String>[], this.leftWidth = _defaultLeftWidth, this.rightWidth = _defaultRightWidth}): _screenTrail = screenTrail,_recentWidgets = recentWidgets;
+  const _WorkspaceState({this.leftPanel = LeftPanel.toolbox, this.propertiesVisible = true, this.problemsVisible = false, this.centerTab = CenterTab.design, this.codePlacement = CodePlacement.tab, this.codeWidth = _defaultCodeWidth, this.codeHeight = _defaultCodeHeight, this.device = PreviewDevice.phone, this.landscape = false, this.showFrame = true, this.statusBar = StatusBarMode.auto, this.showSafeArea = false, this.prototype = false, this.darkTheme = false, this.showGuidelines = false,  List<String> screenTrail = const <String>[], this.zoom = 1.0,  List<String> recentWidgets = const <String>[], this.leftWidth = _defaultLeftWidth, this.rightWidth = _defaultRightWidth}): _screenTrail = screenTrail,_recentWidgets = recentWidgets;
   
 
 /// The open left panel, or null when the left dock is collapsed.
@@ -298,16 +304,18 @@ _$WorkspaceStateCopyWith<_WorkspaceState> get copyWith => __$WorkspaceStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkspaceState&&(identical(other.leftPanel, leftPanel) || other.leftPanel == leftPanel)&&(identical(other.propertiesVisible, propertiesVisible) || other.propertiesVisible == propertiesVisible)&&(identical(other.problemsVisible, problemsVisible) || other.problemsVisible == problemsVisible)&&(identical(other.centerTab, centerTab) || other.centerTab == centerTab)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.codeWidth, codeWidth) || other.codeWidth == codeWidth)&&(identical(other.codeHeight, codeHeight) || other.codeHeight == codeHeight)&&(identical(other.device, device) || other.device == device)&&(identical(other.landscape, landscape) || other.landscape == landscape)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.prototype, prototype) || other.prototype == prototype)&&(identical(other.darkTheme, darkTheme) || other.darkTheme == darkTheme)&&(identical(other.showGuidelines, showGuidelines) || other.showGuidelines == showGuidelines)&&const DeepCollectionEquality().equals(other._screenTrail, _screenTrail)&&(identical(other.zoom, zoom) || other.zoom == zoom)&&const DeepCollectionEquality().equals(other._recentWidgets, _recentWidgets)&&(identical(other.leftWidth, leftWidth) || other.leftWidth == leftWidth)&&(identical(other.rightWidth, rightWidth) || other.rightWidth == rightWidth));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkspaceState&&(identical(other.leftPanel, leftPanel) || other.leftPanel == leftPanel)&&(identical(other.propertiesVisible, propertiesVisible) || other.propertiesVisible == propertiesVisible)&&(identical(other.problemsVisible, problemsVisible) || other.problemsVisible == problemsVisible)&&(identical(other.centerTab, centerTab) || other.centerTab == centerTab)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.codeWidth, codeWidth) || other.codeWidth == codeWidth)&&(identical(other.codeHeight, codeHeight) || other.codeHeight == codeHeight)&&(identical(other.device, device) || other.device == device)&&(identical(other.landscape, landscape) || other.landscape == landscape)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.prototype, prototype) || other.prototype == prototype)&&(identical(other.darkTheme, darkTheme) || other.darkTheme == darkTheme)&&(identical(other.showGuidelines, showGuidelines) || other.showGuidelines == showGuidelines)&&const DeepCollectionEquality().equals(other.screenTrail, _screenTrail)&&(identical(other.zoom, zoom) || other.zoom == zoom)&&const DeepCollectionEquality().equals(other.recentWidgets, _recentWidgets)&&(identical(other.leftWidth, leftWidth) || other.leftWidth == leftWidth)&&(identical(other.rightWidth, rightWidth) || other.rightWidth == rightWidth));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,leftPanel,propertiesVisible,problemsVisible,centerTab,codePlacement,codeWidth,codeHeight,device,landscape,showFrame,statusBar,showSafeArea,prototype,darkTheme,showGuidelines,const DeepCollectionEquality().hash(_screenTrail),zoom,const DeepCollectionEquality().hash(_recentWidgets),leftWidth,rightWidth]);
+int get hashCode {
+    return Object.hashAll([runtimeType,leftPanel,propertiesVisible,problemsVisible,centerTab,codePlacement,codeWidth,codeHeight,device,landscape,showFrame,statusBar,showSafeArea,prototype,darkTheme,showGuidelines,const DeepCollectionEquality().hash(_screenTrail),zoom,const DeepCollectionEquality().hash(_recentWidgets),leftWidth,rightWidth]);
+}
 
 @override
 String toString() {
-  return 'WorkspaceState(leftPanel: $leftPanel, propertiesVisible: $propertiesVisible, problemsVisible: $problemsVisible, centerTab: $centerTab, codePlacement: $codePlacement, codeWidth: $codeWidth, codeHeight: $codeHeight, device: $device, landscape: $landscape, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, prototype: $prototype, darkTheme: $darkTheme, showGuidelines: $showGuidelines, screenTrail: $screenTrail, zoom: $zoom, recentWidgets: $recentWidgets, leftWidth: $leftWidth, rightWidth: $rightWidth)';
+    return 'WorkspaceState(leftPanel: $leftPanel, propertiesVisible: $propertiesVisible, problemsVisible: $problemsVisible, centerTab: $centerTab, codePlacement: $codePlacement, codeWidth: $codeWidth, codeHeight: $codeHeight, device: $device, landscape: $landscape, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, prototype: $prototype, darkTheme: $darkTheme, showGuidelines: $showGuidelines, screenTrail: $screenTrail, zoom: $zoom, recentWidgets: $recentWidgets, leftWidth: $leftWidth, rightWidth: $rightWidth)';
 }
 
 

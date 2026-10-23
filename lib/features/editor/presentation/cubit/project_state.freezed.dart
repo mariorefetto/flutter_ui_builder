@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'project_state.dart';
@@ -9,6 +9,7 @@ part of 'project_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -27,16 +28,21 @@ $ProjectStateCopyWith<ProjectState> get copyWith => _$ProjectStateCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectState&&(identical(other.savedDocument, savedDocument) || other.savedDocument == savedDocument)&&(identical(other.filePath, filePath) || other.filePath == filePath)&&(identical(other.event, event) || other.event == event));
+  final _this = this as ProjectState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectState&&(identical(other.savedDocument, _this.savedDocument) || other.savedDocument == _this.savedDocument)&&(identical(other.filePath, _this.filePath) || other.filePath == _this.filePath)&&(identical(other.event, _this.event) || other.event == _this.event));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,savedDocument,filePath,event);
+int get hashCode {
+  final _this = this as ProjectState;
+  return Object.hash(runtimeType,_this.savedDocument,_this.filePath,_this.event);
+}
 
 @override
 String toString() {
-  return 'ProjectState(savedDocument: $savedDocument, filePath: $filePath, event: $event)';
+  final _this = this as ProjectState;
+  return 'ProjectState(savedDocument: ${_this.savedDocument}, filePath: ${_this.filePath}, event: ${_this.event})';
 }
 
 
@@ -65,7 +71,7 @@ class _$ProjectStateCopyWithImpl<$Res>
 /// Create a copy of ProjectState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? savedDocument = null,Object? filePath = freezed,Object? event = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(ProjectState(
 savedDocument: null == savedDocument ? _self.savedDocument : savedDocument // ignore: cast_nullable_to_non_nullable
 as EditorDocument,filePath: freezed == filePath ? _self.filePath : filePath // ignore: cast_nullable_to_non_nullable
 as String?,event: freezed == event ? _self.event : event // ignore: cast_nullable_to_non_nullable
@@ -238,16 +244,18 @@ _$ProjectStateCopyWith<_ProjectState> get copyWith => __$ProjectStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProjectState&&(identical(other.savedDocument, savedDocument) || other.savedDocument == savedDocument)&&(identical(other.filePath, filePath) || other.filePath == filePath)&&(identical(other.event, event) || other.event == event));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProjectState&&(identical(other.savedDocument, savedDocument) || other.savedDocument == savedDocument)&&(identical(other.filePath, filePath) || other.filePath == filePath)&&(identical(other.event, event) || other.event == event));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,savedDocument,filePath,event);
+int get hashCode {
+    return Object.hash(runtimeType,savedDocument,filePath,event);
+}
 
 @override
 String toString() {
-  return 'ProjectState(savedDocument: $savedDocument, filePath: $filePath, event: $event)';
+    return 'ProjectState(savedDocument: $savedDocument, filePath: $filePath, event: $event)';
 }
 
 

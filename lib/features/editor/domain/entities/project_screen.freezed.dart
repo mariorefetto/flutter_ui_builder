@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'project_screen.dart';
@@ -9,6 +9,7 @@ part of 'project_screen.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -26,16 +27,21 @@ $ProjectScreenCopyWith<ProjectScreen> get copyWith => _$ProjectScreenCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectScreen&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other.params, params));
+  final _this = this as ProjectScreen;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectScreen&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.root, _this.root) || other.root == _this.root)&&(identical(other.component, _this.component) || other.component == _this.component)&&const DeepCollectionEquality().equals(other.params, _this.params));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,root,component,const DeepCollectionEquality().hash(params));
+int get hashCode {
+  final _this = this as ProjectScreen;
+  return Object.hash(runtimeType,_this.name,_this.root,_this.component,const DeepCollectionEquality().hash(_this.params));
+}
 
 @override
 String toString() {
-  return 'ProjectScreen(name: $name, root: $root, component: $component, params: $params)';
+  final _this = this as ProjectScreen;
+  return 'ProjectScreen(name: ${_this.name}, root: ${_this.root}, component: ${_this.component}, params: ${_this.params})';
 }
 
 
@@ -64,7 +70,7 @@ class _$ProjectScreenCopyWithImpl<$Res>
 /// Create a copy of ProjectScreen
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? root = null,Object? component = null,Object? params = null,}) {
-  return _then(_self.copyWith(
+  return _then(ProjectScreen(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,root: null == root ? _self.root : root // ignore: cast_nullable_to_non_nullable
 as WidgetNode,component: null == component ? _self.component : component // ignore: cast_nullable_to_non_nullable
@@ -219,7 +225,7 @@ return $default(_that.name,_that.root,_that.component,_that.params);case _:
 
 
 class _ProjectScreen implements ProjectScreen {
-  const _ProjectScreen({required this.name, required this.root, this.component = false, final  List<ComponentParam> params = const <ComponentParam>[]}): _params = params;
+  const _ProjectScreen({required this.name, required this.root, this.component = false,  List<ComponentParam> params = const <ComponentParam>[]}): _params = params;
   
 
 @override final  String name;
@@ -245,16 +251,18 @@ _$ProjectScreenCopyWith<_ProjectScreen> get copyWith => __$ProjectScreenCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProjectScreen&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other._params, _params));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProjectScreen&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other.params, _params));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,root,component,const DeepCollectionEquality().hash(_params));
+int get hashCode {
+    return Object.hash(runtimeType,name,root,component,const DeepCollectionEquality().hash(_params));
+}
 
 @override
 String toString() {
-  return 'ProjectScreen(name: $name, root: $root, component: $component, params: $params)';
+    return 'ProjectScreen(name: $name, root: $root, component: $component, params: $params)';
 }
 
 

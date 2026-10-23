@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'editor_state.dart';
@@ -9,6 +9,7 @@ part of 'editor_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -31,16 +32,21 @@ $EditorStateCopyWith<EditorState> get copyWith => _$EditorStateCopyWithImpl<Edit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditorState&&(identical(other.history, history) || other.history == history)&&(identical(other.selectedId, selectedId) || other.selectedId == selectedId)&&const DeepCollectionEquality().equals(other.extraSelected, extraSelected)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.clipboard, clipboard) || other.clipboard == clipboard));
+  final _this = this as EditorState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditorState&&(identical(other.history, _this.history) || other.history == _this.history)&&(identical(other.selectedId, _this.selectedId) || other.selectedId == _this.selectedId)&&const DeepCollectionEquality().equals(other.extraSelected, _this.extraSelected)&&(identical(other.failure, _this.failure) || other.failure == _this.failure)&&(identical(other.clipboard, _this.clipboard) || other.clipboard == _this.clipboard));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,history,selectedId,const DeepCollectionEquality().hash(extraSelected),failure,clipboard);
+int get hashCode {
+  final _this = this as EditorState;
+  return Object.hash(runtimeType,_this.history,_this.selectedId,const DeepCollectionEquality().hash(_this.extraSelected),_this.failure,_this.clipboard);
+}
 
 @override
 String toString() {
-  return 'EditorState(history: $history, selectedId: $selectedId, extraSelected: $extraSelected, failure: $failure, clipboard: $clipboard)';
+  final _this = this as EditorState;
+  return 'EditorState(history: ${_this.history}, selectedId: ${_this.selectedId}, extraSelected: ${_this.extraSelected}, failure: ${_this.failure}, clipboard: ${_this.clipboard})';
 }
 
 
@@ -69,7 +75,7 @@ class _$EditorStateCopyWithImpl<$Res>
 /// Create a copy of EditorState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? history = null,Object? selectedId = freezed,Object? extraSelected = null,Object? failure = freezed,Object? clipboard = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(EditorState(
 history: null == history ? _self.history : history // ignore: cast_nullable_to_non_nullable
 as DocumentHistory,selectedId: freezed == selectedId ? _self.selectedId : selectedId // ignore: cast_nullable_to_non_nullable
 as String?,extraSelected: null == extraSelected ? _self.extraSelected : extraSelected // ignore: cast_nullable_to_non_nullable
@@ -237,7 +243,7 @@ return $default(_that.history,_that.selectedId,_that.extraSelected,_that.failure
 
 
 class _EditorState extends EditorState {
-  const _EditorState({required this.history, this.selectedId, final  Set<String> extraSelected = const <String>{}, this.failure, this.clipboard}): _extraSelected = extraSelected,super._();
+  const _EditorState({required this.history, this.selectedId,  Set<String> extraSelected = const <String>{}, this.failure, this.clipboard}): _extraSelected = extraSelected,super._();
   
 
 @override final  DocumentHistory history;
@@ -270,16 +276,18 @@ _$EditorStateCopyWith<_EditorState> get copyWith => __$EditorStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EditorState&&(identical(other.history, history) || other.history == history)&&(identical(other.selectedId, selectedId) || other.selectedId == selectedId)&&const DeepCollectionEquality().equals(other._extraSelected, _extraSelected)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.clipboard, clipboard) || other.clipboard == clipboard));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _EditorState&&(identical(other.history, history) || other.history == history)&&(identical(other.selectedId, selectedId) || other.selectedId == selectedId)&&const DeepCollectionEquality().equals(other.extraSelected, _extraSelected)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.clipboard, clipboard) || other.clipboard == clipboard));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,history,selectedId,const DeepCollectionEquality().hash(_extraSelected),failure,clipboard);
+int get hashCode {
+    return Object.hash(runtimeType,history,selectedId,const DeepCollectionEquality().hash(_extraSelected),failure,clipboard);
+}
 
 @override
 String toString() {
-  return 'EditorState(history: $history, selectedId: $selectedId, extraSelected: $extraSelected, failure: $failure, clipboard: $clipboard)';
+    return 'EditorState(history: $history, selectedId: $selectedId, extraSelected: $extraSelected, failure: $failure, clipboard: $clipboard)';
 }
 
 

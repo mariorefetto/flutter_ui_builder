@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'widget_node_model.dart';
@@ -9,6 +9,7 @@ part of 'widget_node_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $WidgetNodeModelCopyWith<WidgetNodeModel> get copyWith => _$WidgetNodeModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WidgetNodeModel&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.label, label) || other.label == label)&&const DeepCollectionEquality().equals(other.props, props)&&const DeepCollectionEquality().equals(other.children, children));
+  final _this = this as WidgetNodeModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WidgetNodeModel&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.label, _this.label) || other.label == _this.label)&&const DeepCollectionEquality().equals(other.props, _this.props)&&const DeepCollectionEquality().equals(other.children, _this.children));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,label,const DeepCollectionEquality().hash(props),const DeepCollectionEquality().hash(children));
+int get hashCode {
+  final _this = this as WidgetNodeModel;
+  return Object.hash(runtimeType,_this.id,_this.type,_this.label,const DeepCollectionEquality().hash(_this.props),const DeepCollectionEquality().hash(_this.children));
+}
 
 @override
 String toString() {
-  return 'WidgetNodeModel(id: $id, type: $type, label: $label, props: $props, children: $children)';
+  final _this = this as WidgetNodeModel;
+  return 'WidgetNodeModel(id: ${_this.id}, type: ${_this.type}, label: ${_this.label}, props: ${_this.props}, children: ${_this.children})';
 }
 
 
@@ -66,7 +72,7 @@ class _$WidgetNodeModelCopyWithImpl<$Res>
 /// Create a copy of WidgetNodeModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? label = freezed,Object? props = null,Object? children = null,}) {
-  return _then(_self.copyWith(
+  return _then(WidgetNodeModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
@@ -213,7 +219,7 @@ return $default(_that.id,_that.type,_that.label,_that.props,_that.children);case
 
 @JsonSerializable(explicitToJson: true, checked: true)
 class _WidgetNodeModel extends WidgetNodeModel {
-  const _WidgetNodeModel({required this.id, required this.type, @JsonKey(includeIfNull: false) this.label, final  Map<String, dynamic> props = const <String, dynamic>{}, final  List<WidgetNodeModel> children = const <WidgetNodeModel>[]}): _props = props,_children = children,super._();
+  const _WidgetNodeModel({required this.id, required this.type, @JsonKey(includeIfNull: false) this.label,  Map<String, dynamic> props = const <String, dynamic>{},  List<WidgetNodeModel> children = const <WidgetNodeModel>[]}): _props = props,_children = children,super._();
   factory _WidgetNodeModel.fromJson(Map<String, dynamic> json) => _$WidgetNodeModelFromJson(json);
 
 @override final  String id;
@@ -247,16 +253,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WidgetNodeModel&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.label, label) || other.label == label)&&const DeepCollectionEquality().equals(other._props, _props)&&const DeepCollectionEquality().equals(other._children, _children));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WidgetNodeModel&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.label, label) || other.label == label)&&const DeepCollectionEquality().equals(other.props, _props)&&const DeepCollectionEquality().equals(other.children, _children));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,label,const DeepCollectionEquality().hash(_props),const DeepCollectionEquality().hash(_children));
+int get hashCode {
+    return Object.hash(runtimeType,id,type,label,const DeepCollectionEquality().hash(_props),const DeepCollectionEquality().hash(_children));
+}
 
 @override
 String toString() {
-  return 'WidgetNodeModel(id: $id, type: $type, label: $label, props: $props, children: $children)';
+    return 'WidgetNodeModel(id: $id, type: $type, label: $label, props: $props, children: $children)';
 }
 
 
