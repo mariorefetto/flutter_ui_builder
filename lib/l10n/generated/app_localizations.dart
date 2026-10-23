@@ -2059,6 +2059,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No picture'**
   String get assetNone;
+
+  /// Screen template: Blank screen
+  ///
+  /// In en, this message translates to:
+  /// **'Blank screen'**
+  String get templateBlank;
+
+  /// Screen template: Login
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get templateLogin;
+
+  /// Screen template: Settings list
+  ///
+  /// In en, this message translates to:
+  /// **'Settings list'**
+  String get templateSettings;
+
+  /// Screen template: Profile
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get templateProfile;
+
+  /// Screen template: Inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Inbox'**
+  String get templateInbox;
+
+  /// Screen template: Onboarding
+  ///
+  /// In en, this message translates to:
+  /// **'Onboarding'**
+  String get templateOnboarding;
 }
 
 class _AppLocalizationsDelegate

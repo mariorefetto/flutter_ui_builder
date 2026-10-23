@@ -1106,4 +1106,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get assetNone => 'No picture';
+
+  @override
+  String get templateBlank => 'Blank screen';
+
+  @override
+  String get templateLogin => 'Login';
+
+  @override
+  String get templateSettings => 'Settings list';
+
+  @override
+  String get templateProfile => 'Profile';
+
+  @override
+  String get templateInbox => 'Inbox';
+
+  @override
+  String get templateOnboarding => 'Onboarding';
 }

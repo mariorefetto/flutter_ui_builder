@@ -4,11 +4,16 @@ import 'package:flutter_ui_builder/core/theme/app_constants.dart';
 import 'package:flutter_ui_builder/core/theme/app_icons.dart';
 import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/screen_templates.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_state.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/project_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/file/rename_dialog.dart';
+import 'package:flutter_ui_builder/l10n/generated/app_localizations.dart';
+
+/// The value of the "+" menu entry that adds a component.
+const String _componentChoice = 'component';
 
 enum _ScreenAction { rename, duplicate, makeHome, delete }
 
@@ -53,19 +58,20 @@ class DocumentTab extends StatelessWidget {
                   ),
                 ),
               ),
-              PopupMenuButton<bool>(
+              PopupMenuButton<String>(
                 tooltip: context.l10n.screenNew,
                 icon: const Icon(AppIcons.add),
                 iconSize: AppConstants.spacingMD,
-                onSelected: (component) =>
-                    _add(context, names, component: component),
+                onSelected: (choice) => _add(context, names, choice),
                 itemBuilder: (context) => [
+                  for (final template in ScreenTemplate.values)
+                    PopupMenuItem(
+                      value: template.name,
+                      child: Text(_templateLabel(context.l10n, template)),
+                    ),
+                  const PopupMenuDivider(),
                   PopupMenuItem(
-                    value: false,
-                    child: Text(context.l10n.screenNewScreen),
-                  ),
-                  PopupMenuItem(
-                    value: true,
+                    value: _componentChoice,
                     child: Text(context.l10n.componentNew),
                   ),
                 ],
@@ -77,26 +83,45 @@ class DocumentTab extends StatelessWidget {
     );
   }
 
+  // A template's name, or the component choice, picked in the "+" menu.
   Future<void> _add(
     BuildContext context,
-    List<String> names, {
-    required bool component,
-  }) async {
+    List<String> names,
+    String choice,
+  ) async {
     final cubit = context.read<EditorCubit>();
     final l10n = context.l10n;
+    final component = choice == _componentChoice;
+    final template = ScreenTemplate.values.asNameMap()[choice];
     final name = await showDialog<String>(
       context: context,
       builder: (context) => RenameDialog(
         initialName: component
             ? l10n.componentDefaultName(names.length + 1)
-            : l10n.screenDefaultName(names.length + 1),
+            : template == null || template == ScreenTemplate.blank
+            ? l10n.screenDefaultName(names.length + 1)
+            : _templateLabel(l10n, template),
         title: component ? l10n.componentNewTitle : l10n.screenNewTitle,
         hint: component ? l10n.componentExtractTitle : l10n.screenNameHint,
       ),
     );
     if (name == null) return;
-    component ? cubit.addComponent(name) : cubit.addScreen(name);
+    if (component) {
+      cubit.addComponent(name);
+    } else {
+      cubit.addScreen(name, template: template ?? ScreenTemplate.blank);
+    }
   }
+
+  String _templateLabel(AppLocalizations l10n, ScreenTemplate template) =>
+      switch (template) {
+        ScreenTemplate.blank => l10n.templateBlank,
+        ScreenTemplate.login => l10n.templateLogin,
+        ScreenTemplate.settings => l10n.templateSettings,
+        ScreenTemplate.profile => l10n.templateProfile,
+        ScreenTemplate.inbox => l10n.templateInbox,
+        ScreenTemplate.onboarding => l10n.templateOnboarding,
+      };
 }
 
 class _ScreenTab extends StatelessWidget {

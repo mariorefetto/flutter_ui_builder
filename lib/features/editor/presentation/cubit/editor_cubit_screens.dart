@@ -13,9 +13,14 @@ extension EditorScreens on EditorCubit {
         (document) => _commit(document, selectedId: state.selectedId),
       );
 
-  /// Adds a screen with a Scaffold and opens it.
-  void addScreen(String name) => _changeScreens(
-    _useCases.addScreen(ScreenParams(document: state.document, name: name)),
+  /// Adds a screen, a blank one or made from a [template], and opens it.
+  void addScreen(
+    String name, {
+    ScreenTemplate template = ScreenTemplate.blank,
+  }) => _changeScreens(
+    _useCases.addScreen(
+      ScreenParams(document: state.document, name: name, template: template),
+    ),
   );
 
   void deleteScreen(String name) => _changeScreens(

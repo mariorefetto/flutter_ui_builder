@@ -2,10 +2,16 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_ui_builder/core/error/failures.dart';
 import 'package:flutter_ui_builder/core/usecase/usecase.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/screen_templates.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 
 class ScreenParams {
-  const ScreenParams({required this.document, required this.name, this.to});
+  const ScreenParams({
+    required this.document,
+    required this.name,
+    this.to,
+    this.template = ScreenTemplate.blank,
+  });
 
   final EditorDocument document;
 
@@ -14,6 +20,9 @@ class ScreenParams {
 
   /// The new name, for a rename.
   final String? to;
+
+  /// What a new screen starts from.
+  final ScreenTemplate template;
 }
 
 class AddScreen implements SyncUseCase<EditorDocument, ScreenParams> {
@@ -23,7 +32,7 @@ class AddScreen implements SyncUseCase<EditorDocument, ScreenParams> {
 
   @override
   Either<Failure, EditorDocument> call(ScreenParams params) =>
-      _editor.add(params.document, params.name);
+      _editor.add(params.document, params.name, template: params.template);
 }
 
 class OpenScreen implements SyncUseCase<EditorDocument, ScreenParams> {

@@ -781,7 +781,7 @@ class UntitledView extends StatelessWidget {
 
     await tester.tap(find.byTooltip('New screen'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('New screen').last);
+    await tester.tap(find.text('Blank screen'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField).last, 'Settings');
     await tester.tap(find.text('OK'));
@@ -1026,5 +1026,22 @@ class UntitledView extends StatelessWidget {
         'assets/logo.png',
       );
     });
+  });
+
+  testWidgets('a screen can start from a template', (tester) async {
+    await pumpApp(tester);
+    final cubit = editorOf(tester);
+
+    await tester.tap(find.byTooltip('New screen'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Login').last);
+    await tester.pumpAndSettle();
+    expect(find.byType(AlertDialog), findsOneWidget);
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+
+    expect(cubit.state.document.name, 'Login');
+    expect(cubit.state.document.root.countNodes(), greaterThan(10));
+    expect(find.text('Welcome back'), findsWidgets);
   });
 }

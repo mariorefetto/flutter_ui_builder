@@ -5,6 +5,7 @@ import 'package:flutter_ui_builder/features/editor/domain/entities/document_hist
 import 'package:flutter_ui_builder/features/editor/domain/entities/drop_plan.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/edit_result.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/screen_templates.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/import_result.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';

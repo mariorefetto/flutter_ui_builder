@@ -1411,5 +1411,29 @@
   "assetNone": "No picture",
   "@assetNone": {
     "description": "Option: no picture chosen"
+  },
+  "templateBlank": "Blank screen",
+  "@templateBlank": {
+    "description": "Screen template: Blank screen"
+  },
+  "templateLogin": "Login",
+  "@templateLogin": {
+    "description": "Screen template: Login"
+  },
+  "templateSettings": "Settings list",
+  "@templateSettings": {
+    "description": "Screen template: Settings list"
+  },
+  "templateProfile": "Profile",
+  "@templateProfile": {
+    "description": "Screen template: Profile"
+  },
+  "templateInbox": "Inbox",
+  "@templateInbox": {
+    "description": "Screen template: Inbox"
+  },
+  "templateOnboarding": "Onboarding",
+  "@templateOnboarding": {
+    "description": "Screen template: Onboarding"
   }
 }

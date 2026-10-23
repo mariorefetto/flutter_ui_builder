@@ -326,5 +326,11 @@
   "mediaRemove": "Rimuovi l'immagine",
   "mediaPubspec": "Aggiungi questo a pubspec.yaml",
   "mediaCopyPubspec": "Copia",
-  "assetNone": "Nessuna immagine"
+  "assetNone": "Nessuna immagine",
+  "templateBlank": "Schermata vuota",
+  "templateLogin": "Accesso",
+  "templateSettings": "Elenco impostazioni",
+  "templateProfile": "Profilo",
+  "templateInbox": "Posta in arrivo",
+  "templateOnboarding": "Benvenuto"
 }

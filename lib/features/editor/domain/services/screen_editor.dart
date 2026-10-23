@@ -3,8 +3,8 @@ import 'package:flutter_ui_builder/core/error/failures.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/component_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
-import 'package:flutter_ui_builder/features/editor/domain/entities/new_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/screen_templates.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/identifier_names.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
@@ -73,15 +73,18 @@ class ScreenEditor {
     return true;
   }
 
-  /// A new screen with a Scaffold, opened for editing.
-  Either<Failure, EditorDocument> add(EditorDocument document, String name) =>
-      _validName(document, name).map((clean) {
-        final all = _all(document);
-        return _build(document, [
-          ...all,
-          ProjectScreen(name: clean, root: createEmptyDocument().root),
-        ], all.length);
-      });
+  /// A new screen made from [template], a Scaffold, opened for editing.
+  Either<Failure, EditorDocument> add(
+    EditorDocument document,
+    String name, {
+    ScreenTemplate template = ScreenTemplate.blank,
+  }) => _validName(document, name).map((clean) {
+    final all = _all(document);
+    return _build(document, [
+      ...all,
+      ProjectScreen(name: clean, root: screenTemplateRoot(template)),
+    ], all.length);
+  });
 
   /// A new component, a Container with a Text, opened for editing.
   Either<Failure, EditorDocument> addComponent(
