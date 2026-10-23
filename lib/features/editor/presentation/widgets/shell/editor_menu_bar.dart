@@ -32,6 +32,12 @@ class EditorMenuBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    // The View menu shows which panels are open and which theme is in use, so
+    // the bar is built again when either changes, however it was changed: a
+    // panel has its own close button.
+    context
+      ..watch<WorkspaceCubit>()
+      ..watch<SettingsCubit>();
     return BlocBuilder<EditorCubit, EditorState>(
       buildWhen: (previous, current) =>
           previous.history.canUndo != current.history.canUndo ||

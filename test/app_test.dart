@@ -1626,4 +1626,49 @@ class UntitledView extends StatelessWidget {
       expect(find.text('Editing 2 widgets at once'), findsOneWidget);
     });
   });
+
+  group('the View menu', () {
+    // Whether the entry called [name] in the open menu has its check mark.
+    bool checked(WidgetTester tester, String name) {
+      final item = find.ancestor(
+        of: find.text(name),
+        matching: find.byType(MenuItemButton),
+      );
+      return find
+          .descendant(of: item.first, matching: find.byIcon(AppIcons.check))
+          .evaluate()
+          .isNotEmpty;
+    }
+
+    testWidgets('follows a panel closed with its own button', (tester) async {
+      await pumpApp(tester);
+      await tester.tap(find.text('View'));
+      await tester.pumpAndSettle();
+      expect(checked(tester, 'Properties'), isTrue);
+      await tester.tapAt(Offset.zero);
+      await tester.pumpAndSettle();
+
+      // The properties panel is the last one with a close button.
+      await tester.tap(find.byTooltip('Close panel').last);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('View'));
+      await tester.pumpAndSettle();
+
+      expect(checked(tester, 'Properties'), isFalse);
+    });
+
+    testWidgets('follows the theme chosen in the settings', (tester) async {
+      await pumpApp(tester);
+      await sl<SettingsCubit>().setThemeMode(ThemeMode.dark);
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('View'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Theme'));
+      await tester.pumpAndSettle();
+
+      expect(checked(tester, 'Dark'), isTrue);
+      expect(checked(tester, 'Light'), isFalse);
+    });
+  });
 }
