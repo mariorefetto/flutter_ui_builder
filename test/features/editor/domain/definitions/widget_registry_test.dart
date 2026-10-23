@@ -13,7 +13,7 @@ void main() {
       types,
       containsAll(['Scaffold', 'Row', 'Column', 'Stack', 'Text', 'Image']),
     );
-    expect(registry.all.map((d) => d.category).toSet(), hasLength(13));
+    expect(registry.all.map((d) => d.category).toSet(), hasLength(14));
   });
 
   test('rejects a duplicate registration', () {

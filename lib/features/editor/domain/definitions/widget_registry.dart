@@ -107,18 +107,23 @@ class WidgetRegistry {
   /// The first rule the tree under [root] breaks, or null when it follows all
   /// of them: known types, a root that needs no parent, and every node
   /// accepted by its parent and ancestors.
-  TreeFailureReason? violation(WidgetNode root) {
+  ///
+  /// A [detached] tree is a component, which is built apart and used inside
+  /// other widgets: what it needs from its ancestors is whatever it is placed
+  /// in, so those rules are not checked here.
+  TreeFailureReason? violation(WidgetNode root, {bool detached = false}) {
     if (!contains(root.type)) return TreeFailureReason.unknownType;
     final allowed = definitionFor(root.type).allowedParents;
     if (allowed != null && allowed.isNotEmpty) {
       return TreeFailureReason.rootNotAllowed;
     }
+    if (detached) return _violationBelow(root, null);
     // The root has no ancestors, so a widget that needs one cannot be it.
     return _missingAncestor(definitionFor(root.type), const []) ??
         _violationBelow(root, [root.type]);
   }
 
-  TreeFailureReason? _violationBelow(WidgetNode node, List<String> ancestors) {
+  TreeFailureReason? _violationBelow(WidgetNode node, List<String>? ancestors) {
     for (final child in node.children) {
       if (!contains(child.type)) return TreeFailureReason.unknownType;
       final siblings = [
@@ -127,7 +132,10 @@ class WidgetRegistry {
       ];
       final refusal =
           admit(node.type, child.type, siblings, ancestorTypes: ancestors) ??
-          _violationBelow(child, [...ancestors, child.type]);
+          _violationBelow(
+            child,
+            ancestors == null ? null : [...ancestors, child.type],
+          );
       if (refusal != null) return refusal;
     }
     return null;

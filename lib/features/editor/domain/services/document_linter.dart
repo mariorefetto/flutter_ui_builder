@@ -1,3 +1,4 @@
+import 'package:flutter_ui_builder/features/editor/domain/definitions/component_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
@@ -156,39 +157,83 @@ const Set<String> _surfaces = {
 
 const double _smallestTarget = 48;
 
+/// What the project holds, for the checks that point at its screens and
+/// components.
+class _Names {
+  const _Names({
+    required this.screens,
+    required this.components,
+    required this.cyclic,
+  });
+
+  final Set<String> screens;
+  final Set<String> components;
+
+  /// Components that contain themselves, or the open component.
+  final Set<String> cyclic;
+}
+
 class DocumentLinter {
   const DocumentLinter(this._registry);
 
   final WidgetRegistry _registry;
 
   /// The problems of [document], in document order.
-  List<Problem> lint(EditorDocument document) => _lintNode(
-    document.root,
-    const [],
-    const ScreenEditor().namesOf(document).toSet(),
-  ).toList();
+  List<Problem> lint(EditorDocument document) {
+    const editor = ScreenEditor();
+    final names = _Names(
+      screens: editor.screensOf(document).toSet(),
+      components: editor.componentsOf(document).toSet(),
+      // A component that contains itself, or the open component.
+      cyclic: {
+        for (final name in editor.componentsOf(document))
+          if (editor.usesComponent(document, name, name) ||
+              (document.component &&
+                  (name == document.name ||
+                      editor.usesComponent(document, name, document.name))))
+            name,
+      },
+    );
+    return _lintNode(document.root, const [], names).toList();
+  }
 
   Iterable<Problem> _lintNode(
     WidgetNode node,
     List<WidgetNode> above,
-    Set<String> screens,
+    _Names names,
   ) sync* {
-    if (_registry.contains(node.type)) yield* _lintOwn(node, above, screens);
+    if (_registry.contains(node.type)) yield* _lintOwn(node, above, names);
     for (final child in node.children) {
-      yield* _lintNode(child, [...above, node], screens);
+      yield* _lintNode(child, [...above, node], names);
     }
   }
 
   Iterable<Problem> _lintOwn(
     WidgetNode node,
     List<WidgetNode> above,
-    Set<String> screens,
+    _Names names,
   ) sync* {
     final target = node.props[navigateToProp];
     if (target is String &&
         target != navigateBack &&
-        !screens.contains(target)) {
+        !names.screens.contains(target)) {
       yield _problem(node, ProblemCode.unknownScreen, ProblemSeverity.warning);
+    }
+    final component = node.props[componentProp];
+    if (node.type == componentType && component is String) {
+      if (!names.components.contains(component)) {
+        yield _problem(
+          node,
+          ProblemCode.unknownComponent,
+          ProblemSeverity.warning,
+        );
+      } else if (names.cyclic.contains(component)) {
+        yield _problem(
+          node,
+          ProblemCode.componentCycle,
+          ProblemSeverity.warning,
+        );
+      }
     }
     final definition = _registry.definitionFor(node.type);
     final props = definition.resolve(node);

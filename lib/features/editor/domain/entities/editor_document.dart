@@ -25,6 +25,9 @@ abstract class EditorDocument with _$EditorDocument {
 
     /// Where the open screen sits among all of them.
     @Default(0) int activeIndex,
+
+    /// Whether the open one is a component rather than a screen.
+    @Default(false) bool component,
     @Default(currentSchemaVersion) int schemaVersion,
   }) = _EditorDocument;
 }

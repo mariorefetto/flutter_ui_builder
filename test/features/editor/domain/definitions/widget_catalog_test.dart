@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_ui_builder/features/editor/data/services/analyzer_code_parser.dart';
 import 'package:flutter_ui_builder/features/editor/data/services/dart_style_code_formatter.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/builtin_definitions.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/component_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_definition.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
@@ -93,7 +94,9 @@ void main() {
   // for each screen widget, which can only be a root.
   List<EditorDocument> catalog({bool full = false}) {
     final tops = [
-      for (final d in registry.all)
+      // A use of a component needs a project with that component, so it has
+      // its own tests.
+      for (final d in registry.all.where((d) => d.type != componentType))
         placed(d.type, props: full ? sampleProps(d) : const {}),
     ];
     return [

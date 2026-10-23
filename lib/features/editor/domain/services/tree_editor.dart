@@ -22,11 +22,16 @@ class TreeEditor {
     required String type,
     required String parentId,
     int? index,
+    Map<String, Object?> props = const {},
   }) {
     if (!_registry.contains(type)) return _fail(TreeFailureReason.unknownType);
     final parent = document.root.find(parentId);
     if (parent == null) return _fail(TreeFailureReason.unknownParent);
-    final node = WidgetNode(id: document.root.nextId(), type: type);
+    final node = WidgetNode(
+      id: document.root.nextId(),
+      type: type,
+      props: props,
+    );
     return _insert(document, parent, node, index);
   }
 
@@ -196,7 +201,7 @@ class TreeEditor {
     WidgetNode root,
     String nodeId,
   ) {
-    final broken = _registry.violation(root);
+    final broken = _registry.violation(root, detached: document.component);
     if (broken != null) return _fail(broken);
     return Right(
       EditResult(
@@ -267,7 +272,7 @@ class TreeEditor {
     });
     // The new child and everything under it must also suit their new
     // ancestors, which only the whole tree can tell.
-    final broken = _registry.violation(root);
+    final broken = _registry.violation(root, detached: document.component);
     if (broken != null) return _fail(broken);
     return Right(
       EditResult(

@@ -23,3 +23,17 @@ String? navigationCallback(String? target) {
   return '() => Navigator.push(context, MaterialPageRoute<void>('
       'builder: (_) => const ${screenClassName(target)}()))';
 }
+
+/// The property of a Component node that names the component it shows.
+const String componentProp = 'component';
+
+const String componentClassSuffix = 'Widget';
+const String componentFileSuffix = '_widget.g.dart';
+
+/// The class the code of the component called [name] declares.
+String componentClassName(String name) =>
+    '${pascalCase(name)}$componentClassSuffix';
+
+/// The file the code of the component called [name] is written to.
+String componentFileName(String name) =>
+    '${snakeCase(name)}$componentFileSuffix';

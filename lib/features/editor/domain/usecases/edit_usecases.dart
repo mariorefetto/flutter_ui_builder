@@ -12,12 +12,16 @@ class AddNodeParams {
     required this.type,
     required this.parentId,
     this.index,
+    this.props = const {},
   });
 
   final EditorDocument document;
   final String type;
   final String parentId;
   final int? index;
+
+  /// Values the new widget starts with.
+  final Map<String, Object?> props;
 }
 
 class AddNode implements SyncUseCase<EditResult, AddNodeParams> {
@@ -31,6 +35,7 @@ class AddNode implements SyncUseCase<EditResult, AddNodeParams> {
     type: params.type,
     parentId: params.parentId,
     index: params.index,
+    props: params.props,
   );
 }
 

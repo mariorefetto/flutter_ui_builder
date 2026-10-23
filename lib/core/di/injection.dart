@@ -118,7 +118,7 @@ void _initEditor() {
       (document, _) => EditorCubit(initialDocument: document, useCases: sl()),
     )
     ..registerLazySingleton(
-      () => EditorUseCases.from(editor: sl(), planner: sl()),
+      () => EditorUseCases.from(editor: sl(), planner: sl(), registry: sl()),
     )
     ..registerLazySingleton(() => DropPlanner(sl()))
     ..registerLazySingleton(() => TreeEditor(sl()))

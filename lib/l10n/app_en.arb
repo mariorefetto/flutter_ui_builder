@@ -1230,5 +1230,13 @@
   "designerPrototype": "Try the navigation: clicking a widget opens its screen",
   "@designerPrototype": {
     "description": "Tooltip: prototype mode"
+  },
+  "problemUnknownComponent": "This widget shows a component that does not exist",
+  "@problemUnknownComponent": {
+    "description": "Problem: This widget shows a component that does not exist"
+  },
+  "problemComponentCycle": "This component would end up containing itself",
+  "@problemComponentCycle": {
+    "description": "Problem: This component would end up containing itself"
   }
 }

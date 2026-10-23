@@ -12,6 +12,7 @@ abstract class ProjectScreenModel with _$ProjectScreenModel {
   const factory ProjectScreenModel({
     required String name,
     required WidgetNodeModel root,
+    @Default(false) bool component,
   }) = _ProjectScreenModel;
 
   factory ProjectScreenModel.fromJson(Map<String, dynamic> json) =>
@@ -21,9 +22,11 @@ abstract class ProjectScreenModel with _$ProjectScreenModel {
       ProjectScreenModel(
         name: screen.name,
         root: WidgetNodeModel.fromEntity(screen.root),
+        component: screen.component,
       );
 
   const ProjectScreenModel._();
 
-  ProjectScreen toEntity() => ProjectScreen(name: name, root: root.toEntity());
+  ProjectScreen toEntity() =>
+      ProjectScreen(name: name, root: root.toEntity(), component: component);
 }

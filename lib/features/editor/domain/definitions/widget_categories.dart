@@ -13,3 +13,6 @@ const String animationCategory = 'Animation';
 const String interactionCategory = 'Interaction';
 const String accessibilityCategory = 'Accessibility';
 const String cupertinoCategory = 'Cupertino';
+
+/// The widgets the user made from parts of the project.
+const String componentsCategory = 'Components';

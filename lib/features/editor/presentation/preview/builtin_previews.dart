@@ -1,9 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/node_props.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/editor_dimensions.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/preview/component_previews.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/control_previews.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/cupertino_previews.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/effect_previews.dart';
@@ -53,6 +53,7 @@ final Map<String, PreviewBuilder> builtinPreviews = {
     color: colorOf(props, 'color'),
     semanticLabel: props.string('semanticLabel'),
   ),
+  ...componentPreviews,
   ...scaffoldPreviews,
   ...layoutPreviews,
   ...controlPreviews,

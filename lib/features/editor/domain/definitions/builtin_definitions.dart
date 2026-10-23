@@ -1,3 +1,4 @@
+import 'package:flutter_ui_builder/features/editor/domain/definitions/component_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/content_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/control_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/cupertino_definitions.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_def
 /// definition listed here, plus its preview in the presentation layer.
 final List<WidgetDefinition> builtinDefinitions = [
   scaffoldDefinition,
+  componentDefinition,
   appBarDefinition,
   bottomAppBarDefinition,
   floatingActionButtonDefinition,

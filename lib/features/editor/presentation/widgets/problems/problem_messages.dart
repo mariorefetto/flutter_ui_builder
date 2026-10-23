@@ -23,4 +23,6 @@ String problemMessage(AppLocalizations l10n, Problem problem) =>
       ProblemCode.lowContrast => l10n.problemLowContrast,
       ProblemCode.smallTapTarget => l10n.problemSmallTapTarget,
       ProblemCode.unknownScreen => l10n.problemUnknownScreen,
+      ProblemCode.unknownComponent => l10n.problemUnknownComponent,
+      ProblemCode.componentCycle => l10n.problemComponentCycle,
     };

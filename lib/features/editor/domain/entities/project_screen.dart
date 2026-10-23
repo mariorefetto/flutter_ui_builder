@@ -3,11 +3,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'project_screen.freezed.dart';
 
-/// A screen of the project that is not the one being edited.
+/// A screen or a component of the project that is not the one being edited.
+/// A component is a widget made once and used in several places.
 @freezed
 abstract class ProjectScreen with _$ProjectScreen {
   const factory ProjectScreen({
     required String name,
     required WidgetNode root,
+    @Default(false) bool component,
   }) = _ProjectScreen;
 }

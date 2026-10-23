@@ -51,4 +51,7 @@ abstract final class AppIcons {
   static const IconData recent = LucideIcons.history;
   static const IconData home = LucideIcons.house;
   static const IconData goTo = LucideIcons.externalLink;
+  static const IconData component = LucideIcons.puzzle;
+  static const IconData extract = LucideIcons.packagePlus;
+  static const IconData detach = LucideIcons.unlink;
 }

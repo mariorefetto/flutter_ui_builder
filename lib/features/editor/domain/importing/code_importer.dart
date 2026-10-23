@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_ui_builder/core/error/failures.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/component_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_definition.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
@@ -110,6 +111,8 @@ class CodeImporter {
 
   WidgetNode? _convert(CodeValue value, List<ImportIssue> issues) {
     if (value is! CodeCall) return null;
+    final component = _componentUse(value);
+    if (component != null) return component;
     final definition = _definitionFor(value);
     if (definition == null) return _unknown(value, issues);
     final props = <String, Object?>{};
@@ -137,6 +140,32 @@ class CodeImporter {
       type: definition.type,
       props: _withoutDefaults(definition, props),
       children: children,
+    );
+  }
+
+  // `ProfileCardWidget()`: a use of the component the generator wrote that
+  // class for. The project is not known here, so any argument-less call to a
+  // class named like one is read as a component; the editor ties it to the
+  // right one or reports it.
+  WidgetNode? _componentUse(CodeCall call) {
+    final name = call.name;
+    final isUse =
+        call.constructor == null &&
+        call.positional.isEmpty &&
+        call.named.isEmpty &&
+        name.endsWith(componentClassSuffix) &&
+        name.length > componentClassSuffix.length &&
+        !_registry.contains(name);
+    if (!isUse || !_registry.contains(componentType)) return null;
+    return WidgetNode(
+      id: '',
+      type: componentType,
+      props: {
+        componentProp: name.substring(
+          0,
+          name.length - componentClassSuffix.length,
+        ),
+      },
     );
   }
 

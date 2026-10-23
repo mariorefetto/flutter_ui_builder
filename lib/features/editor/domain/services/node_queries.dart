@@ -1,3 +1,4 @@
+import 'package:flutter_ui_builder/features/editor/domain/definitions/component_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 
@@ -49,6 +50,14 @@ extension NodeQueries on WidgetNode {
         when target.isNotEmpty && target != navigateBack)
       target,
     for (final child in children) ...child.navigationTargets(),
+  };
+
+  /// The components that widgets in this subtree show, by name.
+  Set<String> componentTargets() => {
+    if (props[componentProp] case final String name
+        when type == componentType && name.isNotEmpty)
+      name,
+    for (final child in children) ...child.componentTargets(),
   };
 
   /// Number of nodes in this subtree, itself included.

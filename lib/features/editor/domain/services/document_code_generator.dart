@@ -22,12 +22,16 @@ class DocumentCodeGenerator {
   final CodeFormatter _formatter;
 
   Either<Failure, GeneratedFile> generate(EditorDocument document) {
-    final className = screenClassName(document.name);
+    final className = document.component
+        ? componentClassName(document.name)
+        : screenClassName(document.name);
     final source = _source(document, className);
     try {
       return Right(
         GeneratedFile(
-          fileName: screenFileName(document.name),
+          fileName: document.component
+              ? componentFileName(document.name)
+              : screenFileName(document.name),
           content: _formatter.format(source),
         ),
       );
@@ -36,15 +40,17 @@ class DocumentCodeGenerator {
     }
   }
 
-  /// One file for each screen of the project, in project order.
+  /// One file for each screen and component of the project, in project order.
   Either<Failure, List<GeneratedFile>> generateAll(EditorDocument document) {
-    final screens = const ScreenEditor().namesOf(document);
     final files = <GeneratedFile>[];
-    for (final name in screens) {
-      final root = const ScreenEditor().rootOf(document, name);
-      if (root == null) continue;
+    for (final entry in const ScreenEditor().entriesOf(document)) {
       final result = generate(
-        EditorDocument(name: name, root: root, screens: document.screens),
+        EditorDocument(
+          name: entry.name,
+          root: entry.root,
+          component: entry.component,
+          screens: document.screens,
+        ),
       );
       if (result.isLeft()) return result.map((_) => const []);
       result.map(files.add);
@@ -78,20 +84,19 @@ class $className extends StatelessWidget {
       _materialLibrary,
       ..._registry.importsFor(document.root),
     }.toList()..sort();
-    // The screens this one opens sit in files of their own, next to it.
-    final screens =
-        document.root
-            .navigationTargets()
-            .where(
-              (name) => screenClassName(name) != screenClassName(document.name),
-            )
-            .map(screenFileName)
-            .toSet()
-            .toList()
-          ..sort();
+    // The screens it opens and the components it shows sit in files of their
+    // own, next to it.
+    final siblings = {
+      for (final name in document.root.navigationTargets())
+        if (screenClassName(name) != screenClassName(document.name))
+          screenFileName(name),
+      for (final name in document.root.componentTargets())
+        if (componentClassName(name) != componentClassName(document.name))
+          componentFileName(name),
+    }.toList()..sort();
     return [
       ...libraries.map((library) => "import '$library';"),
-      ...screens.map((file) => "import '$file';"),
+      ...siblings.map((file) => "import '$file';"),
     ].join('\n');
   }
 

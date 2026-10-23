@@ -17,6 +17,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
     required WidgetNodeModel root,
     @Default(<ProjectScreenModel>[]) List<ProjectScreenModel> screens,
     @Default(0) int activeIndex,
+    @Default(false) bool component,
     @Default(currentSchemaVersion) int schemaVersion,
   }) = _EditorDocumentModel;
 
@@ -29,6 +30,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
         root: WidgetNodeModel.fromEntity(document.root),
         screens: document.screens.map(ProjectScreenModel.fromEntity).toList(),
         activeIndex: document.activeIndex,
+        component: document.component,
         schemaVersion: document.schemaVersion,
       );
 
@@ -40,6 +42,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
     root: root.toEntity(),
     screens: screens.map((s) => s.toEntity()).toList(),
     activeIndex: activeIndex.clamp(0, screens.length),
+    component: component,
     schemaVersion: schemaVersion,
   );
 }

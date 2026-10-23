@@ -969,4 +969,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get designerPrototype =>
       'Try the navigation: clicking a widget opens its screen';
+
+  @override
+  String get problemUnknownComponent =>
+      'This widget shows a component that does not exist';
+
+  @override
+  String get problemComponentCycle =>
+      'This component would end up containing itself';
 }

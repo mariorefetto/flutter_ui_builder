@@ -39,6 +39,7 @@ void main() {
       useCases: EditorUseCases.from(
         editor: editor,
         planner: DropPlanner(registry),
+        registry: registry,
       ),
     );
   });

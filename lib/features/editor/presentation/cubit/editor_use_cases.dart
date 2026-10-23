@@ -1,7 +1,9 @@
+import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/document_reconciler.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/drop_planner.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/tree_editor.dart';
+import 'package:flutter_ui_builder/features/editor/domain/usecases/component_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/edit_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/history_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/import_usecases.dart';
@@ -33,12 +35,16 @@ class EditorUseCases {
     required this.deleteScreen,
     required this.duplicateScreen,
     required this.makeHomeScreen,
+    required this.addComponent,
+    required this.extractComponent,
+    required this.detachComponent,
   });
 
   /// Builds the use cases over one tree editor and one drop planner.
   factory EditorUseCases.from({
     required TreeEditor editor,
     required DropPlanner planner,
+    required WidgetRegistry registry,
   }) => EditorUseCases(
     addNode: AddNode(editor),
     moveNode: MoveNode(editor),
@@ -60,6 +66,9 @@ class EditorUseCases {
     deleteScreen: const DeleteScreen(ScreenEditor()),
     duplicateScreen: const DuplicateScreen(ScreenEditor()),
     makeHomeScreen: const MakeHomeScreen(ScreenEditor()),
+    addComponent: const AddComponent(ScreenEditor()),
+    extractComponent: ExtractComponent(const ScreenEditor(), registry),
+    detachComponent: const DetachComponent(ScreenEditor()),
   );
 
   final AddNode addNode;
@@ -82,4 +91,7 @@ class EditorUseCases {
   final DeleteScreen deleteScreen;
   final DuplicateScreen duplicateScreen;
   final MakeHomeScreen makeHomeScreen;
+  final AddComponent addComponent;
+  final ExtractComponent extractComponent;
+  final DetachComponent detachComponent;
 }

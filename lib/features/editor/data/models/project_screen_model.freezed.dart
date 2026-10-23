@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProjectScreenModel {
 
- String get name; WidgetNodeModel get root;
+ String get name; WidgetNodeModel get root; bool get component;
 /// Create a copy of ProjectScreenModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ProjectScreenModelCopyWith<ProjectScreenModel> get copyWith => _$ProjectScreenM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectScreenModel&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectScreenModel&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&(identical(other.component, component) || other.component == component));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,root);
+int get hashCode => Object.hash(runtimeType,name,root,component);
 
 @override
 String toString() {
-  return 'ProjectScreenModel(name: $name, root: $root)';
+  return 'ProjectScreenModel(name: $name, root: $root, component: $component)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ProjectScreenModelCopyWith<$Res>  {
   factory $ProjectScreenModelCopyWith(ProjectScreenModel value, $Res Function(ProjectScreenModel) _then) = _$ProjectScreenModelCopyWithImpl;
 @useResult
 $Res call({
- String name, WidgetNodeModel root
+ String name, WidgetNodeModel root, bool component
 });
 
 
@@ -65,11 +65,12 @@ class _$ProjectScreenModelCopyWithImpl<$Res>
 
 /// Create a copy of ProjectScreenModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? root = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? root = null,Object? component = null,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,root: null == root ? _self.root : root // ignore: cast_nullable_to_non_nullable
-as WidgetNodeModel,
+as WidgetNodeModel,component: null == component ? _self.component : component // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 /// Create a copy of ProjectScreenModel
@@ -163,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  WidgetNodeModel root)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  WidgetNodeModel root,  bool component)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProjectScreenModel() when $default != null:
-return $default(_that.name,_that.root);case _:
+return $default(_that.name,_that.root,_that.component);case _:
   return orElse();
 
 }
@@ -184,10 +185,10 @@ return $default(_that.name,_that.root);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  WidgetNodeModel root)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  WidgetNodeModel root,  bool component)  $default,) {final _that = this;
 switch (_that) {
 case _ProjectScreenModel():
-return $default(_that.name,_that.root);case _:
+return $default(_that.name,_that.root,_that.component);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +205,10 @@ return $default(_that.name,_that.root);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  WidgetNodeModel root)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  WidgetNodeModel root,  bool component)?  $default,) {final _that = this;
 switch (_that) {
 case _ProjectScreenModel() when $default != null:
-return $default(_that.name,_that.root);case _:
+return $default(_that.name,_that.root,_that.component);case _:
   return null;
 
 }
@@ -219,11 +220,12 @@ return $default(_that.name,_that.root);case _:
 
 @JsonSerializable(explicitToJson: true, checked: true)
 class _ProjectScreenModel extends ProjectScreenModel {
-  const _ProjectScreenModel({required this.name, required this.root}): super._();
+  const _ProjectScreenModel({required this.name, required this.root, this.component = false}): super._();
   factory _ProjectScreenModel.fromJson(Map<String, dynamic> json) => _$ProjectScreenModelFromJson(json);
 
 @override final  String name;
 @override final  WidgetNodeModel root;
+@override@JsonKey() final  bool component;
 
 /// Create a copy of ProjectScreenModel
 /// with the given fields replaced by the non-null parameter values.
@@ -238,16 +240,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProjectScreenModel&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProjectScreenModel&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&(identical(other.component, component) || other.component == component));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,root);
+int get hashCode => Object.hash(runtimeType,name,root,component);
 
 @override
 String toString() {
-  return 'ProjectScreenModel(name: $name, root: $root)';
+  return 'ProjectScreenModel(name: $name, root: $root, component: $component)';
 }
 
 
@@ -258,7 +260,7 @@ abstract mixin class _$ProjectScreenModelCopyWith<$Res> implements $ProjectScree
   factory _$ProjectScreenModelCopyWith(_ProjectScreenModel value, $Res Function(_ProjectScreenModel) _then) = __$ProjectScreenModelCopyWithImpl;
 @override @useResult
 $Res call({
- String name, WidgetNodeModel root
+ String name, WidgetNodeModel root, bool component
 });
 
 
@@ -275,11 +277,12 @@ class __$ProjectScreenModelCopyWithImpl<$Res>
 
 /// Create a copy of ProjectScreenModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? root = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? root = null,Object? component = null,}) {
   return _then(_ProjectScreenModel(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,root: null == root ? _self.root : root // ignore: cast_nullable_to_non_nullable
-as WidgetNodeModel,
+as WidgetNodeModel,component: null == component ? _self.component : component // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

@@ -142,12 +142,13 @@ class DropResolver {
     DragPayload payload,
     DropPlan plan,
   ) => switch (payload) {
-    NewWidgetPayload(:final type) => _useCases.addNode(
+    NewWidgetPayload(:final type, :final props) => _useCases.addNode(
       AddNodeParams(
         document: document,
         type: type,
         parentId: plan.parentId,
         index: plan.index,
+        props: props,
       ),
     ),
     MoveNodePayload(:final nodeId) => _useCases.moveNode(

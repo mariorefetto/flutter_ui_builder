@@ -48,4 +48,28 @@ extension EditorScreens on EditorCubit {
   // that is no longer open.
   void _changeScreens(Either<Failure, EditorDocument> result) =>
       result.fold(_reportFailure, (d) => _commit(d, selectedId: null));
+
+  /// Adds a component, a widget to be used in several places, and opens it.
+  void addComponent(String name) => _changeScreens(
+    _useCases.addComponent(
+      ComponentParams(document: state.document, name: name),
+    ),
+  );
+
+  /// Makes a component of the selected widget and what is inside it. The
+  /// widget becomes a use of the component, and stays selected.
+  void extractSelectedAsComponent(String name) => _withSelection(
+    (id) => _useCases
+        .extractComponent(
+          ComponentParams(document: state.document, name: name, nodeId: id),
+        )
+        .fold(_reportFailure, (document) => _commit(document, selectedId: id)),
+  );
+
+  /// Replaces the selected use of a component with a copy of its content.
+  void detachSelectedComponent() => _withSelection(
+    (id) => _useCases
+        .detachComponent(ComponentParams(document: state.document, nodeId: id))
+        .fold(_reportFailure, (document) => _commit(document, selectedId: id)),
+  );
 }

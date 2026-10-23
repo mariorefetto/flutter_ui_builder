@@ -29,6 +29,7 @@ _EditorDocumentModel _$EditorDocumentModelFromJson(Map<String, dynamic> json) =>
           'activeIndex',
           (v) => (v as num?)?.toInt() ?? 0,
         ),
+        component: $checkedConvert('component', (v) => v as bool? ?? false),
         schemaVersion: $checkedConvert(
           'schemaVersion',
           (v) => (v as num?)?.toInt() ?? currentSchemaVersion,
@@ -44,5 +45,6 @@ Map<String, dynamic> _$EditorDocumentModelToJson(
   'root': instance.root.toJson(),
   'screens': instance.screens.map((e) => e.toJson()).toList(),
   'activeIndex': instance.activeIndex,
+  'component': instance.component,
   'schemaVersion': instance.schemaVersion,
 };

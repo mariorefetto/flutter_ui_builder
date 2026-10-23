@@ -986,4 +986,12 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get designerPrototype =>
       'Prova la navigazione: un clic su un widget apre la sua schermata';
+
+  @override
+  String get problemUnknownComponent =>
+      'Questo widget mostra un componente che non esiste';
+
+  @override
+  String get problemComponentCycle =>
+      'Questo componente finirebbe per contenere se stesso';
 }

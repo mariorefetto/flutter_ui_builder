@@ -22,6 +22,7 @@ EditorCubit _cubit() {
     useCases: EditorUseCases.from(
       editor: editor,
       planner: DropPlanner(registry),
+      registry: registry,
     ),
   );
 }

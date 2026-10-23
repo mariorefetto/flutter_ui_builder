@@ -17,29 +17,31 @@ class DocumentReconciler {
   EditorDocument reconcile(EditorDocument previous, ImportResult imported) {
     final root = imported.document.root;
     final fresh = _highestOf(previous.root, root) + 1;
-    final names = const ScreenEditor().namesOf(previous);
+    const editor = ScreenEditor();
     return previous.copyWith(
       name: _name(previous, imported),
-      root: _retargeted(_carryIds(previous.root, root, _Counter(fresh)), names),
+      root: _retargeted(_carryIds(previous.root, root, _Counter(fresh)), {
+        navigateToProp: editor.screensOf(previous),
+        componentProp: editor.componentsOf(previous),
+      }),
     );
   }
 
-  // Code names a screen by its class, so `Settings` stands for the screen
-  // "settings" when the project has one that writes the same class.
-  WidgetNode _retargeted(WidgetNode node, List<String> screens) {
-    final target = node.props[navigateToProp];
+  // Code names a screen or component by its class, so `Settings` stands for
+  // the screen "settings" when the project has one that writes the same class.
+  WidgetNode _retargeted(WidgetNode node, Map<String, List<String>> known) {
     var props = node.props;
-    if (target is String && target != navigateBack) {
-      final match = screens
+    for (final MapEntry(:key, value: names) in known.entries) {
+      final target = props[key];
+      if (target is! String || target == navigateBack) continue;
+      final match = names
           .where((s) => pascalCase(s) == pascalCase(target))
           .firstOrNull;
-      if (match != null && match != target) {
-        props = {...props, navigateToProp: match};
-      }
+      if (match != null && match != target) props = {...props, key: match};
     }
     return node.copyWith(
       props: props,
-      children: [for (final c in node.children) _retargeted(c, screens)],
+      children: [for (final c in node.children) _retargeted(c, known)],
     );
   }
 

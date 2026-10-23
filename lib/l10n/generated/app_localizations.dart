@@ -1795,6 +1795,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try the navigation: clicking a widget opens its screen'**
   String get designerPrototype;
+
+  /// Problem: This widget shows a component that does not exist
+  ///
+  /// In en, this message translates to:
+  /// **'This widget shows a component that does not exist'**
+  String get problemUnknownComponent;
+
+  /// Problem: This component would end up containing itself
+  ///
+  /// In en, this message translates to:
+  /// **'This component would end up containing itself'**
+  String get problemComponentCycle;
 }
 
 class _AppLocalizationsDelegate

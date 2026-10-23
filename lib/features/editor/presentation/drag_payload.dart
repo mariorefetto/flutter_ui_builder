@@ -4,9 +4,12 @@ sealed class DragPayload {
 }
 
 final class NewWidgetPayload extends DragPayload {
-  const NewWidgetPayload(this.type);
+  const NewWidgetPayload(this.type, {this.props = const {}});
 
   final String type;
+
+  /// Values the new widget starts with, such as the component it shows.
+  final Map<String, Object?> props;
 }
 
 final class MoveNodePayload extends DragPayload {

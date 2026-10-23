@@ -17,6 +17,8 @@ enum ProblemCode {
   lowContrast,
   smallTapTarget,
   unknownScreen,
+  unknownComponent,
+  componentCycle,
 }
 
 /// Something in the document that will misbehave or be hard to use, found

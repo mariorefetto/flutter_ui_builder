@@ -28,12 +28,12 @@ class DocumentValidator {
     if (names.toSet().length != names.length) {
       return DocumentFailureReason.invalidStructure;
     }
-    for (final name in editor.namesOf(document)) {
-      final root = editor.rootOf(document, name);
-      if (root == null) continue;
-      final reason = _duplicateId(root, <String>{})
+    for (final entry in editor.entriesOf(document)) {
+      final reason = _duplicateId(entry.root, <String>{})
           ? DocumentFailureReason.invalidStructure
-          : _reasonFor(_registry.violation(root));
+          : _reasonFor(
+              _registry.violation(entry.root, detached: entry.component),
+            );
       if (reason != null) return reason;
     }
     return null;

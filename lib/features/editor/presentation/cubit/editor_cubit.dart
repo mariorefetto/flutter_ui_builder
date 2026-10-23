@@ -8,6 +8,7 @@ import 'package:flutter_ui_builder/features/editor/domain/entities/editor_docume
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/import_result.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
+import 'package:flutter_ui_builder/features/editor/domain/usecases/component_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/edit_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/import_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/screen_usecases.dart';
@@ -119,11 +120,12 @@ class EditorCubit extends Cubit<EditorState> {
 
   /// Adds a widget next to or inside the selection (the root when nothing is
   /// selected). Keyboard and screen reader alternative to dragging.
-  void addToSelection(String type) => drop(
-    NewWidgetPayload(type),
-    state.selectedId ?? state.document.root.id,
-    DropSide.after,
-  );
+  void addToSelection(String type, {Map<String, Object?> props = const {}}) =>
+      drop(
+        NewWidgetPayload(type, props: props),
+        state.selectedId ?? state.document.root.id,
+        DropSide.after,
+      );
 
   /// Whether a widget of [type] could be added to the selection (or to the
   /// root when nothing is selected). The palette and the context menu list
