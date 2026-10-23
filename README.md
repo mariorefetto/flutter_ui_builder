@@ -37,9 +37,13 @@ flutter test
 
 Copyright (c) 2026 Mario Refetto.
 
-Flutter UI Builder is free software, licensed under the GNU Affero General
-Public License, version 3 (see [LICENSE](LICENSE)). You may use, study, modify
-and share it, but anything you distribute or offer as a service that is based
-on it must be released under the same license, with its source code.
+Flutter UI Builder is source-available under the PolyForm Noncommercial
+License 1.0.0 (see [LICENSE](LICENSE)). You may use, study, modify and share
+it for any noncommercial purpose, including personal use, research, education
+and hobby projects. You may not sell it, or use it for commercial purposes,
+without the permission of the author.
+
+This is not an open source license in the sense of the Open Source Initiative,
+because it limits commercial use.
 
 The code the application generates for your own projects is yours.
