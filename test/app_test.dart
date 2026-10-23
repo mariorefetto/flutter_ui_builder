@@ -15,6 +15,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/c
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/editor_canvas.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/scaled_box.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/code/code_view.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/code/highlighting_controller.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag/dashed_outline.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/palette/palette_item.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/editor_shortcuts.dart';
@@ -75,6 +76,25 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('class UntitledView'), findsOneWidget);
+  });
+
+  testWidgets('the code is coloured as Dart', (tester) async {
+    await pumpApp(tester);
+    await tester.tap(find.text('Code'));
+    await tester.pumpAndSettle();
+
+    final editable = tester.widget<EditableText>(find.byType(EditableText));
+
+    expect(editable.controller, isA<HighlightingController>());
+    final span = editable.controller.buildTextSpan(
+      context: tester.element(find.byType(EditableText)),
+      withComposing: false,
+      style: const TextStyle(),
+    );
+    final keyword = span.children?.whereType<TextSpan>().firstWhere(
+      (s) => s.text == 'class',
+    );
+    expect(keyword?.style?.color, isNotNull);
   });
 
   testWidgets('selecting in the outline shows the path and the properties', (

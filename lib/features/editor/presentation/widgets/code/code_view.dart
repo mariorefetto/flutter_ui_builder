@@ -13,6 +13,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/code_state
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/editor_dimensions.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/shortcuts.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/code/highlighting_controller.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/import/import_outcome.dart';
 
 const String _monospace = 'monospace';
@@ -49,7 +50,7 @@ class _Editor extends StatefulWidget {
 }
 
 class _EditorState extends State<_Editor> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = HighlightingController();
 
   @override
   void initState() {
