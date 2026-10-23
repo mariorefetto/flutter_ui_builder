@@ -2857,6 +2857,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A picture is no longer where it was taken from, so it cannot be copied. Nothing was written.'**
   String get errorStorageAssetMissing;
+
+  /// Message: Only widgets that are next to each other, in the s
+  ///
+  /// In en, this message translates to:
+  /// **'Only widgets that are next to each other, in the same parent, can be wrapped together'**
+  String get errorNotSiblings;
+
+  /// Message: {count} widgets selected
+  ///
+  /// In en, this message translates to:
+  /// **'{count} widgets selected'**
+  String statusSelected(int count);
+
+  /// Message: Editing {count} widgets at once
+  ///
+  /// In en, this message translates to:
+  /// **'Editing {count} widgets at once'**
+  String multiSelectionNote(int count);
 }
 
 class _AppLocalizationsDelegate

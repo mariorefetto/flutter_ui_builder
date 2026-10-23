@@ -179,6 +179,32 @@ class WrapNode implements SyncUseCase<EditResult, WrapNodeParams> {
   );
 }
 
+class WrapNodesParams {
+  const WrapNodesParams({
+    required this.document,
+    required this.nodeIds,
+    required this.wrapperType,
+  });
+
+  final EditorDocument document;
+  final List<String> nodeIds;
+  final String wrapperType;
+}
+
+/// Wraps several sibling widgets together in one new widget.
+class WrapNodes implements SyncUseCase<EditResult, WrapNodesParams> {
+  const WrapNodes(this._editor);
+
+  final TreeEditor _editor;
+
+  @override
+  Either<Failure, EditResult> call(WrapNodesParams params) => _editor.wrapAll(
+    params.document,
+    nodeIds: params.nodeIds,
+    wrapperType: params.wrapperType,
+  );
+}
+
 class UnwrapNode implements SyncUseCase<EditResult, RemoveNodeParams> {
   const UnwrapNode(this._editor);
 

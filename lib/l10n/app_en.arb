@@ -1981,5 +1981,27 @@
   "errorStorageAssetMissing": "A picture is no longer where it was taken from, so it cannot be copied. Nothing was written.",
   "@errorStorageAssetMissing": {
     "description": "Message: A picture is no longer where it was taken from, so"
+  },
+  "errorNotSiblings": "Only widgets that are next to each other, in the same parent, can be wrapped together",
+  "@errorNotSiblings": {
+    "description": "Message: Only widgets that are next to each other, in the s"
+  },
+  "statusSelected": "{count} widgets selected",
+  "@statusSelected": {
+    "description": "Message: {count} widgets selected",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "multiSelectionNote": "Editing {count} widgets at once",
+  "@multiSelectionNote": {
+    "description": "Message: Editing {count} widgets at once",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

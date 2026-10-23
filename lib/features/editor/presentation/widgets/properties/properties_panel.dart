@@ -54,7 +54,8 @@ class _PropertiesPanelState extends State<PropertiesPanel> {
     return BlocBuilder<EditorCubit, EditorState>(
       buildWhen: (previous, current) =>
           previous.document != current.document ||
-          previous.selectedId != current.selectedId,
+          previous.selectedId != current.selectedId ||
+          previous.extraSelected != current.extraSelected,
       builder: (context, state) {
         final selected = state.selectedId;
         final node = selected == null
@@ -64,6 +65,8 @@ class _PropertiesPanelState extends State<PropertiesPanel> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ObjectSelector(root: state.document.root, selectedId: selected),
+            if (node != null && state.isMultiSelection)
+              _MultiNote(count: state.selectedIds.length),
             if (node != null)
               WidgetAbout(definition: widget.registry.definitionFor(node.type)),
             _toolbar(context),
@@ -218,7 +221,9 @@ class _PropertiesPanelState extends State<PropertiesPanel> {
       modified: node.props.containsKey(prop.name) && bound == null,
       focused: _focused == prop.name,
       onFocus: () => setState(() => _focused = prop.name),
-      onChanged: (value) => cubit.updateProp(node.id, prop.name, value),
+      onChanged: (value) => cubit.state.isMultiSelection
+          ? cubit.updatePropOfSelection(prop.name, value)
+          : cubit.updateProp(node.id, prop.name, value),
       boundTo: bound,
       // Only the properties of a component's own widgets can be parameters.
       onBind: inComponent && canBindToParam(prop)
@@ -273,6 +278,30 @@ class _GroupHeader extends StatelessWidget {
                 style: context.textTheme.labelLarge,
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Says that what is changed here reaches every selected widget.
+class _MultiNote extends StatelessWidget {
+  const _MultiNote({required this.count});
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colorScheme;
+    return ColoredBox(
+      color: colors.primaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(AppConstants.spacingSM),
+        child: Text(
+          context.l10n.multiSelectionNote(count),
+          style: context.textTheme.labelMedium?.copyWith(
+            color: colors.onPrimaryContainer,
           ),
         ),
       ),

@@ -31,6 +31,7 @@ class EditorUseCases {
     required this.duplicateNode,
     required this.pasteNode,
     required this.wrapNode,
+    required this.wrapNodes,
     required this.unwrapNode,
     required this.applyImport,
     required this.relabelNode,
@@ -68,6 +69,7 @@ class EditorUseCases {
     duplicateNode: DuplicateNode(editor),
     pasteNode: PasteNode(editor),
     wrapNode: WrapNode(editor),
+    wrapNodes: WrapNodes(editor),
     unwrapNode: UnwrapNode(editor),
     applyImport: const ApplyImport(DocumentReconciler()),
     relabelNode: RelabelNode(editor),
@@ -99,6 +101,7 @@ class EditorUseCases {
   final DuplicateNode duplicateNode;
   final PasteNode pasteNode;
   final WrapNode wrapNode;
+  final WrapNodes wrapNodes;
   final UnwrapNode unwrapNode;
   final ApplyImport applyImport;
   final RelabelNode relabelNode;

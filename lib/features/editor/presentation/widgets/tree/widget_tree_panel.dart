@@ -71,7 +71,8 @@ class _WidgetTreePanelState extends State<WidgetTreePanel> {
           child: BlocBuilder<EditorCubit, EditorState>(
             buildWhen: (previous, current) =>
                 previous.document != current.document ||
-                previous.selectedId != current.selectedId,
+                previous.selectedId != current.selectedId ||
+                previous.extraSelected != current.extraSelected,
             builder: (context, state) {
               _reveal(state.document.root, state.selectedId);
               final rows = _visible(state.document.root);
@@ -81,7 +82,7 @@ class _WidgetTreePanelState extends State<WidgetTreePanel> {
                   node: rows[index].node,
                   depth: rows[index].depth,
                   isRoot: rows[index].node.id == state.document.root.id,
-                  selected: rows[index].node.id == state.selectedId,
+                  selected: state.selectedIds.contains(rows[index].node.id),
                   category: _category(rows[index].node.type),
                   expanded: !_collapsed.contains(rows[index].node.id),
                   onToggle: () => _toggle(rows[index].node.id),

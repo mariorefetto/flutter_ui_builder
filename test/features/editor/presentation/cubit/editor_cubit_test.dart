@@ -497,4 +497,125 @@ void main() {
       expect(cubit.state.document.theme.parts['card'], {'elevation': 4.0});
     });
   });
+
+  group('several widgets selected', () {
+    EditorCubit withThree() {
+      final cubit = _cubit()
+        ..addNode(type: 'Text', parentId: 'node_0')
+        ..addNode(type: 'Text', parentId: 'node_0')
+        ..addNode(type: 'Padding', parentId: 'node_0');
+      return cubit;
+    }
+
+    test('a widget is added to the selection and taken out of it', () {
+      final cubit = withThree()
+        ..select('node_1')
+        ..toggleSelect('node_2');
+
+      expect(cubit.state.selectedIds, ['node_2', 'node_1']);
+      expect(cubit.state.isMultiSelection, isTrue);
+
+      cubit.toggleSelect('node_2');
+      expect(cubit.state.selectedIds, ['node_1']);
+      expect(cubit.state.isMultiSelection, isFalse);
+
+      cubit.toggleSelect('node_1');
+      expect(cubit.state.selectedId, isNull);
+    });
+
+    test('selecting one widget leaves the others', () {
+      final cubit = withThree()
+        ..select('node_1')
+        ..toggleSelect('node_2')
+        ..select('node_3');
+
+      expect(cubit.state.selectedIds, ['node_3']);
+    });
+
+    test('they are all removed in one undo step', () {
+      final cubit = withThree()
+        ..select('node_1')
+        ..toggleSelect('node_2');
+      final steps = cubit.state.history.past.length;
+
+      cubit.removeSelected();
+
+      expect(cubit.state.document.root.children.map((c) => c.id), ['node_3']);
+      expect(cubit.state.history.past.length, steps + 1);
+      cubit.undo();
+      expect(cubit.state.document.root.children, hasLength(3));
+    });
+
+    test('they are all duplicated', () {
+      final cubit = withThree()
+        ..select('node_1')
+        ..toggleSelect('node_2')
+        ..duplicateSelected();
+
+      expect(cubit.state.document.root.children.map((c) => c.type), [
+        'Text',
+        'Text',
+        'Text',
+        'Text',
+        'Padding',
+      ]);
+    });
+
+    test('they are wrapped together', () {
+      final cubit = withThree()
+        ..select('node_1')
+        ..toggleSelect('node_2');
+
+      expect(cubit.canWrapSelection('Row'), isTrue);
+      cubit.wrapSelected('Row');
+
+      final row = cubit.state.document.root.children.first;
+      expect(row.type, 'Row');
+      expect(row.children.map((c) => c.id), ['node_1', 'node_2']);
+      expect(cubit.state.isMultiSelection, isFalse);
+    });
+
+    test('a property is set on all of them, in one undo step', () {
+      final cubit = withThree()
+        ..select('node_1')
+        ..toggleSelect('node_2');
+      final steps = cubit.state.history.past.length;
+
+      cubit.updatePropOfSelection('text', 'Same');
+
+      for (final id in ['node_1', 'node_2']) {
+        expect(cubit.state.document.root.find(id)?.props['text'], 'Same');
+      }
+      expect(cubit.state.history.past.length, steps + 1);
+      expect(cubit.state.selectedIds, hasLength(2));
+      cubit.undo();
+      expect(cubit.state.document.root.find('node_1')?.props['text'], isNull);
+    });
+
+    test('widgets of different types change only the main one', () {
+      final cubit = withThree()
+        ..select('node_1')
+        ..toggleSelect('node_3');
+
+      cubit.updatePropOfSelection('text', 'Only');
+
+      expect(cubit.state.document.root.find('node_3')?.props['text'], isNull);
+    });
+
+    test('a widget that is gone leaves the selection when undone', () {
+      final cubit = withThree()
+        ..select('node_1')
+        ..toggleSelect('node_2');
+
+      cubit.undo();
+
+      expect(cubit.state.selectedIds, isNot(contains('node_3')));
+      expect(
+        cubit.state.selectedIds.every(
+          (id) => cubit.state.document.root.find(id) != null,
+        ),
+        isTrue,
+      );
+    });
+  });
 }

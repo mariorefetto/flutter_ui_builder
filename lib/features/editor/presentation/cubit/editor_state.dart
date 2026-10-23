@@ -14,6 +14,10 @@ abstract class EditorState with _$EditorState {
     /// Id of the selected node, or null when nothing is selected.
     String? selectedId,
 
+    /// Widgets picked along with [selectedId] by clicking with Cmd, Ctrl or
+    /// Shift held. They are edited, copied and removed together.
+    @Default(<String>{}) Set<String> extraSelected,
+
     /// Set for one emission when the last user action was refused.
     Failure? failure,
 
@@ -26,4 +30,10 @@ abstract class EditorState with _$EditorState {
   const EditorState._();
 
   EditorDocument get document => history.present;
+
+  /// Every selected widget, the main one first.
+  List<String> get selectedIds => [?selectedId, ...extraSelected];
+
+  /// More than one widget is selected.
+  bool get isMultiSelection => extraSelected.isNotEmpty;
 }

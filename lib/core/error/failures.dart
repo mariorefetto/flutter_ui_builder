@@ -33,6 +33,7 @@ enum TreeFailureReason {
   invalidIndex,
   rootProtected,
   cyclicMove,
+  notSiblings,
   nothingToUndo,
   nothingToRedo,
 }

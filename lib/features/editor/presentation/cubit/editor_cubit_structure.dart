@@ -66,26 +66,31 @@ extension EditorStructure on EditorCubit {
     return clip != null && _pasteResult(clip).isRight();
   }
 
-  void duplicateSelected() => _withSelection(
-    (id) => _applyEdit(
-      _resolver.duplicate(state.document, id),
-      selectAffected: true,
-    ),
-  );
+  void duplicateSelected() => state.isMultiSelection
+      ? _duplicateSelection()
+      : _withSelection(
+          (id) => _applyEdit(
+            _resolver.duplicate(state.document, id),
+            selectAffected: true,
+          ),
+        );
 
   bool get canDuplicate =>
       _selectionAllows((id) => _resolver.duplicate(state.document, id));
 
   /// Puts a new widget of [type] around the selection.
-  void wrapSelected(String type) => _withSelection(
-    (id) => _applyEdit(
-      _resolver.wrap(state.document, id, type),
-      selectAffected: true,
-    ),
-  );
+  void wrapSelected(String type) => state.isMultiSelection
+      ? _applyEdit(_wrapSelection(type), selectAffected: true)
+      : _withSelection(
+          (id) => _applyEdit(
+            _resolver.wrap(state.document, id, type),
+            selectAffected: true,
+          ),
+        );
 
-  bool canWrapSelection(String type) =>
-      _selectionAllows((id) => _resolver.wrap(state.document, id, type));
+  bool canWrapSelection(String type) => state.isMultiSelection
+      ? _wrapSelection(type).isRight()
+      : _selectionAllows((id) => _resolver.wrap(state.document, id, type));
 
   /// Replaces the selection with the widgets inside it.
   void unwrapSelected() => _withSelection(

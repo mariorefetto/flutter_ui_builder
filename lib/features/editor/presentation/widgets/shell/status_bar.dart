@@ -49,7 +49,9 @@ class StatusBar extends StatelessWidget {
     final l10n = context.l10n;
     final root = state.document.root;
     final selected = state.selectedId;
-    final path = selected == null
+    final path = state.isMultiSelection
+        ? l10n.statusSelected(state.selectedIds.length)
+        : selected == null
         ? l10n.statusNoSelection
         : root.pathTo(selected).map((n) => n.type).join(_pathSeparator);
     return Row(

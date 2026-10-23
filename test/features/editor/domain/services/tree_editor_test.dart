@@ -6,6 +6,7 @@ import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_reg
 import 'package:flutter_ui_builder/features/editor/domain/entities/edit_result.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/tree_editor.dart';
 
 void main() {
@@ -373,6 +374,97 @@ void main() {
       final copy = success(editor.duplicate(named.document, 'node_1'));
 
       expect(copy.document.root.children[1].label, 'Card');
+    });
+  });
+
+  group('wrapAll', () {
+    // Column > [Text 1, Text 2, Text 3, Padding > Text]
+    const siblings = EditorDocument(
+      name: 'test',
+      root: WidgetNode(
+        id: 'node_0',
+        type: 'Column',
+        children: [
+          WidgetNode(id: 'node_1', type: 'Text'),
+          WidgetNode(id: 'node_2', type: 'Text'),
+          WidgetNode(id: 'node_3', type: 'Text'),
+          WidgetNode(
+            id: 'node_4',
+            type: 'Padding',
+            children: [WidgetNode(id: 'node_5', type: 'Text')],
+          ),
+        ],
+      ),
+    );
+
+    EditorDocument wrapped(List<String> ids, [String type = 'Row']) => editor
+        .wrapAll(siblings, nodeIds: ids, wrapperType: type)
+        .getOrElse(() => throw StateError('wrap failed'))
+        .document;
+
+    test('the widgets go into one new widget where the first was', () {
+      final doc = wrapped(['node_1', 'node_3']);
+
+      final children = doc.root.children;
+      expect(children.map((c) => c.type), ['Row', 'Text', 'Padding']);
+      expect(children.first.children.map((c) => c.id), ['node_1', 'node_3']);
+      expect(children[1].id, 'node_2');
+    });
+
+    test('they keep the order they had, not the order they were given', () {
+      final doc = wrapped(['node_3', 'node_1']);
+
+      expect(doc.root.children.first.children.map((c) => c.id), [
+        'node_1',
+        'node_3',
+      ]);
+    });
+
+    test('the result points at the wrapper, which has a new id', () {
+      final result = editor
+          .wrapAll(siblings, nodeIds: ['node_1', 'node_2'], wrapperType: 'Row')
+          .getOrElse(() => throw StateError('wrap failed'));
+
+      expect(result.nodeId, 'node_6');
+      expect(result.document.root.find('node_6')?.type, 'Row');
+    });
+
+    test('widgets of different parents are refused', () {
+      expect(
+        reasonOf(
+          editor.wrapAll(
+            siblings,
+            nodeIds: ['node_1', 'node_5'],
+            wrapperType: 'Row',
+          ),
+        ),
+        TreeFailureReason.notSiblings,
+      );
+    });
+
+    test('the root, an unknown widget and a type that cannot hold them', () {
+      expect(
+        reasonOf(
+          editor.wrapAll(siblings, nodeIds: ['node_0'], wrapperType: 'Row'),
+        ),
+        TreeFailureReason.rootProtected,
+      );
+      expect(
+        reasonOf(
+          editor.wrapAll(siblings, nodeIds: ['nope'], wrapperType: 'Row'),
+        ),
+        TreeFailureReason.unknownNode,
+      );
+      expect(
+        reasonOf(
+          editor.wrapAll(
+            siblings,
+            nodeIds: ['node_1', 'node_2'],
+            wrapperType: 'Padding',
+          ),
+        ),
+        TreeFailureReason.parentFull,
+      );
     });
   });
 }

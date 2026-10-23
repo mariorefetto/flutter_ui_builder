@@ -19,6 +19,7 @@ String messageFor(AppLocalizations l10n, Failure failure) => switch (failure) {
     TreeFailureReason.invalidIndex => l10n.errorInvalidIndex,
     TreeFailureReason.rootProtected => l10n.errorRootProtected,
     TreeFailureReason.cyclicMove => l10n.errorCyclicMove,
+    TreeFailureReason.notSiblings => l10n.errorNotSiblings,
     TreeFailureReason.nothingToUndo => l10n.errorNothingToUndo,
     TreeFailureReason.nothingToRedo => l10n.errorNothingToRedo,
   },

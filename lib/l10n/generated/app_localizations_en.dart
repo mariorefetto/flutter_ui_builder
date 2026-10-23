@@ -1572,4 +1572,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorStorageAssetMissing =>
       'A picture is no longer where it was taken from, so it cannot be copied. Nothing was written.';
+
+  @override
+  String get errorNotSiblings =>
+      'Only widgets that are next to each other, in the same parent, can be wrapped together';
+
+  @override
+  String statusSelected(int count) {
+    return '$count widgets selected';
+  }
+
+  @override
+  String multiSelectionNote(int count) {
+    return 'Editing $count widgets at once';
+  }
 }

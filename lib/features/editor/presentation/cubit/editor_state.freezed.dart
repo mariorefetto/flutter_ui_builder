@@ -15,7 +15,9 @@ T _$identity<T>(T value) => value;
 mixin _$EditorState {
 
  DocumentHistory get history;/// Id of the selected node, or null when nothing is selected.
- String? get selectedId;/// Set for one emission when the last user action was refused.
+ String? get selectedId;/// Widgets picked along with [selectedId] by clicking with Cmd, Ctrl or
+/// Shift held. They are edited, copied and removed together.
+ Set<String> get extraSelected;/// Set for one emission when the last user action was refused.
  Failure? get failure;/// A copied or cut subtree, waiting to be pasted. It is not part of the
 /// document and is not undone.
  WidgetNode? get clipboard;
@@ -29,16 +31,16 @@ $EditorStateCopyWith<EditorState> get copyWith => _$EditorStateCopyWithImpl<Edit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditorState&&(identical(other.history, history) || other.history == history)&&(identical(other.selectedId, selectedId) || other.selectedId == selectedId)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.clipboard, clipboard) || other.clipboard == clipboard));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditorState&&(identical(other.history, history) || other.history == history)&&(identical(other.selectedId, selectedId) || other.selectedId == selectedId)&&const DeepCollectionEquality().equals(other.extraSelected, extraSelected)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.clipboard, clipboard) || other.clipboard == clipboard));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,history,selectedId,failure,clipboard);
+int get hashCode => Object.hash(runtimeType,history,selectedId,const DeepCollectionEquality().hash(extraSelected),failure,clipboard);
 
 @override
 String toString() {
-  return 'EditorState(history: $history, selectedId: $selectedId, failure: $failure, clipboard: $clipboard)';
+  return 'EditorState(history: $history, selectedId: $selectedId, extraSelected: $extraSelected, failure: $failure, clipboard: $clipboard)';
 }
 
 
@@ -49,7 +51,7 @@ abstract mixin class $EditorStateCopyWith<$Res>  {
   factory $EditorStateCopyWith(EditorState value, $Res Function(EditorState) _then) = _$EditorStateCopyWithImpl;
 @useResult
 $Res call({
- DocumentHistory history, String? selectedId, Failure? failure, WidgetNode? clipboard
+ DocumentHistory history, String? selectedId, Set<String> extraSelected, Failure? failure, WidgetNode? clipboard
 });
 
 
@@ -66,11 +68,12 @@ class _$EditorStateCopyWithImpl<$Res>
 
 /// Create a copy of EditorState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? history = null,Object? selectedId = freezed,Object? failure = freezed,Object? clipboard = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? history = null,Object? selectedId = freezed,Object? extraSelected = null,Object? failure = freezed,Object? clipboard = freezed,}) {
   return _then(_self.copyWith(
 history: null == history ? _self.history : history // ignore: cast_nullable_to_non_nullable
 as DocumentHistory,selectedId: freezed == selectedId ? _self.selectedId : selectedId // ignore: cast_nullable_to_non_nullable
-as String?,failure: freezed == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
+as String?,extraSelected: null == extraSelected ? _self.extraSelected : extraSelected // ignore: cast_nullable_to_non_nullable
+as Set<String>,failure: freezed == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
 as Failure?,clipboard: freezed == clipboard ? _self.clipboard : clipboard // ignore: cast_nullable_to_non_nullable
 as WidgetNode?,
   ));
@@ -178,10 +181,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DocumentHistory history,  String? selectedId,  Failure? failure,  WidgetNode? clipboard)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DocumentHistory history,  String? selectedId,  Set<String> extraSelected,  Failure? failure,  WidgetNode? clipboard)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _EditorState() when $default != null:
-return $default(_that.history,_that.selectedId,_that.failure,_that.clipboard);case _:
+return $default(_that.history,_that.selectedId,_that.extraSelected,_that.failure,_that.clipboard);case _:
   return orElse();
 
 }
@@ -199,10 +202,10 @@ return $default(_that.history,_that.selectedId,_that.failure,_that.clipboard);ca
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DocumentHistory history,  String? selectedId,  Failure? failure,  WidgetNode? clipboard)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DocumentHistory history,  String? selectedId,  Set<String> extraSelected,  Failure? failure,  WidgetNode? clipboard)  $default,) {final _that = this;
 switch (_that) {
 case _EditorState():
-return $default(_that.history,_that.selectedId,_that.failure,_that.clipboard);case _:
+return $default(_that.history,_that.selectedId,_that.extraSelected,_that.failure,_that.clipboard);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -219,10 +222,10 @@ return $default(_that.history,_that.selectedId,_that.failure,_that.clipboard);ca
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DocumentHistory history,  String? selectedId,  Failure? failure,  WidgetNode? clipboard)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DocumentHistory history,  String? selectedId,  Set<String> extraSelected,  Failure? failure,  WidgetNode? clipboard)?  $default,) {final _that = this;
 switch (_that) {
 case _EditorState() when $default != null:
-return $default(_that.history,_that.selectedId,_that.failure,_that.clipboard);case _:
+return $default(_that.history,_that.selectedId,_that.extraSelected,_that.failure,_that.clipboard);case _:
   return null;
 
 }
@@ -234,12 +237,23 @@ return $default(_that.history,_that.selectedId,_that.failure,_that.clipboard);ca
 
 
 class _EditorState extends EditorState {
-  const _EditorState({required this.history, this.selectedId, this.failure, this.clipboard}): super._();
+  const _EditorState({required this.history, this.selectedId, final  Set<String> extraSelected = const <String>{}, this.failure, this.clipboard}): _extraSelected = extraSelected,super._();
   
 
 @override final  DocumentHistory history;
 /// Id of the selected node, or null when nothing is selected.
 @override final  String? selectedId;
+/// Widgets picked along with [selectedId] by clicking with Cmd, Ctrl or
+/// Shift held. They are edited, copied and removed together.
+ final  Set<String> _extraSelected;
+/// Widgets picked along with [selectedId] by clicking with Cmd, Ctrl or
+/// Shift held. They are edited, copied and removed together.
+@override@JsonKey() Set<String> get extraSelected {
+  if (_extraSelected is EqualUnmodifiableSetView) return _extraSelected;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableSetView(_extraSelected);
+}
+
 /// Set for one emission when the last user action was refused.
 @override final  Failure? failure;
 /// A copied or cut subtree, waiting to be pasted. It is not part of the
@@ -256,16 +270,16 @@ _$EditorStateCopyWith<_EditorState> get copyWith => __$EditorStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EditorState&&(identical(other.history, history) || other.history == history)&&(identical(other.selectedId, selectedId) || other.selectedId == selectedId)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.clipboard, clipboard) || other.clipboard == clipboard));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EditorState&&(identical(other.history, history) || other.history == history)&&(identical(other.selectedId, selectedId) || other.selectedId == selectedId)&&const DeepCollectionEquality().equals(other._extraSelected, _extraSelected)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.clipboard, clipboard) || other.clipboard == clipboard));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,history,selectedId,failure,clipboard);
+int get hashCode => Object.hash(runtimeType,history,selectedId,const DeepCollectionEquality().hash(_extraSelected),failure,clipboard);
 
 @override
 String toString() {
-  return 'EditorState(history: $history, selectedId: $selectedId, failure: $failure, clipboard: $clipboard)';
+  return 'EditorState(history: $history, selectedId: $selectedId, extraSelected: $extraSelected, failure: $failure, clipboard: $clipboard)';
 }
 
 
@@ -276,7 +290,7 @@ abstract mixin class _$EditorStateCopyWith<$Res> implements $EditorStateCopyWith
   factory _$EditorStateCopyWith(_EditorState value, $Res Function(_EditorState) _then) = __$EditorStateCopyWithImpl;
 @override @useResult
 $Res call({
- DocumentHistory history, String? selectedId, Failure? failure, WidgetNode? clipboard
+ DocumentHistory history, String? selectedId, Set<String> extraSelected, Failure? failure, WidgetNode? clipboard
 });
 
 
@@ -293,11 +307,12 @@ class __$EditorStateCopyWithImpl<$Res>
 
 /// Create a copy of EditorState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? history = null,Object? selectedId = freezed,Object? failure = freezed,Object? clipboard = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? history = null,Object? selectedId = freezed,Object? extraSelected = null,Object? failure = freezed,Object? clipboard = freezed,}) {
   return _then(_EditorState(
 history: null == history ? _self.history : history // ignore: cast_nullable_to_non_nullable
 as DocumentHistory,selectedId: freezed == selectedId ? _self.selectedId : selectedId // ignore: cast_nullable_to_non_nullable
-as String?,failure: freezed == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
+as String?,extraSelected: null == extraSelected ? _self._extraSelected : extraSelected // ignore: cast_nullable_to_non_nullable
+as Set<String>,failure: freezed == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
 as Failure?,clipboard: freezed == clipboard ? _self.clipboard : clipboard // ignore: cast_nullable_to_non_nullable
 as WidgetNode?,
   ));

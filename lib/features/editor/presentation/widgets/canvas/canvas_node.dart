@@ -12,6 +12,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_
 import 'package:flutter_ui_builder/features/editor/presentation/drag_payload.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/editor_dimensions.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_screen.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/shortcuts.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_context_menu.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag/dashed_outline.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag/drop_label.dart';
@@ -55,7 +56,7 @@ class _CanvasNodeState extends State<CanvasNode> {
       return _prototype(context, cubit);
     }
     final selected = context.select(
-      (EditorCubit c) => c.state.selectedId == widget.node.id,
+      (EditorCubit c) => c.state.selectedIds.contains(widget.node.id),
     );
     return DragTarget<DragPayload>(
       onWillAcceptWithDetails: (details) {
@@ -72,7 +73,9 @@ class _CanvasNodeState extends State<CanvasNode> {
       builder: (context, candidates, rejected) => GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          cubit.select(widget.node.id);
+          addsToSelection
+              ? cubit.toggleSelect(widget.node.id)
+              : cubit.select(widget.node.id);
           EditorShortcuts.reclaimFocus(context);
         },
         onSecondaryTapDown: (details) =>
@@ -203,7 +206,11 @@ class _CanvasNodeState extends State<CanvasNode> {
 
   // Selects the node, then opens the context menu on it.
   void _openMenu(EditorCubit cubit, Offset position) {
-    cubit.select(widget.node.id);
+    // A widget that is already picked leaves the selection as it is, so the
+    // menu acts on all of them.
+    if (!cubit.state.selectedIds.contains(widget.node.id)) {
+      cubit.select(widget.node.id);
+    }
     CanvasMenuScope.maybeOf(context)?.open(position);
   }
 

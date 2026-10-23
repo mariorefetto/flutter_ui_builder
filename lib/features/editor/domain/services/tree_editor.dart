@@ -190,6 +190,55 @@ class TreeEditor {
     return _restructured(document, root, wrapper.id);
   }
 
+  /// Puts a new [wrapperType] node where the first of [nodeIds] is, holding
+  /// all of them in the order they had. They must be children of the same
+  /// parent. The result points at the wrapper.
+  Either<Failure, EditResult> wrapAll(
+    EditorDocument document, {
+    required List<String> nodeIds,
+    required String wrapperType,
+  }) {
+    if (!_registry.contains(wrapperType)) {
+      return _fail(TreeFailureReason.unknownType);
+    }
+    final ids = nodeIds.toSet();
+    final parents = {
+      for (final id in ids)
+        if (document.root.find(id) == null)
+          null
+        else
+          document.root.parentOf(id)?.id ?? '',
+    };
+    if (ids.isEmpty || parents.contains(null)) {
+      return _fail(TreeFailureReason.unknownNode);
+    }
+    if (parents.contains('')) return _fail(TreeFailureReason.rootProtected);
+    if (parents.length != 1) return _fail(TreeFailureReason.notSiblings);
+    final parent = document.root.find(parents.single!)!;
+    final chosen = [
+      for (final child in parent.children)
+        if (ids.contains(child.id)) child,
+    ];
+    final wrapper = WidgetNode(
+      id: document.root.nextId(),
+      type: wrapperType,
+      children: chosen,
+    );
+    final root = _mapNode(document.root, parent.id, (target) {
+      // The wrapper takes the place of the first of them; the rest go in it.
+      final children = <WidgetNode>[];
+      for (final child in target.children) {
+        if (!ids.contains(child.id)) {
+          children.add(child);
+        } else if (child.id == chosen.first.id) {
+          children.add(wrapper);
+        }
+      }
+      return target.copyWith(children: children);
+    });
+    return _restructured(document, root, wrapper.id);
+  }
+
   /// Replaces the node [nodeId] with its own children. The result points at
   /// the first child that took its place.
   Either<Failure, EditResult> unwrap(EditorDocument document, String nodeId) {

@@ -1555,4 +1555,75 @@ class UntitledView extends StatelessWidget {
 
     expect(file.dx, lessThan(100));
   });
+
+  group('several widgets selected', () {
+    Future<void> clickWith(
+      WidgetTester tester,
+      Finder finder,
+      LogicalKeyboardKey key,
+    ) async {
+      await tester.sendKeyDownEvent(key);
+      await tester.tap(finder);
+      await tester.sendKeyUpEvent(key);
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('a click with Ctrl adds to the selection in the outline', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..addNode(type: 'Text', parentId: 'node_2')
+        ..addNode(type: 'Image', parentId: 'node_2');
+      await tester.tap(find.byTooltip('Document outline'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.widgetWithText(TreeRow, 'Text'));
+      await tester.pumpAndSettle();
+      await clickWith(
+        tester,
+        find.widgetWithText(TreeRow, 'Image'),
+        LogicalKeyboardKey.control,
+      );
+
+      expect(cubit.state.selectedIds, hasLength(2));
+      expect(find.text('2 widgets selected'), findsOneWidget);
+      expect(find.text('Editing 2 widgets at once'), findsOneWidget);
+    });
+
+    testWidgets('Delete removes all the selected widgets', (tester) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..addNode(type: 'Text', parentId: 'node_2')
+        ..addNode(type: 'Image', parentId: 'node_2');
+      await tester.tap(find.byTooltip('Document outline'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(TreeRow, 'Text'));
+      await tester.pumpAndSettle();
+      await clickWith(
+        tester,
+        find.widgetWithText(TreeRow, 'Image'),
+        LogicalKeyboardKey.control,
+      );
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.delete);
+      await tester.pumpAndSettle();
+
+      expect(cubit.state.document.root.find('node_2')?.children, isEmpty);
+    });
+
+    testWidgets('the properties say how many widgets they edit', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      editorOf(tester)
+        ..addNode(type: 'Text', parentId: 'node_2')
+        ..addNode(type: 'Text', parentId: 'node_2')
+        ..select('node_3')
+        ..toggleSelect('node_4');
+      await tester.pumpAndSettle();
+
+      expect(find.text('Editing 2 widgets at once'), findsOneWidget);
+    });
+  });
 }

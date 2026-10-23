@@ -11,6 +11,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/drag_sessi
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/drag_payload.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/editor_dimensions.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/shortcuts.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag/dashed_outline.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag_feedback.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/editor_shortcuts.dart';
@@ -110,7 +111,9 @@ class _TreeRowState extends State<TreeRow> {
       onExit: (_) => setState(() => _hovered = false),
       child: InkWell(
         onTap: () {
-          cubit.select(widget.node.id);
+          addsToSelection
+              ? cubit.toggleSelect(widget.node.id)
+              : cubit.select(widget.node.id);
           EditorShortcuts.reclaimFocus(context);
         },
         onLongPress: () {

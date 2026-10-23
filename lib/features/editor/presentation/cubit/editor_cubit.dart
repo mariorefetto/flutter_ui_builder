@@ -21,6 +21,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_use
 import 'package:flutter_ui_builder/features/editor/presentation/drag_payload.dart';
 
 part 'editor_cubit_screens.dart';
+part 'editor_cubit_selection.dart';
 part 'editor_cubit_structure.dart';
 
 /// Holds the document being edited with its undo history, the selection and
@@ -39,7 +40,12 @@ class EditorCubit extends Cubit<EditorState> {
   /// Selects [nodeId], or clears the selection when null or unknown.
   void select(String? nodeId) {
     final known = nodeId != null && state.document.root.find(nodeId) != null;
-    emit(state.copyWith(selectedId: known ? nodeId : null));
+    emit(
+      state.copyWith(
+        selectedId: known ? nodeId : null,
+        extraSelected: const {},
+      ),
+    );
   }
 
   void addNode({required String type, required String parentId, int? index}) {
@@ -165,7 +171,8 @@ class EditorCubit extends Cubit<EditorState> {
     ),
   );
 
-  void removeSelected() => _withSelection(removeNode);
+  void removeSelected() =>
+      state.isMultiSelection ? _removeSelection() : _withSelection(removeNode);
 
   /// Gives [nodeId] a name shown in the outline; a blank name clears it.
   void relabelNode(String nodeId, String label) => _applyEdit(
@@ -197,6 +204,7 @@ class EditorCubit extends Cubit<EditorState> {
     state.copyWith(
       history: DocumentHistory(present: document),
       selectedId: null,
+      extraSelected: const {},
       failure: null,
     ),
   );
@@ -268,16 +276,34 @@ class EditorCubit extends Cubit<EditorState> {
 
   // An edit that changes nothing (a node dropped where it already is) must not
   // create an undo step.
-  void _commit(EditorDocument next, {required String? selectedId}) {
+  // [keepSelection] keeps the widgets picked along with the main one, for an
+  // edit that works on all of them.
+  void _commit(
+    EditorDocument next, {
+    required String? selectedId,
+    bool keepSelection = false,
+  }) {
     if (next == state.document) return;
     emit(
       state.copyWith(
         history: state.history.record(next),
         selectedId: selectedId,
+        extraSelected: keepSelection
+            ? _stillIn(next, state.extraSelected)
+            : const {},
         failure: null,
       ),
     );
   }
+
+  Set<String> _stillIn(EditorDocument document, Set<String> ids) => {
+    for (final id in ids)
+      if (document.root.find(id) != null) id,
+  };
+
+  // Changes which widgets are selected, without touching the document.
+  void _setSelection(String? primary, Set<String> extras) =>
+      emit(state.copyWith(selectedId: primary, extraSelected: extras));
 
   void _applyHistory(Either<Failure, DocumentHistory> result) {
     result.fold(_reportFailure, (history) {
@@ -288,6 +314,7 @@ class EditorCubit extends Cubit<EditorState> {
         state.copyWith(
           history: history,
           selectedId: stillThere ? selected : null,
+          extraSelected: _stillIn(history.present, state.extraSelected),
           failure: null,
         ),
       );
