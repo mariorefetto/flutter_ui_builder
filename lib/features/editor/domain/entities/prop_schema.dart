@@ -22,6 +22,7 @@ class PropSchema {
     this.iconPicker = false,
     this.screenPicker = false,
     this.componentPicker = false,
+    this.assetPicker = false,
   });
 
   /// Key used in WidgetNode.props.
@@ -69,6 +70,10 @@ class PropSchema {
   /// Group shown in the properties panel. When null it is worked out from the
   /// property name and type by propCategoryOf.
   final String? category;
+
+  /// A string that names one of the project's pictures when the widget's
+  /// source is an asset, and is typed otherwise.
+  final bool assetPicker;
 
   /// A string naming a component of the project, picked from them.
   final bool componentPicker;

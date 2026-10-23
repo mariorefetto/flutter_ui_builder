@@ -1,3 +1,4 @@
+import 'package:flutter_ui_builder/features/editor/data/models/media_asset_model.dart';
 import 'package:flutter_ui_builder/features/editor/data/models/project_screen_model.dart';
 import 'package:flutter_ui_builder/features/editor/data/models/widget_node_model.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
@@ -18,6 +19,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
     @Default(<ProjectScreenModel>[]) List<ProjectScreenModel> screens,
     @Default(0) int activeIndex,
     @Default(false) bool component,
+    @Default(<MediaAssetModel>[]) List<MediaAssetModel> assets,
     @Default(currentSchemaVersion) int schemaVersion,
   }) = _EditorDocumentModel;
 
@@ -31,6 +33,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
         screens: document.screens.map(ProjectScreenModel.fromEntity).toList(),
         activeIndex: document.activeIndex,
         component: document.component,
+        assets: document.assets.map(MediaAssetModel.fromEntity).toList(),
         schemaVersion: document.schemaVersion,
       );
 
@@ -43,6 +46,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
     screens: screens.map((s) => s.toEntity()).toList(),
     activeIndex: activeIndex.clamp(0, screens.length),
     component: component,
+    assets: assets.map((a) => a.toEntity()).toList(),
     schemaVersion: schemaVersion,
   );
 }

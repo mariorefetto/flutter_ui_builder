@@ -4,6 +4,7 @@ import 'package:flutter_ui_builder/core/usecase/usecase.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/opened_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/repositories/document_repository.dart';
+import 'package:flutter_ui_builder/features/editor/domain/repositories/file_dialog_repository.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/document_validator.dart';
 
 class SaveDocumentParams {
@@ -69,4 +70,15 @@ class RenameDocument
     }
     return Right(params.document.copyWith(name: name));
   }
+}
+
+/// Lets the user pick pictures for the project.
+class PickImages implements UseCase<List<String>, NoParams> {
+  const PickImages(this._dialogs);
+
+  final FileDialogRepository _dialogs;
+
+  @override
+  Future<Either<Failure, List<String>>> call(NoParams params) =>
+      _dialogs.pickImages();
 }

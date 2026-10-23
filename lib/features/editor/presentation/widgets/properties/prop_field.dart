@@ -4,6 +4,7 @@ import 'package:flutter_ui_builder/core/widgets/app_select.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/edge_insets_value.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/node_props.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/prop_schema.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/asset_field.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/color_field.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/committed_text_field.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/edge_insets_field.dart';
@@ -31,6 +32,9 @@ class PropField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => switch (schema.type) {
+    PropType.string
+        when schema.assetPicker && props.choice('source') == 'asset' =>
+      AssetField(value: props.string(schema.name), onChanged: onChanged),
     PropType.string when schema.componentPicker => ScreenField(
       components: true,
       value: props.string(schema.name),

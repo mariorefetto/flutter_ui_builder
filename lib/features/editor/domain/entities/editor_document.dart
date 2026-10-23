@@ -1,3 +1,4 @@
+import 'package:flutter_ui_builder/features/editor/domain/entities/media_asset.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -28,6 +29,9 @@ abstract class EditorDocument with _$EditorDocument {
 
     /// Whether the open one is a component rather than a screen.
     @Default(false) bool component,
+
+    /// The pictures of the project, shared by all its screens.
+    @Default(<MediaAsset>[]) List<MediaAsset> assets,
     @Default(currentSchemaVersion) int schemaVersion,
   }) = _EditorDocument;
 }

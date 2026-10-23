@@ -1,12 +1,14 @@
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/document_reconciler.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/drop_planner.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/media_editor.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/tree_editor.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/component_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/edit_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/history_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/import_usecases.dart';
+import 'package:flutter_ui_builder/features/editor/domain/usecases/media_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/plan_drop.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/project_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/screen_usecases.dart';
@@ -38,6 +40,8 @@ class EditorUseCases {
     required this.addComponent,
     required this.extractComponent,
     required this.detachComponent,
+    required this.addAssets,
+    required this.removeAsset,
   });
 
   /// Builds the use cases over one tree editor and one drop planner.
@@ -69,6 +73,8 @@ class EditorUseCases {
     addComponent: const AddComponent(ScreenEditor()),
     extractComponent: ExtractComponent(const ScreenEditor(), registry),
     detachComponent: const DetachComponent(ScreenEditor()),
+    addAssets: const AddAssets(MediaEditor()),
+    removeAsset: const RemoveAsset(MediaEditor()),
   );
 
   final AddNode addNode;
@@ -94,4 +100,6 @@ class EditorUseCases {
   final AddComponent addComponent;
   final ExtractComponent extractComponent;
   final DetachComponent detachComponent;
+  final AddAssets addAssets;
+  final RemoveAsset removeAsset;
 }

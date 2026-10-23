@@ -2011,6 +2011,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Move the widget up'**
   String get shortcutMoveUp;
+
+  /// Label: Media
+  ///
+  /// In en, this message translates to:
+  /// **'Media'**
+  String get panelMedia;
+
+  /// Label: Add pictures...
+  ///
+  /// In en, this message translates to:
+  /// **'Add pictures...'**
+  String get mediaAdd;
+
+  /// Label: No pictures yet. Add some to use them in Image widgets.
+  ///
+  /// In en, this message translates to:
+  /// **'No pictures yet. Add some to use them in Image widgets.'**
+  String get mediaEmpty;
+
+  /// Label: Click to add an Image that shows it
+  ///
+  /// In en, this message translates to:
+  /// **'Click to add an Image that shows it'**
+  String get mediaUseTooltip;
+
+  /// Label: Remove the picture
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the picture'**
+  String get mediaRemove;
+
+  /// Label: Add this to pubspec.yaml
+  ///
+  /// In en, this message translates to:
+  /// **'Add this to pubspec.yaml'**
+  String get mediaPubspec;
+
+  /// Label: Copy
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get mediaCopyPubspec;
+
+  /// Option: no picture chosen
+  ///
+  /// In en, this message translates to:
+  /// **'No picture'**
+  String get assetNone;
 }
 
 class _AppLocalizationsDelegate

@@ -9,6 +9,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/preview/cupertin
 import 'package:flutter_ui_builder/features/editor/presentation/preview/effect_previews.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/information_previews.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/layout_previews.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/preview/media_scope.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_builder.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_helpers.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/scaffold_previews.dart';
@@ -162,7 +163,8 @@ Widget _image(BuildContext context, NodeProps props, List<PreviewChild> _) {
   Widget broken(BuildContext context, Object error, StackTrace? stack) =>
       placeholder;
   return switch (props.requiredChoice('source')) {
-    'asset' => Image.asset(
+    'asset' => _assetImage(
+      context,
       path,
       width: width,
       height: height,
@@ -170,8 +172,8 @@ Widget _image(BuildContext context, NodeProps props, List<PreviewChild> _) {
       alignment: alignment,
       repeat: repeat,
       color: color,
-      semanticLabel: label,
-      errorBuilder: broken,
+      label: label,
+      broken: broken,
     ),
     'file' => Image.file(
       File(path),
@@ -196,4 +198,34 @@ Widget _image(BuildContext context, NodeProps props, List<PreviewChild> _) {
       errorBuilder: broken,
     ),
   };
+}
+
+// A picture of the project is drawn from the file it was taken from, when it
+// is known. The designer's own app does not have the project's asset bundle,
+// so without the file there is only the placeholder.
+Widget _assetImage(
+  BuildContext context,
+  String name, {
+  required double? width,
+  required double? height,
+  required BoxFit fit,
+  required Alignment alignment,
+  required ImageRepeat repeat,
+  required Color? color,
+  required String? label,
+  required ImageErrorWidgetBuilder broken,
+}) {
+  final file = MediaScope.fileOf(context, name);
+  if (file == null) return broken(context, name, null);
+  return Image.file(
+    File(file),
+    width: width,
+    height: height,
+    fit: fit,
+    alignment: alignment,
+    repeat: repeat,
+    color: color,
+    semanticLabel: label,
+    errorBuilder: broken,
+  );
 }

@@ -1081,4 +1081,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shortcutMoveUp => 'Move the widget up';
+
+  @override
+  String get panelMedia => 'Media';
+
+  @override
+  String get mediaAdd => 'Add pictures...';
+
+  @override
+  String get mediaEmpty =>
+      'No pictures yet. Add some to use them in Image widgets.';
+
+  @override
+  String get mediaUseTooltip => 'Click to add an Image that shows it';
+
+  @override
+  String get mediaRemove => 'Remove the picture';
+
+  @override
+  String get mediaPubspec => 'Add this to pubspec.yaml';
+
+  @override
+  String get mediaCopyPubspec => 'Copy';
+
+  @override
+  String get assetNone => 'No picture';
 }

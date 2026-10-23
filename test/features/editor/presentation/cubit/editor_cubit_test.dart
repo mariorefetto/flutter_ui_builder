@@ -432,4 +432,24 @@ void main() {
       expect(cubit.state.document.screens.single.name, 'untitled');
     });
   });
+
+  group('pictures', () {
+    test('pictures are added and removed', () {
+      final cubit = _cubit()..addAssets(['/x/logo.png']);
+
+      expect(cubit.state.document.assets.single.name, 'assets/logo.png');
+      cubit.removeAsset('assets/logo.png');
+      expect(cubit.state.document.assets, isEmpty);
+    });
+
+    test('adding pictures is an undo step, and adding none is not', () {
+      final cubit = _cubit()..addAssets(const []);
+      expect(cubit.state.history.canUndo, isFalse);
+
+      cubit.addAssets(['/x/logo.png']);
+      expect(cubit.state.history.canUndo, isTrue);
+      cubit.undo();
+      expect(cubit.state.document.assets, isEmpty);
+    });
+  });
 }

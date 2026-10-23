@@ -17,7 +17,8 @@ mixin _$EditorDocument {
  String get name; WidgetNode get root;/// The screens that are not open, in project order.
  List<ProjectScreen> get screens;/// Where the open screen sits among all of them.
  int get activeIndex;/// Whether the open one is a component rather than a screen.
- bool get component; int get schemaVersion;
+ bool get component;/// The pictures of the project, shared by all its screens.
+ List<MediaAsset> get assets; int get schemaVersion;
 /// Create a copy of EditorDocument
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +29,16 @@ $EditorDocumentCopyWith<EditorDocument> get copyWith => _$EditorDocumentCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditorDocument&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&const DeepCollectionEquality().equals(other.screens, screens)&&(identical(other.activeIndex, activeIndex) || other.activeIndex == activeIndex)&&(identical(other.component, component) || other.component == component)&&(identical(other.schemaVersion, schemaVersion) || other.schemaVersion == schemaVersion));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditorDocument&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&const DeepCollectionEquality().equals(other.screens, screens)&&(identical(other.activeIndex, activeIndex) || other.activeIndex == activeIndex)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other.assets, assets)&&(identical(other.schemaVersion, schemaVersion) || other.schemaVersion == schemaVersion));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,root,const DeepCollectionEquality().hash(screens),activeIndex,component,schemaVersion);
+int get hashCode => Object.hash(runtimeType,name,root,const DeepCollectionEquality().hash(screens),activeIndex,component,const DeepCollectionEquality().hash(assets),schemaVersion);
 
 @override
 String toString() {
-  return 'EditorDocument(name: $name, root: $root, screens: $screens, activeIndex: $activeIndex, component: $component, schemaVersion: $schemaVersion)';
+  return 'EditorDocument(name: $name, root: $root, screens: $screens, activeIndex: $activeIndex, component: $component, assets: $assets, schemaVersion: $schemaVersion)';
 }
 
 
@@ -48,7 +49,7 @@ abstract mixin class $EditorDocumentCopyWith<$Res>  {
   factory $EditorDocumentCopyWith(EditorDocument value, $Res Function(EditorDocument) _then) = _$EditorDocumentCopyWithImpl;
 @useResult
 $Res call({
- String name, WidgetNode root, List<ProjectScreen> screens, int activeIndex, bool component, int schemaVersion
+ String name, WidgetNode root, List<ProjectScreen> screens, int activeIndex, bool component, List<MediaAsset> assets, int schemaVersion
 });
 
 
@@ -65,14 +66,15 @@ class _$EditorDocumentCopyWithImpl<$Res>
 
 /// Create a copy of EditorDocument
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? root = null,Object? screens = null,Object? activeIndex = null,Object? component = null,Object? schemaVersion = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? root = null,Object? screens = null,Object? activeIndex = null,Object? component = null,Object? assets = null,Object? schemaVersion = null,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,root: null == root ? _self.root : root // ignore: cast_nullable_to_non_nullable
 as WidgetNode,screens: null == screens ? _self.screens : screens // ignore: cast_nullable_to_non_nullable
 as List<ProjectScreen>,activeIndex: null == activeIndex ? _self.activeIndex : activeIndex // ignore: cast_nullable_to_non_nullable
 as int,component: null == component ? _self.component : component // ignore: cast_nullable_to_non_nullable
-as bool,schemaVersion: null == schemaVersion ? _self.schemaVersion : schemaVersion // ignore: cast_nullable_to_non_nullable
+as bool,assets: null == assets ? _self.assets : assets // ignore: cast_nullable_to_non_nullable
+as List<MediaAsset>,schemaVersion: null == schemaVersion ? _self.schemaVersion : schemaVersion // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -167,10 +169,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  WidgetNode root,  List<ProjectScreen> screens,  int activeIndex,  bool component,  int schemaVersion)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  WidgetNode root,  List<ProjectScreen> screens,  int activeIndex,  bool component,  List<MediaAsset> assets,  int schemaVersion)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _EditorDocument() when $default != null:
-return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.component,_that.schemaVersion);case _:
+return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.component,_that.assets,_that.schemaVersion);case _:
   return orElse();
 
 }
@@ -188,10 +190,10 @@ return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.comp
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  WidgetNode root,  List<ProjectScreen> screens,  int activeIndex,  bool component,  int schemaVersion)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  WidgetNode root,  List<ProjectScreen> screens,  int activeIndex,  bool component,  List<MediaAsset> assets,  int schemaVersion)  $default,) {final _that = this;
 switch (_that) {
 case _EditorDocument():
-return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.component,_that.schemaVersion);case _:
+return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.component,_that.assets,_that.schemaVersion);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -208,10 +210,10 @@ return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.comp
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  WidgetNode root,  List<ProjectScreen> screens,  int activeIndex,  bool component,  int schemaVersion)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  WidgetNode root,  List<ProjectScreen> screens,  int activeIndex,  bool component,  List<MediaAsset> assets,  int schemaVersion)?  $default,) {final _that = this;
 switch (_that) {
 case _EditorDocument() when $default != null:
-return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.component,_that.schemaVersion);case _:
+return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.component,_that.assets,_that.schemaVersion);case _:
   return null;
 
 }
@@ -223,7 +225,7 @@ return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.comp
 
 
 class _EditorDocument implements EditorDocument {
-  const _EditorDocument({required this.name, required this.root, final  List<ProjectScreen> screens = const <ProjectScreen>[], this.activeIndex = 0, this.component = false, this.schemaVersion = currentSchemaVersion}): _screens = screens;
+  const _EditorDocument({required this.name, required this.root, final  List<ProjectScreen> screens = const <ProjectScreen>[], this.activeIndex = 0, this.component = false, final  List<MediaAsset> assets = const <MediaAsset>[], this.schemaVersion = currentSchemaVersion}): _screens = screens,_assets = assets;
   
 
 @override final  String name;
@@ -241,6 +243,15 @@ class _EditorDocument implements EditorDocument {
 @override@JsonKey() final  int activeIndex;
 /// Whether the open one is a component rather than a screen.
 @override@JsonKey() final  bool component;
+/// The pictures of the project, shared by all its screens.
+ final  List<MediaAsset> _assets;
+/// The pictures of the project, shared by all its screens.
+@override@JsonKey() List<MediaAsset> get assets {
+  if (_assets is EqualUnmodifiableListView) return _assets;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_assets);
+}
+
 @override@JsonKey() final  int schemaVersion;
 
 /// Create a copy of EditorDocument
@@ -253,16 +264,16 @@ _$EditorDocumentCopyWith<_EditorDocument> get copyWith => __$EditorDocumentCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EditorDocument&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&const DeepCollectionEquality().equals(other._screens, _screens)&&(identical(other.activeIndex, activeIndex) || other.activeIndex == activeIndex)&&(identical(other.component, component) || other.component == component)&&(identical(other.schemaVersion, schemaVersion) || other.schemaVersion == schemaVersion));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EditorDocument&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&const DeepCollectionEquality().equals(other._screens, _screens)&&(identical(other.activeIndex, activeIndex) || other.activeIndex == activeIndex)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other._assets, _assets)&&(identical(other.schemaVersion, schemaVersion) || other.schemaVersion == schemaVersion));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,root,const DeepCollectionEquality().hash(_screens),activeIndex,component,schemaVersion);
+int get hashCode => Object.hash(runtimeType,name,root,const DeepCollectionEquality().hash(_screens),activeIndex,component,const DeepCollectionEquality().hash(_assets),schemaVersion);
 
 @override
 String toString() {
-  return 'EditorDocument(name: $name, root: $root, screens: $screens, activeIndex: $activeIndex, component: $component, schemaVersion: $schemaVersion)';
+  return 'EditorDocument(name: $name, root: $root, screens: $screens, activeIndex: $activeIndex, component: $component, assets: $assets, schemaVersion: $schemaVersion)';
 }
 
 
@@ -273,7 +284,7 @@ abstract mixin class _$EditorDocumentCopyWith<$Res> implements $EditorDocumentCo
   factory _$EditorDocumentCopyWith(_EditorDocument value, $Res Function(_EditorDocument) _then) = __$EditorDocumentCopyWithImpl;
 @override @useResult
 $Res call({
- String name, WidgetNode root, List<ProjectScreen> screens, int activeIndex, bool component, int schemaVersion
+ String name, WidgetNode root, List<ProjectScreen> screens, int activeIndex, bool component, List<MediaAsset> assets, int schemaVersion
 });
 
 
@@ -290,14 +301,15 @@ class __$EditorDocumentCopyWithImpl<$Res>
 
 /// Create a copy of EditorDocument
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? root = null,Object? screens = null,Object? activeIndex = null,Object? component = null,Object? schemaVersion = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? root = null,Object? screens = null,Object? activeIndex = null,Object? component = null,Object? assets = null,Object? schemaVersion = null,}) {
   return _then(_EditorDocument(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,root: null == root ? _self.root : root // ignore: cast_nullable_to_non_nullable
 as WidgetNode,screens: null == screens ? _self._screens : screens // ignore: cast_nullable_to_non_nullable
 as List<ProjectScreen>,activeIndex: null == activeIndex ? _self.activeIndex : activeIndex // ignore: cast_nullable_to_non_nullable
 as int,component: null == component ? _self.component : component // ignore: cast_nullable_to_non_nullable
-as bool,schemaVersion: null == schemaVersion ? _self.schemaVersion : schemaVersion // ignore: cast_nullable_to_non_nullable
+as bool,assets: null == assets ? _self._assets : assets // ignore: cast_nullable_to_non_nullable
+as List<MediaAsset>,schemaVersion: null == schemaVersion ? _self.schemaVersion : schemaVersion // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

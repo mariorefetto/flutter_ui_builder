@@ -20,11 +20,16 @@ import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag/das
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/palette/palette_item.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/editor_shortcuts.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/tree/tree_row.dart';
+import 'package:flutter_ui_builder/features/settings/domain/repositories/settings_repository.dart';
+import 'support/memory_settings_repository.dart';
 
 void main() {
   setUp(() async {
     await sl.reset();
     await configureDependencies();
+    // The settings of the person running the tests are left alone.
+    await sl.unregister<SettingsRepository>();
+    sl.registerSingleton<SettingsRepository>(MemorySettingsRepository());
   });
 
   tearDown(sl.reset);
@@ -964,4 +969,62 @@ class UntitledView extends StatelessWidget {
       expect(find.text('Language'), findsOneWidget);
     },
   );
+
+  group('pictures', () {
+    testWidgets('the media panel lists a picture and adds an Image for it', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)..addAssets(['/x/logo.png']);
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byTooltip('Media'));
+      await tester.pumpAndSettle();
+      expect(find.text('assets/logo.png'), findsOneWidget);
+      expect(find.textContaining('- assets/logo.png'), findsOneWidget);
+
+      cubit.select('node_2');
+      await tester.tap(find.text('assets/logo.png'));
+      await tester.pumpAndSettle();
+
+      final image = cubit.state.document.root
+          .find('node_2')
+          ?.children
+          .where((c) => c.type == 'Image')
+          .single;
+      expect(image?.props['source'], 'asset');
+      expect(image?.props['url'], 'assets/logo.png');
+    });
+
+    testWidgets('an empty media panel says how to start', (tester) async {
+      await pumpApp(tester);
+
+      await tester.tap(find.byTooltip('Media'));
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('No pictures yet'), findsOneWidget);
+    });
+
+    testWidgets('an Image from the assets picks from the project pictures', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..addAssets(['/x/logo.png'])
+        ..addNode(type: 'Image', parentId: 'node_2')
+        ..updateProp('node_3', 'source', 'asset');
+      await tester.pumpAndSettle();
+
+      expect(find.text('No picture'), findsOneWidget);
+      await tester.tap(find.text('No picture'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('assets/logo.png').last);
+      await tester.pumpAndSettle();
+
+      expect(
+        cubit.state.document.root.find('node_3')?.props['url'],
+        'assets/logo.png',
+      );
+    });
+  });
 }

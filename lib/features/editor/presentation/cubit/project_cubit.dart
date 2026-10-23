@@ -14,14 +14,17 @@ class ProjectCubit extends Cubit<ProjectState> {
     required SaveDocument saveDocument,
     required SaveDocumentAs saveDocumentAs,
     required OpenDocument openDocument,
+    required PickImages pickImages,
   }) : _saveDocument = saveDocument,
        _saveDocumentAs = saveDocumentAs,
        _openDocument = openDocument,
+       _pickImages = pickImages,
        super(ProjectState(savedDocument: initialDocument));
 
   final SaveDocument _saveDocument;
   final SaveDocumentAs _saveDocumentAs;
   final OpenDocument _openDocument;
+  final PickImages _pickImages;
 
   /// Saves [document] to its file, asking for one the first time.
   Future<void> save(EditorDocument document) async {
@@ -52,6 +55,17 @@ class ProjectCubit extends Cubit<ProjectState> {
       emit(ProjectState(savedDocument: opened.document, filePath: opened.path));
       _notify(ProjectOpened(opened.document));
     });
+  }
+
+  /// Asks the user for pictures and returns their paths. A dialog that fails
+  /// is reported like any file problem and gives none.
+  Future<List<String>> pickImages() async {
+    final result = await _pickImages(const NoParams());
+    if (isClosed) return const [];
+    return result.fold((failure) {
+      _notify(ProjectFailed(failure));
+      return const <String>[];
+    }, (paths) => paths);
   }
 
   /// Forgets the current file and treats [document] as the saved state.

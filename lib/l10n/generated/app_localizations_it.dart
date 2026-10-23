@@ -1098,4 +1098,30 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get shortcutMoveUp => 'Sposta il widget in alto';
+
+  @override
+  String get panelMedia => 'Media';
+
+  @override
+  String get mediaAdd => 'Aggiungi immagini...';
+
+  @override
+  String get mediaEmpty =>
+      'Ancora nessuna immagine. Aggiungine per usarle nei widget Image.';
+
+  @override
+  String get mediaUseTooltip =>
+      'Fai clic per aggiungere un Image che la mostra';
+
+  @override
+  String get mediaRemove => 'Rimuovi l\'immagine';
+
+  @override
+  String get mediaPubspec => 'Aggiungi questo a pubspec.yaml';
+
+  @override
+  String get mediaCopyPubspec => 'Copia';
+
+  @override
+  String get assetNone => 'Nessuna immagine';
 }

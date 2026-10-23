@@ -20,4 +20,14 @@ class FileDialogRepositoryImpl implements FileDialogRepository {
       return const Left(StorageFailure(StorageFailureReason.access));
     }
   }
+
+  @override
+  Future<Either<Failure, List<String>>> pickImages() async {
+    try {
+      return Right(await _dialogs.pickImages());
+    } on Exception catch (e) {
+      _talker.warning('Image dialog failed: $e');
+      return const Left(StorageFailure(StorageFailureReason.access));
+    }
+  }
 }

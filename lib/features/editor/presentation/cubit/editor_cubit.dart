@@ -11,6 +11,7 @@ import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.
 import 'package:flutter_ui_builder/features/editor/domain/usecases/component_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/edit_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/import_usecases.dart';
+import 'package:flutter_ui_builder/features/editor/domain/usecases/media_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/screen_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/drop_resolver.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_state.dart';

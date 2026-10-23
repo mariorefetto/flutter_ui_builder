@@ -72,4 +72,22 @@ extension EditorScreens on EditorCubit {
         .detachComponent(ComponentParams(document: state.document, nodeId: id))
         .fold(_reportFailure, (document) => _commit(document, selectedId: id)),
   );
+
+  /// Adds the files at [paths] as pictures of the project.
+  void addAssets(List<String> paths) {
+    if (paths.isEmpty) return;
+    _useCases
+        .addAssets(MediaParams(document: state.document, paths: paths))
+        .fold(
+          _reportFailure,
+          (document) => _commit(document, selectedId: state.selectedId),
+        );
+  }
+
+  void removeAsset(String name) => _useCases
+      .removeAsset(MediaParams(document: state.document, name: name))
+      .fold(
+        _reportFailure,
+        (document) => _commit(document, selectedId: state.selectedId),
+      );
 }

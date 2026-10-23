@@ -318,5 +318,13 @@
   "shortcutSelectParent": "Seleziona il widget genitore",
   "shortcutSelectFirstChild": "Seleziona il primo figlio",
   "shortcutMoveDown": "Sposta il widget in basso",
-  "shortcutMoveUp": "Sposta il widget in alto"
+  "shortcutMoveUp": "Sposta il widget in alto",
+  "panelMedia": "Media",
+  "mediaAdd": "Aggiungi immagini...",
+  "mediaEmpty": "Ancora nessuna immagine. Aggiungine per usarle nei widget Image.",
+  "mediaUseTooltip": "Fai clic per aggiungere un Image che la mostra",
+  "mediaRemove": "Rimuovi l'immagine",
+  "mediaPubspec": "Aggiungi questo a pubspec.yaml",
+  "mediaCopyPubspec": "Copia",
+  "assetNone": "Nessuna immagine"
 }

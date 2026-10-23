@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'workspace_state.freezed.dart';
 
 /// Panels that can dock on the left.
-enum LeftPanel { toolbox, outline }
+enum LeftPanel { toolbox, outline, media }
 
 /// How the status bar of the previewed device is shown.
 enum StatusBarMode {

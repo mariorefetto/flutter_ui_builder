@@ -1379,5 +1379,37 @@
   "shortcutMoveUp": "Move the widget up",
   "@shortcutMoveUp": {
     "description": "Label: Move the widget up"
+  },
+  "panelMedia": "Media",
+  "@panelMedia": {
+    "description": "Label: Media"
+  },
+  "mediaAdd": "Add pictures...",
+  "@mediaAdd": {
+    "description": "Label: Add pictures..."
+  },
+  "mediaEmpty": "No pictures yet. Add some to use them in Image widgets.",
+  "@mediaEmpty": {
+    "description": "Label: No pictures yet. Add some to use them in Image widgets."
+  },
+  "mediaUseTooltip": "Click to add an Image that shows it",
+  "@mediaUseTooltip": {
+    "description": "Label: Click to add an Image that shows it"
+  },
+  "mediaRemove": "Remove the picture",
+  "@mediaRemove": {
+    "description": "Label: Remove the picture"
+  },
+  "mediaPubspec": "Add this to pubspec.yaml",
+  "@mediaPubspec": {
+    "description": "Label: Add this to pubspec.yaml"
+  },
+  "mediaCopyPubspec": "Copy",
+  "@mediaCopyPubspec": {
+    "description": "Label: Copy"
+  },
+  "assetNone": "No picture",
+  "@assetNone": {
+    "description": "Option: no picture chosen"
   }
 }

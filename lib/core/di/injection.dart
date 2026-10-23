@@ -118,8 +118,10 @@ void _initEditor() {
         saveDocument: sl(),
         saveDocumentAs: sl(),
         openDocument: sl(),
+        pickImages: sl(),
       ),
     )
+    ..registerLazySingleton(() => PickImages(sl()))
     ..registerLazySingleton(() => SaveDocument(sl()))
     ..registerLazySingleton(() => SaveDocumentAs(sl()))
     ..registerLazySingleton(() => OpenDocument(sl(), sl()))

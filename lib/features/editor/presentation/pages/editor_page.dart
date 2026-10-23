@@ -22,6 +22,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/designer_toolbar.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/editor_canvas.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/code/code_view.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/media/media_panel.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/palette/widget_palette.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/problems/problems_panel.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/properties_panel.dart';
@@ -193,6 +194,11 @@ class _Workspace extends StatelessWidget {
         title: l10n.panelOutline,
         onClose: close,
         child: const WidgetTreePanel(),
+      ),
+      LeftPanel.media => DockPanel(
+        title: l10n.panelMedia,
+        onClose: close,
+        child: const MediaPanel(),
       ),
     };
   }

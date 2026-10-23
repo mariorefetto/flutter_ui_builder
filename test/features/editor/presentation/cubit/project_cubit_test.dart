@@ -8,6 +8,7 @@ import 'package:flutter_ui_builder/features/editor/domain/entities/editor_docume
 import 'package:flutter_ui_builder/features/editor/domain/entities/opened_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/repositories/document_repository.dart';
+import 'package:flutter_ui_builder/features/editor/domain/repositories/file_dialog_repository.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/document_validator.dart';
 import 'package:flutter_ui_builder/features/editor/domain/usecases/project_usecases.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/project_cubit.dart';
@@ -15,6 +16,8 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/project_st
 import 'package:mocktail/mocktail.dart';
 
 class _MockRepository extends Mock implements DocumentRepository {}
+
+class _MockDialogs extends Mock implements FileDialogRepository {}
 
 /// A Column root accepts any number of children, unlike a Scaffold.
 EditorDocument columnDocument() => const EditorDocument(
@@ -24,12 +27,16 @@ EditorDocument columnDocument() => const EditorDocument(
 
 void main() {
   late _MockRepository repository;
+  late _MockDialogs dialogs;
   final initial = columnDocument();
   final edited = initial.copyWith(name: 'edited');
 
   setUpAll(() => registerFallbackValue(initial));
 
-  setUp(() => repository = _MockRepository());
+  setUp(() {
+    repository = _MockRepository();
+    dialogs = _MockDialogs();
+  });
 
   ProjectCubit build() => ProjectCubit(
     initialDocument: initial,
@@ -39,6 +46,7 @@ void main() {
       repository,
       DocumentValidator(WidgetRegistry(builtinDefinitions)),
     ),
+    pickImages: PickImages(dialogs),
   );
 
   blocTest<ProjectCubit, ProjectState>(
@@ -130,6 +138,29 @@ void main() {
         'failure',
         isA<DocumentFailure>(),
       ),
+      isA<ProjectState>().having((s) => s.event, 'event', isNull),
+    ],
+  );
+
+  test('the pictures chosen are returned as paths', () async {
+    when(
+      () => dialogs.pickImages(),
+    ).thenAnswer((_) async => const Right(['/x/a.png', '/x/b.jpg']));
+
+    expect(await build().pickImages(), ['/x/a.png', '/x/b.jpg']);
+  });
+
+  blocTest<ProjectCubit, ProjectState>(
+    'a picture dialog that fails is reported and gives none',
+    setUp: () => when(() => dialogs.pickImages()).thenAnswer(
+      (_) async => const Left(StorageFailure(StorageFailureReason.access)),
+    ),
+    build: build,
+    act: (cubit) async {
+      expect(await cubit.pickImages(), isEmpty);
+    },
+    expect: () => [
+      isA<ProjectState>().having((s) => s.event, 'event', isA<ProjectFailed>()),
       isA<ProjectState>().having((s) => s.event, 'event', isNull),
     ],
   );

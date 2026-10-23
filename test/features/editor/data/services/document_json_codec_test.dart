@@ -3,6 +3,7 @@ import 'package:flutter_ui_builder/core/error/exceptions.dart';
 import 'package:flutter_ui_builder/core/error/failures.dart';
 import 'package:flutter_ui_builder/features/editor/data/services/document_json_codec.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/media_asset.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 
@@ -101,5 +102,18 @@ void main() {
 
     expect(decoded.component, isFalse);
     expect(decoded.screens, isEmpty);
+  });
+
+  test('the pictures of a project survive a save and an open', () {
+    const project = EditorDocument(
+      name: 'Home',
+      root: WidgetNode(id: 'node_0', type: 'Column'),
+      assets: [
+        MediaAsset(name: 'assets/a.png', sourcePath: '/x/a.png'),
+        MediaAsset(name: 'assets/b.png'),
+      ],
+    );
+
+    expect(codec.decode(codec.encode(project)), project);
   });
 }

@@ -57,7 +57,7 @@ final WidgetDefinition textDefinition = WidgetDefinition(
 
 final List<PropSchema> _imageProps = [
   choiceProp('source', imageSourceOptions, defaultValue: 'network'),
-  stringProp('url', defaultValue: ''),
+  stringProp('url', defaultValue: '', assetPicker: true),
   numberProp('width'),
   numberProp('height'),
   choiceProp(

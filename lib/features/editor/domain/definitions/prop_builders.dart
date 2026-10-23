@@ -62,6 +62,7 @@ PropSchema stringProp(
   String? argument,
   String? group,
   String? template,
+  bool assetPicker = false,
 }) => PropSchema(
   name: name,
   type: PropType.string,
@@ -70,6 +71,7 @@ PropSchema stringProp(
   argument: argument,
   group: group,
   template: template,
+  assetPicker: assetPicker,
 );
 
 /// A string written as `Text('...')`.

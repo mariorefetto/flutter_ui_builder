@@ -77,7 +77,7 @@ class ScreenEditor {
   Either<Failure, EditorDocument> add(EditorDocument document, String name) =>
       _validName(document, name).map((clean) {
         final all = _all(document);
-        return _build([
+        return _build(document, [
           ...all,
           ProjectScreen(name: clean, root: createEmptyDocument().root),
         ], all.length);
@@ -89,7 +89,7 @@ class ScreenEditor {
     String name,
   ) => _validName(document, name).map((clean) {
     final all = _all(document);
-    return _build([
+    return _build(document, [
       ...all,
       ProjectScreen(
         name: clean,
@@ -128,7 +128,7 @@ class ScreenEditor {
       final replaced = _replaceNode(document.root, nodeId, instance);
       final all = _all(document);
       final active = document.activeIndex.clamp(0, all.length - 1);
-      return _build([
+      return _build(document, [
         for (var i = 0; i < all.length; i++)
           i == active
               ? ProjectScreen(
@@ -163,7 +163,7 @@ class ScreenEditor {
   Either<Failure, EditorDocument> open(EditorDocument document, String name) {
     final all = _all(document);
     final index = all.indexWhere((s) => s.name == name);
-    return index < 0 ? _unknown() : Right(_build(all, index));
+    return index < 0 ? _unknown() : Right(_build(document, all, index));
   }
 
   Either<Failure, EditorDocument> rename(
@@ -183,7 +183,7 @@ class ScreenEditor {
             component: screen.component,
           ),
       ];
-      return _build(renamed, document.activeIndex);
+      return _build(document, renamed, document.activeIndex);
     });
   }
 
@@ -218,7 +218,7 @@ class ScreenEditor {
         : index == active
         ? (active >= remaining.length ? remaining.length - 1 : active)
         : active;
-    return Right(_build(remaining, next));
+    return Right(_build(document, remaining, next));
   }
 
   /// A copy of the screen called [name], opened for editing.
@@ -235,7 +235,7 @@ class ScreenEditor {
       copy = '$name $_copySuffix $n';
     }
     return Right(
-      _build([
+      _build(document, [
         ...all,
         ProjectScreen(name: copy, root: all[index].root),
       ], all.length),
@@ -252,7 +252,9 @@ class ScreenEditor {
     if (index < 0) return _unknown();
     final open = all[document.activeIndex].name;
     final moved = [all[index], ...all.where((s) => s.name != name)];
-    return Right(_build(moved, moved.indexWhere((s) => s.name == open)));
+    return Right(
+      _build(document, moved, moved.indexWhere((s) => s.name == open)),
+    );
   }
 
   // The open screen sits among the others at its place.
@@ -266,9 +268,15 @@ class ScreenEditor {
     return [...document.screens.take(at), open, ...document.screens.skip(at)];
   }
 
-  EditorDocument _build(List<ProjectScreen> all, int active) {
+  // The project with [all] as its screens and components and the one at
+  // [active] open. Everything else about [base], such as its pictures, stays.
+  EditorDocument _build(
+    EditorDocument base,
+    List<ProjectScreen> all,
+    int active,
+  ) {
     final open = all[active];
-    return EditorDocument(
+    return base.copyWith(
       name: open.name,
       root: open.root,
       component: open.component,
