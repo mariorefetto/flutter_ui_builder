@@ -7,6 +7,7 @@ import 'package:flutter_ui_builder/app.dart';
 import 'package:flutter_ui_builder/core/di/injection.dart';
 import 'package:flutter_ui_builder/core/theme/app_icons.dart';
 import 'package:flutter_ui_builder/core/widgets/app_select.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/screen_templates.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/code_edit_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
@@ -1209,6 +1210,53 @@ class UntitledView extends StatelessWidget {
       await tester.pumpAndSettle();
 
       expect(find.text('Welcome: step 1 of 4'), findsOneWidget);
+    });
+  });
+
+  group('screens overview', () {
+    testWidgets(
+      'all the screens are drawn side by side and one can be opened',
+      (tester) async {
+        await pumpApp(tester);
+        final cubit = editorOf(tester)
+          ..addScreen('Details', template: ScreenTemplate.login)
+          ..openScreen('untitled');
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.byTooltip('See all the screens side by side'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('All the screens'), findsOneWidget);
+        expect(find.text('untitled (start)'), findsOneWidget);
+        expect(find.text('Details'), findsWidgets);
+        // The login template is drawn small in the overview.
+        expect(find.text('Welcome back'), findsWidgets);
+
+        await tester.tap(find.text('Details').last);
+        await tester.pumpAndSettle();
+
+        expect(cubit.state.document.name, 'Details');
+        expect(find.text('All the screens'), findsNothing);
+      },
+    );
+
+    testWidgets('components are not listed as screens', (tester) async {
+      await pumpApp(tester);
+      editorOf(tester).addComponent('Badge');
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byTooltip('See all the screens side by side'));
+      await tester.pumpAndSettle();
+
+      // The tab of the component stays behind the dialog; the dialog has none.
+      expect(
+        find.descendant(
+          of: find.byType(AlertDialog),
+          matching: find.text('Badge'),
+        ),
+        findsNothing,
+      );
+      expect(find.text('untitled (start)'), findsOneWidget);
     });
   });
 }

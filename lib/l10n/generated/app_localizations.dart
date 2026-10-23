@@ -2551,6 +2551,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome tour'**
   String get menuWelcomeTour;
+
+  /// Overview: All the screens
+  ///
+  /// In en, this message translates to:
+  /// **'All the screens'**
+  String get overviewTitle;
+
+  /// Overview: {name} (start)
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (start)'**
+  String overviewStart(String name);
+
+  /// Overview: See all the screens side by side
+  ///
+  /// In en, this message translates to:
+  /// **'See all the screens side by side'**
+  String get designerOverview;
 }
 
 class _AppLocalizationsDelegate

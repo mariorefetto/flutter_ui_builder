@@ -1772,5 +1772,22 @@
   "menuWelcomeTour": "Welcome tour",
   "@menuWelcomeTour": {
     "description": "Welcome tour: Welcome tour"
+  },
+  "overviewTitle": "All the screens",
+  "@overviewTitle": {
+    "description": "Overview: All the screens"
+  },
+  "overviewStart": "{name} (start)",
+  "@overviewStart": {
+    "description": "Overview: {name} (start)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "designerOverview": "See all the screens side by side",
+  "@designerOverview": {
+    "description": "Overview: See all the screens side by side"
   }
 }

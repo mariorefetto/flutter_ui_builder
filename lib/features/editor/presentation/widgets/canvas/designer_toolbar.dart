@@ -8,6 +8,7 @@ import 'package:flutter_ui_builder/core/widgets/app_select.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_state.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_screen.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/help/screens_overview_dialog.dart';
 import 'package:flutter_ui_builder/l10n/generated/app_localizations.dart';
 
 const int _percent = 100;
@@ -57,6 +58,12 @@ class DesignerToolbar extends StatelessWidget {
                           ),
                       ],
                     ),
+                  ),
+                  IconButton(
+                    tooltip: l10n.designerOverview,
+                    visualDensity: VisualDensity.compact,
+                    icon: const Icon(AppIcons.overview),
+                    onPressed: () => showScreensOverview(context),
                   ),
                   IconButton(
                     tooltip: l10n.designerPrototype,

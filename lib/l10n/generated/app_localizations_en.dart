@@ -1402,4 +1402,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get menuWelcomeTour => 'Welcome tour';
+
+  @override
+  String get overviewTitle => 'All the screens';
+
+  @override
+  String overviewStart(String name) {
+    return '$name (start)';
+  }
+
+  @override
+  String get designerOverview => 'See all the screens side by side';
 }

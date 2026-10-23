@@ -1422,4 +1422,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get menuWelcomeTour => 'Tutorial di benvenuto';
+
+  @override
+  String get overviewTitle => 'Tutte le schermate';
+
+  @override
+  String overviewStart(String name) {
+    return '$name (iniziale)';
+  }
+
+  @override
+  String get designerOverview => 'Vedi tutte le schermate affiancate';
 }

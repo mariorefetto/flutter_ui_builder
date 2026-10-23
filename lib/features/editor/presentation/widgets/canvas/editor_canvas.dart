@@ -6,15 +6,13 @@ import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/child_policy.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
-import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_state.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_state.dart';
-import 'package:flutter_ui_builder/features/editor/presentation/preview/component_scope.dart';
-import 'package:flutter_ui_builder/features/editor/presentation/preview/media_scope.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_registry.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_screen.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/preview/project_scopes.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/status_bar_appearance.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_context_menu.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_node.dart';
@@ -119,30 +117,17 @@ class EditorCanvas extends StatelessWidget {
     final rootId = state.document.root.id;
     return SizedBox(
       width: screen.width,
-      // The components must be reachable from the context the previews are
-      // built with, so the scope sits above it.
-      child: MediaScope(
-        files: {
-          for (final asset in state.document.assets)
-            if (asset.sourcePath != null) asset.name: asset.sourcePath!,
-        },
-        child: ComponentScope(
-          roots: {
-            for (final entry in const ScreenEditor().entriesOf(state.document))
-              if (entry.component) entry.name: entry.root,
-          },
-          build: previews.build,
-          child: Builder(
-            builder: (context) => previews.build(
-              context,
-              state.document.root,
-              wrapper: (context, node, built) => CanvasNode(
-                node: node,
-                isRoot: node.id == rootId,
-                isEmptyContainer: _isEmptyContainer(node),
-                child: built,
-              ),
-            ),
+      child: ProjectScopes(
+        document: state.document,
+        previews: previews,
+        builder: (context) => previews.build(
+          context,
+          state.document.root,
+          wrapper: (context, node, built) => CanvasNode(
+            node: node,
+            isRoot: node.id == rootId,
+            isEmptyContainer: _isEmptyContainer(node),
+            child: built,
           ),
         ),
       ),

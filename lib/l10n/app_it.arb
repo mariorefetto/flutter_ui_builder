@@ -408,5 +408,8 @@
   "tourBack": "Indietro",
   "tourNext": "Avanti",
   "tourDone": "Inizia",
-  "menuWelcomeTour": "Tutorial di benvenuto"
+  "menuWelcomeTour": "Tutorial di benvenuto",
+  "overviewTitle": "Tutte le schermate",
+  "overviewStart": "{name} (iniziale)",
+  "designerOverview": "Vedi tutte le schermate affiancate"
 }
