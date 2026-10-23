@@ -83,11 +83,15 @@ void main() {
     await tester.tap(find.text('Code'));
     await tester.pumpAndSettle();
 
-    final editable = tester.widget<EditableText>(find.byType(EditableText));
+    // The editor has other text fields; the code's is the one that colours.
+    final field = find.byWidgetPredicate(
+      (widget) =>
+          widget is EditableText && widget.controller is HighlightingController,
+    );
+    final editable = tester.widget<EditableText>(field);
 
-    expect(editable.controller, isA<HighlightingController>());
     final span = editable.controller.buildTextSpan(
-      context: tester.element(find.byType(EditableText)),
+      context: tester.element(field),
       withComposing: false,
       style: const TextStyle(),
     );
