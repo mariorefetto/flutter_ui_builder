@@ -26,6 +26,13 @@ flutter run -d macos
 
 Windows and Linux are set up but not yet verified.
 
+## Third-party software
+
+The application uses packages published on pub.dev, under the MIT, BSD-3 and
+Apache-2.0 licenses, and `dbus` (through `file_picker_linux`, on Linux only)
+under the MPL-2.0. The icons come from the `lucide_icons_flutter` package
+(MIT). Each keeps its own license.
+
 ## Tests
 
 ```

@@ -1,11 +1,44 @@
+# Dart and Flutter
 .dart_tool/
-build/
 .flutter-plugins
 .flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+*.g.dart.bak
+
+# Platform builds
+macos/Pods/
+macos/Flutter/ephemeral/
+macos/Flutter/Flutter-Generated.xcconfig
+macos/Flutter/flutter_export_environment.sh
+macos/Runner.xcworkspace/xcuserdata/
+macos/Runner.xcodeproj/xcuserdata/
+macos/Runner.xcodeproj/project.xcworkspace/xcuserdata/
+macos/**/*.xcuserstate
+linux/flutter/ephemeral/
+windows/flutter/ephemeral/
+
+# Signing and secrets
+*.p12
+*.pem
+*.key
+*.keystore
+*.jks
+.env
+.env.*
+
+# IDEs
 .idea/
 *.iml
-.DS_Store
-
-# Local
 .vscode/*.log
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs and local files
 *.log
+devtools_options.yaml
