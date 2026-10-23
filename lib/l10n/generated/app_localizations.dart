@@ -2569,6 +2569,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'See all the screens side by side'**
   String get designerOverview;
+
+  /// FAQ: Questions and answers
+  ///
+  /// In en, this message translates to:
+  /// **'Questions and answers'**
+  String get faqTitle;
+
+  /// FAQ: Questions and answers
+  ///
+  /// In en, this message translates to:
+  /// **'Questions and answers'**
+  String get menuFaq;
+
+  /// FAQ: Where is my project saved?
+  ///
+  /// In en, this message translates to:
+  /// **'Where is my project saved?'**
+  String get faqSaveQuestion;
+
+  /// FAQ: Save writes a JSON file in the place you choose, w
+  ///
+  /// In en, this message translates to:
+  /// **'Save writes a JSON file in the place you choose, with every screen, component and picture of the project. Open reads it back. Your settings are kept apart, in a folder named .flutter_ui_builder in your home folder.'**
+  String get faqSaveAnswer;
+
+  /// FAQ: How do I use the code in my app?
+  ///
+  /// In en, this message translates to:
+  /// **'How do I use the code in my app?'**
+  String get faqExportQuestion;
+
+  /// FAQ: Export code writes one file for each screen and co
+  ///
+  /// In en, this message translates to:
+  /// **'Export code writes one file for each screen and component into a folder. Copy them into the lib folder of your Flutter project, add the pictures and the lines for pubspec.yaml shown in the Media panel, and use the class of the first screen as the home of your app.'**
+  String get faqExportAnswer;
+
+  /// FAQ: Can I change the code and keep working?
+  ///
+  /// In en, this message translates to:
+  /// **'Can I change the code and keep working?'**
+  String get faqCodeQuestion;
+
+  /// FAQ: Yes. Edit the code in the Code panel and press App
+  ///
+  /// In en, this message translates to:
+  /// **'Yes. Edit the code in the Code panel and press Apply: the screen is redrawn from it and the change is one step of undo. Code the editor cannot read is listed and left out, so the screen always stays drawable.'**
+  String get faqCodeAnswer;
+
+  /// FAQ: Why can a widget not be added here?
+  ///
+  /// In en, this message translates to:
+  /// **'Why can a widget not be added here?'**
+  String get faqCannotAddQuestion;
+
+  /// FAQ: Flutter widgets have rules: an AppBar only goes in
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter widgets have rules: an AppBar only goes in a Scaffold, a ListTile needs a Material surface, a Column cannot hold a ListView without an Expanded. About this widget lists the rules of the selected one, and the filter in the toolbox shows only what fits where you are.'**
+  String get faqCannotAddAnswer;
+
+  /// FAQ: How do screens open each other?
+  ///
+  /// In en, this message translates to:
+  /// **'How do screens open each other?'**
+  String get faqScreensQuestion;
+
+  /// FAQ: Select a button or another widget that can be pres
+  ///
+  /// In en, this message translates to:
+  /// **'Select a button or another widget that can be pressed and choose the screen it opens in its navigateTo property. In the code it becomes a Navigator.push. The play button of the designer lets you try it by clicking.'**
+  String get faqScreensAnswer;
+
+  /// FAQ: What is a component?
+  ///
+  /// In en, this message translates to:
+  /// **'What is a component?'**
+  String get faqComponentsQuestion;
+
+  /// FAQ: A widget you make once and use in several places.
+  ///
+  /// In en, this message translates to:
+  /// **'A widget you make once and use in several places. Right-click a widget and choose to make a component of it. Changing the component changes every place it is used.'**
+  String get faqComponentsAnswer;
+
+  /// FAQ: What do the problems mean?
+  ///
+  /// In en, this message translates to:
+  /// **'What do the problems mean?'**
+  String get faqProblemsQuestion;
+
+  /// FAQ: They are things that will misbehave or be hard to
+  ///
+  /// In en, this message translates to:
+  /// **'They are things that will misbehave or be hard to use, found without running the app: a missing label, text that is hard to read on its background, a button too small to hit, a screen that does not exist. Click one to select the widget.'**
+  String get faqProblemsAnswer;
+
+  /// FAQ: How do I undo a change?
+  ///
+  /// In en, this message translates to:
+  /// **'How do I undo a change?'**
+  String get faqUndoQuestion;
+
+  /// FAQ: With the undo button or Cmd/Ctrl+Z, and redo with
+  ///
+  /// In en, this message translates to:
+  /// **'With the undo button or Cmd/Ctrl+Z, and redo with Cmd/Ctrl+Shift+Z. Opening another screen is not a change and is not undone.'**
+  String get faqUndoAnswer;
 }
 
 class _AppLocalizationsDelegate

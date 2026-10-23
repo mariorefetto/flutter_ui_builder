@@ -1433,4 +1433,68 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get designerOverview => 'Vedi tutte le schermate affiancate';
+
+  @override
+  String get faqTitle => 'Domande e risposte';
+
+  @override
+  String get menuFaq => 'Domande e risposte';
+
+  @override
+  String get faqSaveQuestion => 'Dove viene salvato il mio progetto?';
+
+  @override
+  String get faqSaveAnswer =>
+      'Salva scrive un file JSON nel posto che scegli, con tutte le schermate, i componenti e le immagini del progetto. Apri lo rilegge. Le tue impostazioni stanno a parte, in una cartella chiamata .flutter_ui_builder nella tua cartella personale.';
+
+  @override
+  String get faqExportQuestion => 'Come uso il codice nella mia app?';
+
+  @override
+  String get faqExportAnswer =>
+      'Esporta il codice scrive un file per ogni schermata e componente in una cartella. Copiali nella cartella lib del tuo progetto Flutter, aggiungi le immagini e le righe per pubspec.yaml mostrate nel pannello Media, e usa la classe della prima schermata come home della tua app.';
+
+  @override
+  String get faqCodeQuestion =>
+      'Posso cambiare il codice e continuare a lavorare?';
+
+  @override
+  String get faqCodeAnswer =>
+      'Sì. Modifica il codice nel pannello Codice e premi Applica: la schermata viene ridisegnata da esso e la modifica è un solo passo di annullamento. Il codice che l\'editor non sa leggere viene elencato e lasciato fuori, così la schermata resta sempre disegnabile.';
+
+  @override
+  String get faqCannotAddQuestion =>
+      'Perché un widget non si può aggiungere qui?';
+
+  @override
+  String get faqCannotAddAnswer =>
+      'I widget di Flutter hanno regole: una AppBar sta solo in uno Scaffold, un ListTile ha bisogno di una superficie Material, una Column non può contenere una ListView senza un Expanded. Informazioni sul widget elenca le regole di quello selezionato e il filtro nella casella degli strumenti mostra solo ciò che entra dove ti trovi.';
+
+  @override
+  String get faqScreensQuestion => 'Come si aprono le schermate tra loro?';
+
+  @override
+  String get faqScreensAnswer =>
+      'Seleziona un pulsante o un altro widget che si può premere e scegli la schermata che apre nella sua proprietà navigateTo. Nel codice diventa un Navigator.push. Il pulsante di riproduzione del designer ti permette di provarlo facendo clic.';
+
+  @override
+  String get faqComponentsQuestion => 'Che cos\'è un componente?';
+
+  @override
+  String get faqComponentsAnswer =>
+      'Un widget che crei una volta e usi in più punti. Fai clic destro su un widget e scegli di farne un componente. Cambiare il componente lo cambia in ogni punto in cui è usato.';
+
+  @override
+  String get faqProblemsQuestion => 'Che cosa significano i problemi?';
+
+  @override
+  String get faqProblemsAnswer =>
+      'Sono cose che funzioneranno male o saranno difficili da usare, trovate senza avviare l\'app: un\'etichetta mancante, un testo difficile da leggere sul suo sfondo, un pulsante troppo piccolo da colpire, una schermata che non esiste. Fai clic su uno per selezionare il widget.';
+
+  @override
+  String get faqUndoQuestion => 'Come annullo una modifica?';
+
+  @override
+  String get faqUndoAnswer =>
+      'Con il pulsante annulla o Cmd/Ctrl+Z, e ripeti con Cmd/Ctrl+Shift+Z. Aprire un\'altra schermata non è una modifica e non si annulla.';
 }

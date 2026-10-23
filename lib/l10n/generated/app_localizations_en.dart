@@ -1413,4 +1413,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get designerOverview => 'See all the screens side by side';
+
+  @override
+  String get faqTitle => 'Questions and answers';
+
+  @override
+  String get menuFaq => 'Questions and answers';
+
+  @override
+  String get faqSaveQuestion => 'Where is my project saved?';
+
+  @override
+  String get faqSaveAnswer =>
+      'Save writes a JSON file in the place you choose, with every screen, component and picture of the project. Open reads it back. Your settings are kept apart, in a folder named .flutter_ui_builder in your home folder.';
+
+  @override
+  String get faqExportQuestion => 'How do I use the code in my app?';
+
+  @override
+  String get faqExportAnswer =>
+      'Export code writes one file for each screen and component into a folder. Copy them into the lib folder of your Flutter project, add the pictures and the lines for pubspec.yaml shown in the Media panel, and use the class of the first screen as the home of your app.';
+
+  @override
+  String get faqCodeQuestion => 'Can I change the code and keep working?';
+
+  @override
+  String get faqCodeAnswer =>
+      'Yes. Edit the code in the Code panel and press Apply: the screen is redrawn from it and the change is one step of undo. Code the editor cannot read is listed and left out, so the screen always stays drawable.';
+
+  @override
+  String get faqCannotAddQuestion => 'Why can a widget not be added here?';
+
+  @override
+  String get faqCannotAddAnswer =>
+      'Flutter widgets have rules: an AppBar only goes in a Scaffold, a ListTile needs a Material surface, a Column cannot hold a ListView without an Expanded. About this widget lists the rules of the selected one, and the filter in the toolbox shows only what fits where you are.';
+
+  @override
+  String get faqScreensQuestion => 'How do screens open each other?';
+
+  @override
+  String get faqScreensAnswer =>
+      'Select a button or another widget that can be pressed and choose the screen it opens in its navigateTo property. In the code it becomes a Navigator.push. The play button of the designer lets you try it by clicking.';
+
+  @override
+  String get faqComponentsQuestion => 'What is a component?';
+
+  @override
+  String get faqComponentsAnswer =>
+      'A widget you make once and use in several places. Right-click a widget and choose to make a component of it. Changing the component changes every place it is used.';
+
+  @override
+  String get faqProblemsQuestion => 'What do the problems mean?';
+
+  @override
+  String get faqProblemsAnswer =>
+      'They are things that will misbehave or be hard to use, found without running the app: a missing label, text that is hard to read on its background, a button too small to hit, a screen that does not exist. Click one to select the widget.';
+
+  @override
+  String get faqUndoQuestion => 'How do I undo a change?';
+
+  @override
+  String get faqUndoAnswer =>
+      'With the undo button or Cmd/Ctrl+Z, and redo with Cmd/Ctrl+Shift+Z. Opening another screen is not a change and is not undone.';
 }

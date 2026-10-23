@@ -14,6 +14,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_
 import 'package:flutter_ui_builder/features/editor/presentation/shortcuts.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/file/file_commands.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/file/rename_dialog.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/help/faq_dialog.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/help/shortcuts_dialog.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/help/welcome_tour.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/help/widget_guide_dialog.dart';
@@ -67,6 +68,10 @@ class EditorMenuBar extends StatelessWidget {
               MenuItemButton(
                 onPressed: () => showWidgetGuide(context),
                 child: Text(l10n.menuWidgetGuide),
+              ),
+              MenuItemButton(
+                onPressed: () => showFaq(context),
+                child: Text(l10n.menuFaq),
               ),
               MenuItemButton(
                 shortcut: const SingleActivator(LogicalKeyboardKey.f1),

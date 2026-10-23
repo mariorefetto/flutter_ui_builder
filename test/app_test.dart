@@ -1259,4 +1259,21 @@ class UntitledView extends StatelessWidget {
       expect(find.text('untitled (start)'), findsOneWidget);
     });
   });
+
+  testWidgets('the questions and answers open from the Help menu', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+
+    await tester.tap(find.text('Help'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Questions and answers'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Where is my project saved?'), findsOneWidget);
+    expect(find.textContaining('Save writes a JSON file'), findsNothing);
+    await tester.tap(find.text('Where is my project saved?'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Save writes a JSON file'), findsOneWidget);
+  });
 }
