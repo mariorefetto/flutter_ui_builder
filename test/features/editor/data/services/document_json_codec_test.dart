@@ -3,6 +3,7 @@ import 'package:flutter_ui_builder/core/error/exceptions.dart';
 import 'package:flutter_ui_builder/core/error/failures.dart';
 import 'package:flutter_ui_builder/features/editor/data/services/document_json_codec.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 
 void main() {
@@ -67,5 +68,38 @@ void main() {
       reasonOf('{"schemaVersion": 99, "name": "a", "root": {}}'),
       DocumentFailureReason.unsupportedVersion,
     );
+  });
+
+  test('screens and components survive a save and an open', () {
+    const project = EditorDocument(
+      name: 'Home',
+      root: WidgetNode(id: 'node_0', type: 'Column'),
+      activeIndex: 1,
+      component: true,
+      screens: [
+        ProjectScreen(
+          name: 'Start',
+          root: WidgetNode(id: 'node_0', type: 'Column'),
+        ),
+        ProjectScreen(
+          name: 'Badge',
+          component: true,
+          root: WidgetNode(id: 'node_0', type: 'Container'),
+        ),
+      ],
+    );
+
+    final decoded = codec.decode(codec.encode(project));
+
+    expect(decoded, project);
+  });
+
+  test('a file from before components reads as a screen', () {
+    final decoded = codec.decode(
+      '{"name":"Old","root":{"id":"node_0","type":"Column"},"schemaVersion":1}',
+    );
+
+    expect(decoded.component, isFalse);
+    expect(decoded.screens, isEmpty);
   });
 }

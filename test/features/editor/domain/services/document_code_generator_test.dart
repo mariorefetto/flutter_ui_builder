@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_ui_builder/features/editor/data/services/dart_style_code_formatter.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/builtin_definitions.dart';
@@ -191,6 +190,85 @@ void main() {
         'settings_view.g.dart',
       ]);
       expect(files.last.content, contains('class SettingsView'));
+    });
+  });
+
+  group('components', () {
+    const use = WidgetNode(
+      id: 'node_1',
+      type: 'Component',
+      props: {'component': 'profile card'},
+    );
+
+    test('a use of a component is a const call to its class', () {
+      final code = generator
+          .generate(
+            const EditorDocument(
+              name: 'Home',
+              root: WidgetNode(id: 'node_0', type: 'Column', children: [use]),
+            ),
+          )
+          .getOrElse(() => throw StateError('generation failed'))
+          .content;
+
+      expect(code, contains('const ProfileCardWidget()'));
+      expect(code, contains("import 'profile_card_widget.g.dart';"));
+    });
+
+    test('a component is a class of its own in its own file', () {
+      final file = generator
+          .generate(
+            const EditorDocument(
+              name: 'profile card',
+              component: true,
+              root: WidgetNode(id: 'node_0', type: 'Container'),
+            ),
+          )
+          .getOrElse(() => throw StateError('generation failed'));
+
+      expect(file.fileName, 'profile_card_widget.g.dart');
+      expect(file.content, contains('class ProfileCardWidget'));
+    });
+
+    test('a use with no component writes nothing visible', () {
+      final code = generator
+          .generate(
+            const EditorDocument(
+              name: 'Home',
+              root: WidgetNode(
+                id: 'node_0',
+                type: 'Column',
+                children: [WidgetNode(id: 'node_1', type: 'Component')],
+              ),
+            ),
+          )
+          .getOrElse(() => throw StateError('generation failed'))
+          .content;
+
+      expect(code, contains('SizedBox.shrink()'));
+    });
+
+    test('the project gets a file for each screen and component', () {
+      final files = generator
+          .generateAll(
+            const EditorDocument(
+              name: 'Home',
+              root: WidgetNode(id: 'node_0', type: 'Column', children: [use]),
+              screens: [
+                ProjectScreen(
+                  name: 'profile card',
+                  component: true,
+                  root: WidgetNode(id: 'node_0', type: 'Container'),
+                ),
+              ],
+            ),
+          )
+          .getOrElse(() => throw StateError('generation failed'));
+
+      expect(files.map((f) => f.fileName), [
+        'home_view.g.dart',
+        'profile_card_widget.g.dart',
+      ]);
     });
   });
 }

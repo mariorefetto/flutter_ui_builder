@@ -977,4 +977,39 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get problemComponentCycle =>
       'This component would end up containing itself';
+
+  @override
+  String get editorCategoryComponents => 'Components';
+
+  @override
+  String get componentNew => 'New component';
+
+  @override
+  String get componentNewTitle => 'New component';
+
+  @override
+  String componentDefaultName(int number) {
+    return 'Component $number';
+  }
+
+  @override
+  String get componentExtract => 'Make a component of this widget';
+
+  @override
+  String get componentExtractTitle => 'Component name';
+
+  @override
+  String get componentDetach => 'Detach from the component';
+
+  @override
+  String get componentEdit => 'Edit the component';
+
+  @override
+  String get componentNone => 'No component';
+
+  @override
+  String get componentOpenTarget => 'Open the component';
+
+  @override
+  String get screenNewScreen => 'New screen';
 }

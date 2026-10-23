@@ -1807,6 +1807,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This component would end up containing itself'**
   String get problemComponentCycle;
+
+  /// Label: Components
+  ///
+  /// In en, this message translates to:
+  /// **'Components'**
+  String get editorCategoryComponents;
+
+  /// Label: New component
+  ///
+  /// In en, this message translates to:
+  /// **'New component'**
+  String get componentNew;
+
+  /// Label: New component
+  ///
+  /// In en, this message translates to:
+  /// **'New component'**
+  String get componentNewTitle;
+
+  /// Suggested name: Component {number}
+  ///
+  /// In en, this message translates to:
+  /// **'Component {number}'**
+  String componentDefaultName(int number);
+
+  /// Label: Make a component of this widget
+  ///
+  /// In en, this message translates to:
+  /// **'Make a component of this widget'**
+  String get componentExtract;
+
+  /// Label: Component name
+  ///
+  /// In en, this message translates to:
+  /// **'Component name'**
+  String get componentExtractTitle;
+
+  /// Label: Detach from the component
+  ///
+  /// In en, this message translates to:
+  /// **'Detach from the component'**
+  String get componentDetach;
+
+  /// Label: Edit the component
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the component'**
+  String get componentEdit;
+
+  /// Label: No component
+  ///
+  /// In en, this message translates to:
+  /// **'No component'**
+  String get componentNone;
+
+  /// Label: Open the component
+  ///
+  /// In en, this message translates to:
+  /// **'Open the component'**
+  String get componentOpenTarget;
+
+  /// Label: New screen
+  ///
+  /// In en, this message translates to:
+  /// **'New screen'**
+  String get screenNewScreen;
 }
 
 class _AppLocalizationsDelegate

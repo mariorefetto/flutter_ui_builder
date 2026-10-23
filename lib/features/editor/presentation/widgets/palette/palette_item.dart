@@ -4,6 +4,7 @@ import 'package:flutter_ui_builder/core/theme/app_constants.dart';
 import 'package:flutter_ui_builder/core/theme/app_icons.dart';
 import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_definition.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/child_policy.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/drag_session_cubit.dart';
@@ -26,6 +27,7 @@ class PaletteItem extends StatefulWidget {
     required this.definition,
     required this.query,
     this.keyPrefix = '',
+    this.instance,
     super.key,
   });
 
@@ -33,6 +35,10 @@ class PaletteItem extends StatefulWidget {
 
   /// What the palette is searched for, in lower case; empty for nothing.
   final String query;
+
+  /// The component this entry adds a use of, when it is one of the project's
+  /// components rather than a widget.
+  final String? instance;
 
   /// Tells the entry in the recent list from the same widget in its category.
   final String keyPrefix;
@@ -59,7 +65,10 @@ class _PaletteItemState extends State<PaletteItem> {
       onExit: (_) => setState(() => _hovered = false),
       child: InkWell(
         onTap: () {
-          context.read<EditorCubit>().addToSelection(definition.type);
+          context.read<EditorCubit>().addToSelection(
+            definition.type,
+            props: _props,
+          );
           workspace.noteAdded(definition.type);
         },
         child: Container(
@@ -83,7 +92,9 @@ class _PaletteItemState extends State<PaletteItem> {
                   child: SizedBox.square(
                     dimension: _paletteIconBox,
                     child: Icon(
-                      iconForWidget(definition.type, definition.category),
+                      widget.instance == null
+                          ? iconForWidget(definition.type, definition.category)
+                          : AppIcons.component,
                       size: treeIconSize,
                       color: tint,
                     ),
@@ -104,9 +115,9 @@ class _PaletteItemState extends State<PaletteItem> {
       ),
     );
     return Draggable<DragPayload>(
-      data: NewWidgetPayload(definition.type),
+      data: NewWidgetPayload(definition.type, props: _props),
       dragAnchorStrategy: pointerDragAnchorStrategy,
-      feedback: DragFeedback(label: definition.label),
+      feedback: DragFeedback(label: _label),
       onDragStarted: session.start,
       onDragEnd: (_) => session.end(),
       onDragCompleted: () => workspace.noteAdded(definition.type),
@@ -119,10 +130,14 @@ class _PaletteItemState extends State<PaletteItem> {
     );
   }
 
+  String get _label => widget.instance ?? widget.definition.label;
+
+  Map<String, Object?> get _props => {componentProp: ?widget.instance};
+
   // The name with the matched part in bold, and the type when it differs.
   Widget _name(BuildContext context) {
     final style = context.textTheme.bodyMedium;
-    final label = widget.definition.label;
+    final label = _label;
     final at = widget.query.isEmpty
         ? -1
         : label.toLowerCase().indexOf(widget.query);
@@ -154,7 +169,7 @@ class _PaletteItemState extends State<PaletteItem> {
       ChildPolicy.multiple => l10n.paletteTakesChildren,
     };
     return [
-      widget.definition.type,
+      widget.instance ?? widget.definition.type,
       policy,
       if (!canAdd) l10n.editorPaletteCannotAdd else l10n.paletteClickToAdd,
     ].join('\n');

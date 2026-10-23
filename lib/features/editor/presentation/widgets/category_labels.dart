@@ -18,5 +18,6 @@ String categoryLabel(AppLocalizations l10n, String category) =>
       interactionCategory => l10n.editorCategoryInteraction,
       accessibilityCategory => l10n.editorCategoryAccessibility,
       cupertinoCategory => l10n.editorCategoryCupertino,
+      componentsCategory => l10n.editorCategoryComponents,
       _ => category,
     };

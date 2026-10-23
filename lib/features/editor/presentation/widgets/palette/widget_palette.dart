@@ -4,9 +4,11 @@ import 'package:flutter_ui_builder/core/theme/app_constants.dart';
 import 'package:flutter_ui_builder/core/theme/app_icons.dart';
 import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/component_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_categories.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_definition.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_state.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_cubit.dart';
@@ -29,7 +31,8 @@ class WidgetPalette extends StatefulWidget {
 
 class _WidgetPaletteState extends State<WidgetPalette> {
   final TextEditingController _search = TextEditingController();
-  // Screens and layout are what a design starts from; the rest open on demand.
+  // Components, screens and layout are what a design starts from; the rest
+  // open on demand.
   late final Set<String> _collapsed = {
     for (final definition in widget.registry.all)
       if (!_openAtStart.contains(definition.category)) definition.category,
@@ -50,6 +53,7 @@ class _WidgetPaletteState extends State<WidgetPalette> {
       builder: (context, _) {
         final cubit = context.read<EditorCubit>();
         final groups = _groupByCategory(query, cubit);
+        final components = _components(query, context);
         final recents = query.isEmpty
             ? context
                   .select((WorkspaceCubit c) => c.state.recentWidgets)
@@ -71,7 +75,7 @@ class _WidgetPaletteState extends State<WidgetPalette> {
                   setState(() => _onlyFitting = !_onlyFitting),
             ),
             Expanded(
-              child: groups.isEmpty && recents.isEmpty
+              child: groups.isEmpty && recents.isEmpty && components.isEmpty
                   ? Center(child: Text(context.l10n.paletteNoMatches))
                   : ListView(
                       children: [
@@ -88,6 +92,33 @@ class _WidgetPaletteState extends State<WidgetPalette> {
                                   definition: d,
                                   query: query,
                                   keyPrefix: _recentKey,
+                                ),
+                            ],
+                          ),
+                        if (components.isNotEmpty)
+                          _Section(
+                            title: categoryLabel(
+                              context.l10n,
+                              componentsCategory,
+                            ),
+                            icon: iconForCategory(componentsCategory),
+                            color: colorForCategory(
+                              context.colorScheme,
+                              componentsCategory,
+                            ),
+                            collapsed:
+                                query.isEmpty &&
+                                _collapsed.contains(componentsCategory),
+                            count: components.length,
+                            onToggle: () => _toggle(componentsCategory),
+                            children: [
+                              for (final name in components)
+                                PaletteItem(
+                                  definition: widget.registry.definitionFor(
+                                    componentType,
+                                  ),
+                                  instance: name,
+                                  query: query,
                                 ),
                             ],
                           ),
@@ -115,7 +146,11 @@ class _WidgetPaletteState extends State<WidgetPalette> {
     );
   }
 
-  static const Set<String> _openAtStart = {screenCategory, layoutCategory};
+  static const Set<String> _openAtStart = {
+    componentsCategory,
+    screenCategory,
+    layoutCategory,
+  };
 
   static const String _recentKey = '__recent__';
 
@@ -129,11 +164,31 @@ class _WidgetPaletteState extends State<WidgetPalette> {
   ) {
     final groups = <String, List<WidgetDefinition>>{};
     for (final definition in widget.registry.all) {
+      // Uses of components are listed by the component, above.
+      if (definition.type == componentType) continue;
       if (!_matches(definition, query)) continue;
       if (_onlyFitting && !cubit.canAddToSelection(definition.type)) continue;
       groups.putIfAbsent(definition.category, () => []).add(definition);
     }
     return groups;
+  }
+
+  // The project's components that match the search, when the open one is not
+  // among them: a component cannot hold itself.
+  List<String> _components(String query, BuildContext context) {
+    final document = context.read<EditorCubit>().state.document;
+    return [
+      for (final name in const ScreenEditor().componentsOf(document))
+        if (name.toLowerCase().contains(query) &&
+            !(document.component && name == document.name) &&
+            !(document.component &&
+                const ScreenEditor().usesComponent(
+                  document,
+                  name,
+                  document.name,
+                )))
+          name,
+    ];
   }
 
   // The name, or the type it is written as in code, or its category.

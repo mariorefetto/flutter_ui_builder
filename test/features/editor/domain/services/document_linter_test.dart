@@ -4,6 +4,7 @@ import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_reg
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/new_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/problem.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/document_linter.dart';
 
@@ -255,5 +256,90 @@ void main() {
       ),
       isNot(contains(ProblemCode.unknownScreen)),
     );
+  });
+
+  group('components', () {
+    List<ProblemCode> codesIn(EditorDocument document) =>
+        linter.lint(document).map((p) => p.code).toList();
+
+    const use = WidgetNode(
+      id: 'node_1',
+      type: 'Component',
+      props: {'component': 'Badge'},
+    );
+
+    test('a use of a component that is not there is reported', () {
+      expect(
+        codesIn(
+          const EditorDocument(
+            name: 'Home',
+            root: WidgetNode(id: 'node_0', type: 'Column', children: [use]),
+          ),
+        ),
+        contains(ProblemCode.unknownComponent),
+      );
+    });
+
+    test('a use of a component that exists is fine', () {
+      expect(
+        codesIn(
+          const EditorDocument(
+            name: 'Home',
+            root: WidgetNode(id: 'node_0', type: 'Column', children: [use]),
+            screens: [
+              ProjectScreen(
+                name: 'Badge',
+                component: true,
+                root: WidgetNode(id: 'node_0', type: 'Container'),
+              ),
+            ],
+          ),
+        ),
+        isNot(contains(ProblemCode.unknownComponent)),
+      );
+    });
+
+    test('a component that contains itself is reported', () {
+      expect(
+        codesIn(
+          const EditorDocument(
+            name: 'Badge',
+            component: true,
+            root: WidgetNode(id: 'node_0', type: 'Column', children: [use]),
+          ),
+        ),
+        contains(ProblemCode.componentCycle),
+      );
+    });
+
+    test('two components that contain each other are reported', () {
+      expect(
+        codesIn(
+          const EditorDocument(
+            name: 'Badge',
+            component: true,
+            root: WidgetNode(
+              id: 'node_0',
+              type: 'Column',
+              children: [
+                WidgetNode(
+                  id: 'node_1',
+                  type: 'Component',
+                  props: {'component': 'Chip'},
+                ),
+              ],
+            ),
+            screens: [
+              ProjectScreen(
+                name: 'Chip',
+                component: true,
+                root: WidgetNode(id: 'node_0', type: 'Column', children: [use]),
+              ),
+            ],
+          ),
+        ),
+        contains(ProblemCode.componentCycle),
+      );
+    });
   });
 }

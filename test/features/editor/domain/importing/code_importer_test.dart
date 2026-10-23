@@ -215,4 +215,41 @@ class HomeView extends StatelessWidget {
       expect(targetOf('() => print(1)'), isNull);
     });
   });
+
+  group('components', () {
+    test('a call to a component class is read as a use of the component', () {
+      final result = import('''
+class HomeView extends StatelessWidget {
+  const HomeView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [const ProfileCardWidget(), Text('x')]);
+  }
+}
+''');
+
+      final use = result.document.root.children.first;
+      expect(use.type, 'Component');
+      expect(use.props['component'], 'ProfileCard');
+    });
+
+    test('a class with arguments that happens to end in Widget is not one', () {
+      final result = import('''
+class HomeView extends StatelessWidget {
+  const HomeView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [ErrorWidget('x')]);
+  }
+}
+''');
+
+      expect(
+        result.document.root.children.where((c) => c.type == 'Component'),
+        isEmpty,
+      );
+    });
+  });
 }

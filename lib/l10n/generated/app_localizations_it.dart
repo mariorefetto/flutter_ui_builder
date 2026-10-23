@@ -994,4 +994,39 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get problemComponentCycle =>
       'Questo componente finirebbe per contenere se stesso';
+
+  @override
+  String get editorCategoryComponents => 'Componenti';
+
+  @override
+  String get componentNew => 'Nuovo componente';
+
+  @override
+  String get componentNewTitle => 'Nuovo componente';
+
+  @override
+  String componentDefaultName(int number) {
+    return 'Componente $number';
+  }
+
+  @override
+  String get componentExtract => 'Crea un componente da questo widget';
+
+  @override
+  String get componentExtractTitle => 'Nome del componente';
+
+  @override
+  String get componentDetach => 'Stacca dal componente';
+
+  @override
+  String get componentEdit => 'Modifica il componente';
+
+  @override
+  String get componentNone => 'Nessun componente';
+
+  @override
+  String get componentOpenTarget => 'Apri il componente';
+
+  @override
+  String get screenNewScreen => 'Nuova schermata';
 }

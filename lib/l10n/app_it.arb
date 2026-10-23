@@ -284,5 +284,16 @@
   "screenOpenTarget": "Apri la schermata di destinazione",
   "designerPrototype": "Prova la navigazione: un clic su un widget apre la sua schermata",
   "problemUnknownComponent": "Questo widget mostra un componente che non esiste",
-  "problemComponentCycle": "Questo componente finirebbe per contenere se stesso"
+  "problemComponentCycle": "Questo componente finirebbe per contenere se stesso",
+  "editorCategoryComponents": "Componenti",
+  "componentNew": "Nuovo componente",
+  "componentNewTitle": "Nuovo componente",
+  "componentDefaultName": "Componente {number}",
+  "componentExtract": "Crea un componente da questo widget",
+  "componentExtractTitle": "Nome del componente",
+  "componentDetach": "Stacca dal componente",
+  "componentEdit": "Modifica il componente",
+  "componentNone": "Nessun componente",
+  "componentOpenTarget": "Apri il componente",
+  "screenNewScreen": "Nuova schermata"
 }

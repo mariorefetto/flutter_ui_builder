@@ -28,7 +28,10 @@ class DocumentTab extends StatelessWidget {
         buildWhen: (previous, current) => previous.document != current.document,
         builder: (context, state) {
           final document = state.document;
-          final names = const ScreenEditor().namesOf(document);
+          final entries = const ScreenEditor().entriesOf(document);
+          final names = [for (final e in entries) e.name];
+          // The app starts on the first screen, whatever comes before it.
+          final firstScreen = entries.indexWhere((e) => !e.component);
           final unsaved = !const ScreenEditor().sameContent(document, saved);
           return Row(
             children: [
@@ -41,7 +44,8 @@ class DocumentTab extends StatelessWidget {
                         _ScreenTab(
                           name: name,
                           active: index == document.activeIndex,
-                          home: index == 0,
+                          home: index == firstScreen,
+                          component: entries[index].component,
                           modified: unsaved && index == document.activeIndex,
                           onlyScreen: names.length == 1,
                         ),
@@ -49,11 +53,22 @@ class DocumentTab extends StatelessWidget {
                   ),
                 ),
               ),
-              IconButton(
+              PopupMenuButton<bool>(
                 tooltip: context.l10n.screenNew,
-                visualDensity: VisualDensity.compact,
                 icon: const Icon(AppIcons.add),
-                onPressed: () => _add(context, names),
+                iconSize: AppConstants.spacingMD,
+                onSelected: (component) =>
+                    _add(context, names, component: component),
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: false,
+                    child: Text(context.l10n.screenNewScreen),
+                  ),
+                  PopupMenuItem(
+                    value: true,
+                    child: Text(context.l10n.componentNew),
+                  ),
+                ],
               ),
             ],
           );
@@ -62,18 +77,25 @@ class DocumentTab extends StatelessWidget {
     );
   }
 
-  Future<void> _add(BuildContext context, List<String> names) async {
+  Future<void> _add(
+    BuildContext context,
+    List<String> names, {
+    required bool component,
+  }) async {
     final cubit = context.read<EditorCubit>();
     final l10n = context.l10n;
     final name = await showDialog<String>(
       context: context,
       builder: (context) => RenameDialog(
-        initialName: l10n.screenDefaultName(names.length + 1),
-        title: l10n.screenNewTitle,
-        hint: l10n.screenNameHint,
+        initialName: component
+            ? l10n.componentDefaultName(names.length + 1)
+            : l10n.screenDefaultName(names.length + 1),
+        title: component ? l10n.componentNewTitle : l10n.screenNewTitle,
+        hint: component ? l10n.componentExtractTitle : l10n.screenNameHint,
       ),
     );
-    if (name != null) cubit.addScreen(name);
+    if (name == null) return;
+    component ? cubit.addComponent(name) : cubit.addScreen(name);
   }
 }
 
@@ -82,6 +104,7 @@ class _ScreenTab extends StatelessWidget {
     required this.name,
     required this.active,
     required this.home,
+    required this.component,
     required this.modified,
     required this.onlyScreen,
   });
@@ -91,6 +114,9 @@ class _ScreenTab extends StatelessWidget {
 
   /// The screen the app starts on.
   final bool home;
+
+  /// A component rather than a screen.
+  final bool component;
   final bool modified;
   final bool onlyScreen;
 
@@ -127,9 +153,9 @@ class _ScreenTab extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (home) ...[
+                  if (home || component) ...[
                     Icon(
-                      AppIcons.home,
+                      component ? AppIcons.component : AppIcons.home,
                       size: AppConstants.spacingMD,
                       color: colors.onSurfaceVariant,
                     ),
@@ -182,7 +208,7 @@ class _ScreenTab extends StatelessWidget {
           child: Text(l10n.menuDuplicate),
         ),
         PopupMenuItem(
-          enabled: !home,
+          enabled: !home && !component,
           value: _ScreenAction.makeHome,
           child: Text(l10n.screenMakeHome),
         ),

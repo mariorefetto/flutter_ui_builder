@@ -1238,5 +1238,54 @@
   "problemComponentCycle": "This component would end up containing itself",
   "@problemComponentCycle": {
     "description": "Problem: This component would end up containing itself"
+  },
+  "editorCategoryComponents": "Components",
+  "@editorCategoryComponents": {
+    "description": "Label: Components"
+  },
+  "componentNew": "New component",
+  "@componentNew": {
+    "description": "Label: New component"
+  },
+  "componentNewTitle": "New component",
+  "@componentNewTitle": {
+    "description": "Label: New component"
+  },
+  "componentDefaultName": "Component {number}",
+  "@componentDefaultName": {
+    "description": "Suggested name: Component {number}",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "componentExtract": "Make a component of this widget",
+  "@componentExtract": {
+    "description": "Label: Make a component of this widget"
+  },
+  "componentExtractTitle": "Component name",
+  "@componentExtractTitle": {
+    "description": "Label: Component name"
+  },
+  "componentDetach": "Detach from the component",
+  "@componentDetach": {
+    "description": "Label: Detach from the component"
+  },
+  "componentEdit": "Edit the component",
+  "@componentEdit": {
+    "description": "Label: Edit the component"
+  },
+  "componentNone": "No component",
+  "@componentNone": {
+    "description": "Label: No component"
+  },
+  "componentOpenTarget": "Open the component",
+  "@componentOpenTarget": {
+    "description": "Label: Open the component"
+  },
+  "screenNewScreen": "New screen",
+  "@screenNewScreen": {
+    "description": "Label: New screen"
   }
 }

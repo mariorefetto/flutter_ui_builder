@@ -116,6 +116,7 @@ class EditorMenuBar extends StatelessWidget {
       AddWidgetMenu(registry: registry, placement: AddPlacement.inside),
       AddWidgetMenu(registry: registry, placement: AddPlacement.beside),
       RestructureMenuItems(registry: registry),
+      ComponentMenuItems(registry: registry),
       const RenameWidgetMenuItem(),
       const Divider(),
       MenuItemButton(

@@ -16,6 +16,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/e
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/scaled_box.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/code/code_view.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag/dashed_outline.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/palette/palette_item.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/editor_shortcuts.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/tree/tree_row.dart';
 
@@ -751,6 +752,8 @@ class UntitledView extends StatelessWidget {
 
     await tester.tap(find.byTooltip('New screen'));
     await tester.pumpAndSettle();
+    await tester.tap(find.text('New screen').last);
+    await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField).last, 'Settings');
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
@@ -850,6 +853,70 @@ class UntitledView extends StatelessWidget {
           tester.widget<DecoratedBox>(outline().first).decoration
               as BoxDecoration;
       expect(bare.borderRadius, isNull);
+    });
+  });
+
+  group('components', () {
+    testWidgets('a widget made a component shows in the palette and draws', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..addNode(type: 'Text', parentId: 'node_2')
+        ..updateProp('node_3', 'text', 'Shared words')
+        ..select('node_3')
+        ..extractSelectedAsComponent('Greeting');
+      await tester.pumpAndSettle();
+
+      // The text is drawn where the use is, through the component.
+      expect(find.text('Shared words'), findsWidgets);
+      expect(cubit.state.document.root.find('node_3')?.type, 'Component');
+      expect(find.text('COMPONENTS'), findsOneWidget);
+      expect(find.widgetWithText(PaletteItem, 'Greeting'), findsOneWidget);
+    });
+
+    testWidgets('adding a component from the palette makes a use of it', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..addNode(type: 'Text', parentId: 'node_2')
+        ..select('node_3')
+        ..extractSelectedAsComponent('Greeting')
+        ..select('node_2');
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.widgetWithText(PaletteItem, 'Greeting'));
+      await tester.pumpAndSettle();
+
+      final column = cubit.state.document.root.find('node_2');
+      expect(
+        column?.children.where((c) => c.props['component'] == 'Greeting'),
+        hasLength(2),
+      );
+    });
+
+    testWidgets('a component opens in its own tab and edits reach its uses', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..addNode(type: 'Text', parentId: 'node_2')
+        ..updateProp('node_3', 'text', 'Before')
+        ..select('node_3')
+        ..extractSelectedAsComponent('Greeting');
+      await tester.pumpAndSettle();
+
+      cubit.openScreen('Greeting');
+      await tester.pumpAndSettle();
+      expect(cubit.state.document.component, isTrue);
+      cubit.updateProp('node_0', 'text', 'After');
+      await tester.pumpAndSettle();
+      cubit.openScreen('untitled');
+      await tester.pumpAndSettle();
+
+      expect(find.text('After'), findsWidgets);
+      expect(find.text('Before'), findsNothing);
     });
   });
 }

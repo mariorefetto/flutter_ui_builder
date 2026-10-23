@@ -7,6 +7,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 /// its category.
 const Map<String, IconData> _typeIcons = {
   'Scaffold': LucideIcons.panelTop,
+  'Component': LucideIcons.puzzle,
   'AppBar': LucideIcons.panelTop,
   'BottomAppBar': LucideIcons.panelBottom,
   'NavigationBar': LucideIcons.panelBottom,
@@ -58,6 +59,7 @@ const Map<String, IconData> _categoryIcons = {
   interactionCategory: LucideIcons.pointer,
   accessibilityCategory: LucideIcons.accessibility,
   cupertinoCategory: LucideIcons.apple,
+  componentsCategory: LucideIcons.puzzle,
 };
 
 /// The icon of a widget in the palette and the outline.
@@ -69,15 +71,15 @@ IconData iconForCategory(String category) =>
 
 /// A colour for a category, from the theme's roles, so the same kind of
 /// widget reads alike in the palette and the outline in both brightnesses.
-Color colorForCategory(ColorScheme colors, String category) =>
-    switch (category) {
-      layoutCategory || scrollingCategory => colors.primary,
-      textCategory || imagesCategory || informationCategory => colors.secondary,
-      buttonsCategory ||
-      inputCategory ||
-      interactionCategory => colors.tertiary,
-      paintingCategory ||
-      animationCategory ||
-      accessibilityCategory => colors.error,
-      _ => colors.onSurfaceVariant,
-    };
+Color colorForCategory(
+  ColorScheme colors,
+  String category,
+) => switch (category) {
+  layoutCategory || scrollingCategory || componentsCategory => colors.primary,
+  textCategory || imagesCategory || informationCategory => colors.secondary,
+  buttonsCategory || inputCategory || interactionCategory => colors.tertiary,
+  paintingCategory ||
+  animationCategory ||
+  accessibilityCategory => colors.error,
+  _ => colors.onSurfaceVariant,
+};

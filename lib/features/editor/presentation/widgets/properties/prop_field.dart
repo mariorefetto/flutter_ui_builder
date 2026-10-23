@@ -31,6 +31,11 @@ class PropField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => switch (schema.type) {
+    PropType.string when schema.componentPicker => ScreenField(
+      components: true,
+      value: props.string(schema.name),
+      onChanged: onChanged,
+    ),
     PropType.string when schema.screenPicker => ScreenField(
       value: props.string(schema.name),
       onChanged: onChanged,

@@ -10,7 +10,16 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cub
 /// The screen a widget opens when it is pressed: none, back, or one of the
 /// project's screens, with a shortcut to open that screen for editing.
 class ScreenField extends StatelessWidget {
-  const ScreenField({required this.value, required this.onChanged, super.key});
+  const ScreenField({
+    required this.value,
+    required this.onChanged,
+    this.components = false,
+    super.key,
+  });
+
+  /// Pick from the project's components, not its screens. A component is
+  /// chosen, not left unset, and there is no going back.
+  final bool components;
 
   /// The screen name, [navigateBack], or null for none.
   final String? value;
@@ -21,7 +30,9 @@ class ScreenField extends StatelessWidget {
     final l10n = context.l10n;
     final current = value;
     final screens = context.select(
-      (EditorCubit c) => const ScreenEditor().namesOf(c.state.document),
+      (EditorCubit c) => components
+          ? const ScreenEditor().componentsOf(c.state.document)
+          : const ScreenEditor().screensOf(c.state.document),
     );
     // A target that no screen has any more is still shown, so it can be seen
     // and changed; the problems panel reports it.
@@ -33,13 +44,19 @@ class ScreenField extends StatelessWidget {
         Expanded(
           child: AppSelect<String>(
             value: current,
-            hint: l10n.screenNavigateNone,
+            hint: components ? l10n.componentNone : l10n.screenNavigateNone,
             options: [
-              AppSelectOption(value: null, label: l10n.screenNavigateNone),
               AppSelectOption(
-                value: navigateBack,
-                label: l10n.screenNavigateBack,
+                value: null,
+                label: components
+                    ? l10n.componentNone
+                    : l10n.screenNavigateNone,
               ),
+              if (!components)
+                AppSelectOption(
+                  value: navigateBack,
+                  label: l10n.screenNavigateBack,
+                ),
               for (final name in screens)
                 AppSelectOption(value: name, label: name),
               if (!known) AppSelectOption(value: current, label: current),
@@ -48,7 +65,9 @@ class ScreenField extends StatelessWidget {
           ),
         ),
         IconButton(
-          tooltip: l10n.screenOpenTarget,
+          tooltip: components
+              ? l10n.componentOpenTarget
+              : l10n.screenOpenTarget,
           visualDensity: VisualDensity.compact,
           icon: const Icon(AppIcons.goTo),
           onPressed: canOpen

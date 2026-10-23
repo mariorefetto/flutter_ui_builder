@@ -291,6 +291,64 @@ void main() {
     expect(result.exitCode, 0, reason: '${result.stdout}');
   }, timeout: const Timeout(Duration(minutes: 3)));
 
+  test('components and their uses generate valid Dart', () async {
+    final generator = DocumentCodeGenerator(
+      registry,
+      const DartStyleCodeFormatter(),
+    );
+    const card = WidgetNode(
+      id: 'node_0',
+      type: 'Card',
+      children: [WidgetNode(id: 'node_1', type: 'Text')],
+    );
+    const use = WidgetNode(
+      id: 'node_1',
+      type: 'Component',
+      props: {'component': 'Greeting'},
+    );
+    final files = generator
+        .generateAll(
+          const EditorDocument(
+            name: 'Home',
+            root: WidgetNode(id: 'node_0', type: 'Column', children: [use]),
+            screens: [
+              ProjectScreen(name: 'Greeting', component: true, root: card),
+              ProjectScreen(
+                name: 'Group',
+                component: true,
+                root: WidgetNode(
+                  id: 'node_0',
+                  type: 'Column',
+                  children: [
+                    WidgetNode(
+                      id: 'node_1',
+                      type: 'Component',
+                      props: {'component': 'Greeting'},
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        .getOrElse(() => throw StateError('generation failed'));
+    final directory = Directory('lib/tmp_component_check')..createSync();
+    addTearDown(() => directory.deleteSync(recursive: true));
+    for (final file in files) {
+      File(
+        '${directory.path}/${file.fileName}',
+      ).writeAsStringSync(file.content);
+    }
+
+    final result = await Process.run('dart', [
+      'analyze',
+      '--fatal-infos',
+      directory.path,
+    ]);
+
+    expect(result.exitCode, 0, reason: '${result.stdout}');
+  }, timeout: const Timeout(Duration(minutes: 3)));
+
   test(
     'the catalog generates valid Dart',
     () => expectValidDart(catalog()),

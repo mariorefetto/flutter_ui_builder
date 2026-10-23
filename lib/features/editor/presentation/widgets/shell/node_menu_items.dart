@@ -3,12 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/component_definitions.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_definition.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_rules.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/shortcuts.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/category_labels.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/file/rename_dialog.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/rename_widget.dart';
 
 /// The widgets "Wrap with" offers: the containers people reach for most.
@@ -177,6 +182,65 @@ class RestructureMenuItems extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+/// Turns the selected widget into a component, or, when it already is a use
+/// of one, opens the component or detaches the use from it.
+class ComponentMenuItems extends StatelessWidget {
+  const ComponentMenuItems({required this.registry, super.key});
+
+  final WidgetRegistry registry;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final cubit = context.read<EditorCubit>();
+    final selected = context.select((EditorCubit c) {
+      final id = c.state.selectedId;
+      return id == null ? null : c.state.document.root.find(id);
+    });
+    if (selected == null) {
+      return MenuItemButton(child: Text(l10n.componentExtract));
+    }
+    final name = selected.props[componentProp];
+    if (selected.type == componentType && name is String) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          MenuItemButton(
+            onPressed: () => cubit.openScreen(name),
+            child: Text(l10n.componentEdit),
+          ),
+          MenuItemButton(
+            onPressed: cubit.detachSelectedComponent,
+            child: Text(l10n.componentDetach),
+          ),
+        ],
+      );
+    }
+    return MenuItemButton(
+      onPressed: canBeComponentRoot(registry, selected.type)
+          ? () => _extract(context, cubit)
+          : null,
+      child: Text(l10n.componentExtract),
+    );
+  }
+
+  Future<void> _extract(BuildContext context, EditorCubit cubit) async {
+    final l10n = context.l10n;
+    final count = const ScreenEditor()
+        .componentsOf(cubit.state.document)
+        .length;
+    final name = await showDialog<String>(
+      context: context,
+      builder: (context) => RenameDialog(
+        initialName: l10n.componentDefaultName(count + 1),
+        title: l10n.componentNewTitle,
+        hint: l10n.componentExtractTitle,
+      ),
+    );
+    if (name != null) cubit.extractSelectedAsComponent(name);
   }
 }
 

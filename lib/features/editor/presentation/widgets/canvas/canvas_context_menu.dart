@@ -69,6 +69,7 @@ class _CanvasContextMenuState extends State<CanvasContextMenu> {
           const RenameWidgetMenuItem(),
           const Divider(),
           RestructureMenuItems(registry: widget.registry),
+          ComponentMenuItems(registry: widget.registry),
           const Divider(),
           MenuItemButton(
             onPressed: cubit.canCut ? cubit.removeSelected : null,
