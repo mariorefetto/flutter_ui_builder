@@ -1,8 +1,10 @@
 name: Release
 
-# A tag such as v0.0.1 builds the release version for each desktop platform and
-# publishes them in a GitHub release. The tag must match the version in
-# pubspec.yaml.
+# A tag such as v0.0.1 on main builds the release version for each desktop
+# platform and publishes them in a GitHub release. The tag must match the
+# version in pubspec.yaml and point at a commit of main, where gitflow puts
+# every release. A tag with a suffix, such as v0.1.0-beta.1, is published as a
+# pre-release.
 on:
   push:
     tags: ['v*']
@@ -19,6 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: The tag is on main
+        run: |
+          git fetch origin main
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "The tag ${GITHUB_REF_NAME} is not on main. Merge the release into main first."
+            exit 1
+          fi
       - name: The tag matches the version of the app
         run: |
           version=$(sed -n 's/^version: \([0-9.]*\).*/\1/p' pubspec.yaml)
@@ -102,7 +113,7 @@ jobs:
         with:
           name: Flutter UI Builder ${{ github.ref_name }}
           generate_release_notes: true
-          prerelease: ${{ startsWith(github.ref_name, 'v0.') }}
+          prerelease: ${{ contains(github.ref_name, '-') }}
           files: dist/*
           body: |
             Desktop builds of Flutter UI Builder, for noncommercial use under the

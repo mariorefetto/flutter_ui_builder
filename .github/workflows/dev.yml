@@ -1,10 +1,11 @@
 name: Dev
 
-# Every push to main and every pull request: analyze, test, and build a debug
-# version for each desktop platform, kept as an artifact for a week.
+# Every push to a long-lived branch of the gitflow (main, develop, release/*,
+# hotfix/*) and every pull request: analyze, test, and build a debug version for
+# each desktop platform, kept as an artifact for a week.
 on:
   push:
-    branches: [main]
+    branches: [main, develop, 'release/**', 'hotfix/**']
   pull_request:
 
 concurrency:
