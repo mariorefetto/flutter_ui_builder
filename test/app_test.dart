@@ -21,6 +21,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/widgets/palette/
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/editor_shortcuts.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/tree/tree_row.dart';
 import 'package:flutter_ui_builder/features/settings/domain/repositories/settings_repository.dart';
+import 'package:flutter_ui_builder/features/settings/presentation/cubit/settings_cubit.dart';
 import 'support/memory_settings_repository.dart';
 
 void main() {
@@ -1062,5 +1063,22 @@ class UntitledView extends StatelessWidget {
     await tester.tap(find.text('About this widget'));
     await tester.pumpAndSettle();
     expect(find.text('Holds no other widget.'), findsNothing);
+  });
+
+  testWidgets('the language of the settings is the language of the app', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+    expect(find.text('Edit'), findsOneWidget);
+
+    await sl<SettingsCubit>().update((s) => s.copyWith(languageCode: 'it'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Modifica'), findsOneWidget);
+    expect(find.text('Edit'), findsNothing);
+
+    await sl<SettingsCubit>().update((s) => s.copyWith(languageCode: null));
+    await tester.pumpAndSettle();
+    expect(find.text('Edit'), findsOneWidget);
   });
 }
