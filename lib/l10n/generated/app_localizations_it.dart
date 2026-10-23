@@ -1359,4 +1359,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get paletteShowList => 'Mostra i widget in elenco';
+
+  @override
+  String get guideTitle => 'Guida ai widget';
+
+  @override
+  String get guideSearch => 'Cerca tra i widget';
+
+  @override
+  String get guideAll => 'Tutti';
+
+  @override
+  String get guideAdd => 'Aggiungi';
+
+  @override
+  String get menuWidgetGuide => 'Guida ai widget';
 }

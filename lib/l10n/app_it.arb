@@ -389,5 +389,10 @@
   "aboutDocs": "Documentazione di Flutter",
   "aboutCopyLink": "Copia il link",
   "paletteShowGrid": "Mostra i widget in griglia",
-  "paletteShowList": "Mostra i widget in elenco"
+  "paletteShowList": "Mostra i widget in elenco",
+  "guideTitle": "Guida ai widget",
+  "guideSearch": "Cerca tra i widget",
+  "guideAll": "Tutti",
+  "guideAdd": "Aggiungi",
+  "menuWidgetGuide": "Guida ai widget"
 }

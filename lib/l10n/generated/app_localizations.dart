@@ -2437,6 +2437,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show the widgets as a list'**
   String get paletteShowList;
+
+  /// Widget guide: Widget guide
+  ///
+  /// In en, this message translates to:
+  /// **'Widget guide'**
+  String get guideTitle;
+
+  /// Widget guide: Search the widgets
+  ///
+  /// In en, this message translates to:
+  /// **'Search the widgets'**
+  String get guideSearch;
+
+  /// Widget guide: All
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get guideAll;
+
+  /// Widget guide: button that adds the widget to the screen
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get guideAdd;
+
+  /// Widget guide: Widget guide
+  ///
+  /// In en, this message translates to:
+  /// **'Widget guide'**
+  String get menuWidgetGuide;
 }
 
 class _AppLocalizationsDelegate

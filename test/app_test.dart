@@ -1081,4 +1081,69 @@ class UntitledView extends StatelessWidget {
     await tester.pumpAndSettle();
     expect(find.text('Edit'), findsOneWidget);
   });
+
+  group('widget guide', () {
+    // The palette behind the dialog lists the same names.
+    Finder inGuide(Finder finder) =>
+        find.descendant(of: find.byType(AlertDialog), matching: finder);
+
+    Future<void> openGuide(WidgetTester tester) async {
+      await tester.tap(find.text('Help'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Widget guide'));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('the guide lists the widgets with what they are', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+
+      await openGuide(tester);
+
+      expect(inGuide(find.text('Align')), findsOneWidget);
+      expect(
+        inGuide(
+          find.text('Puts its child at a chosen place in the space it has.'),
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('a letter or a search narrows the guide', (tester) async {
+      await pumpApp(tester);
+      await openGuide(tester);
+
+      await tester.tap(inGuide(find.text('S')).first);
+      await tester.pumpAndSettle();
+      expect(inGuide(find.text('Slider')), findsOneWidget);
+      expect(inGuide(find.text('Align')), findsNothing);
+
+      await tester.tap(inGuide(find.text('All')));
+      await tester.pumpAndSettle();
+      await tester.enterText(inGuide(find.byType(TextField)), 'checkbox');
+      await tester.pumpAndSettle();
+      expect(inGuide(find.text('Checkbox')), findsOneWidget);
+      expect(inGuide(find.text('Slider')), findsNothing);
+    });
+
+    testWidgets('a widget can be added from the guide', (tester) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)..select('node_2');
+      await openGuide(tester);
+      await tester.enterText(inGuide(find.byType(TextField)), 'divider');
+      await tester.pumpAndSettle();
+
+      await tester.tap(inGuide(find.text('Add')).first);
+      await tester.pumpAndSettle();
+
+      expect(
+        cubit.state.document.root
+            .find('node_2')
+            ?.children
+            .any((c) => c.type == 'Divider'),
+        isTrue,
+      );
+    });
+  });
 }

@@ -1339,4 +1339,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paletteShowList => 'Show the widgets as a list';
+
+  @override
+  String get guideTitle => 'Widget guide';
+
+  @override
+  String get guideSearch => 'Search the widgets';
+
+  @override
+  String get guideAll => 'All';
+
+  @override
+  String get guideAdd => 'Add';
+
+  @override
+  String get menuWidgetGuide => 'Widget guide';
 }

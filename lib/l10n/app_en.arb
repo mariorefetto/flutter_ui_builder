@@ -1688,5 +1688,25 @@
   "paletteShowList": "Show the widgets as a list",
   "@paletteShowList": {
     "description": "Palette: Show the widgets as a list"
+  },
+  "guideTitle": "Widget guide",
+  "@guideTitle": {
+    "description": "Widget guide: Widget guide"
+  },
+  "guideSearch": "Search the widgets",
+  "@guideSearch": {
+    "description": "Widget guide: Search the widgets"
+  },
+  "guideAll": "All",
+  "@guideAll": {
+    "description": "Widget guide: All"
+  },
+  "guideAdd": "Add",
+  "@guideAdd": {
+    "description": "Widget guide: button that adds the widget to the screen"
+  },
+  "menuWidgetGuide": "Widget guide",
+  "@menuWidgetGuide": {
+    "description": "Widget guide: Widget guide"
   }
 }
