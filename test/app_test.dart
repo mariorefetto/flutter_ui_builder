@@ -956,9 +956,9 @@ class UntitledView extends StatelessWidget {
       await tester.tap(find.text('Close'));
       await tester.pumpAndSettle();
 
-      await tester.sendKeyDownEvent(LogicalKeyboardKey.meta);
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.control);
       await tester.sendKeyEvent(LogicalKeyboardKey.comma);
-      await tester.sendKeyUpEvent(LogicalKeyboardKey.meta);
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.control);
       await tester.pumpAndSettle();
       expect(find.text('Settings'), findsWidgets);
       expect(find.text('Language'), findsOneWidget);
