@@ -2095,6 +2095,336 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Onboarding'**
   String get templateOnboarding;
+
+  /// What the widget Scaffold is
+  ///
+  /// In en, this message translates to:
+  /// **'The basic structure of a screen: it holds an app bar, a body, a floating button and a bottom bar, and gives its content a Material surface.'**
+  String get widgetHelpScaffold;
+
+  /// What the widget AppBar is
+  ///
+  /// In en, this message translates to:
+  /// **'The bar at the top of a screen, with a title and room for icons that act on the screen.'**
+  String get widgetHelpAppBar;
+
+  /// What the widget BottomAppBar is
+  ///
+  /// In en, this message translates to:
+  /// **'A bar at the bottom of a screen that holds actions, often next to a floating button.'**
+  String get widgetHelpBottomAppBar;
+
+  /// What the widget NavigationBar is
+  ///
+  /// In en, this message translates to:
+  /// **'The bar at the bottom for moving between the main places of an app.'**
+  String get widgetHelpNavigationBar;
+
+  /// What the widget FloatingActionButton is
+  ///
+  /// In en, this message translates to:
+  /// **'A round button that floats over the content for the main action of the screen.'**
+  String get widgetHelpFloatingActionButton;
+
+  /// What the widget Column is
+  ///
+  /// In en, this message translates to:
+  /// **'Places its children one under the other.'**
+  String get widgetHelpColumn;
+
+  /// What the widget Row is
+  ///
+  /// In en, this message translates to:
+  /// **'Places its children side by side.'**
+  String get widgetHelpRow;
+
+  /// What the widget Stack is
+  ///
+  /// In en, this message translates to:
+  /// **'Puts its children on top of each other, so they can overlap.'**
+  String get widgetHelpStack;
+
+  /// What the widget Container is
+  ///
+  /// In en, this message translates to:
+  /// **'A box that can have a size, a margin, a padding, a colour, a border, a shadow and a shape.'**
+  String get widgetHelpContainer;
+
+  /// What the widget Padding is
+  ///
+  /// In en, this message translates to:
+  /// **'Adds empty space around its child.'**
+  String get widgetHelpPadding;
+
+  /// What the widget Center is
+  ///
+  /// In en, this message translates to:
+  /// **'Puts its child in the middle of the space it has.'**
+  String get widgetHelpCenter;
+
+  /// What the widget Align is
+  ///
+  /// In en, this message translates to:
+  /// **'Puts its child at a chosen place in the space it has.'**
+  String get widgetHelpAlign;
+
+  /// What the widget SizedBox is
+  ///
+  /// In en, this message translates to:
+  /// **'A box of a fixed size. Without a child it is an empty gap.'**
+  String get widgetHelpSizedBox;
+
+  /// What the widget Expanded is
+  ///
+  /// In en, this message translates to:
+  /// **'Makes its child fill the free space of a Row or Column.'**
+  String get widgetHelpExpanded;
+
+  /// What the widget Flexible is
+  ///
+  /// In en, this message translates to:
+  /// **'Lets its child take free space in a Row or Column, without having to fill it.'**
+  String get widgetHelpFlexible;
+
+  /// What the widget Spacer is
+  ///
+  /// In en, this message translates to:
+  /// **'An empty gap that takes the free space of a Row or Column.'**
+  String get widgetHelpSpacer;
+
+  /// What the widget SafeArea is
+  ///
+  /// In en, this message translates to:
+  /// **'Keeps its child clear of the notch, the status bar and the other parts of the screen the system covers.'**
+  String get widgetHelpSafeArea;
+
+  /// What the widget SingleChildScrollView is
+  ///
+  /// In en, this message translates to:
+  /// **'Lets one child that is taller than the screen be scrolled.'**
+  String get widgetHelpSingleChildScrollView;
+
+  /// What the widget Wrap is
+  ///
+  /// In en, this message translates to:
+  /// **'Places its children in a line and starts a new line when there is no room.'**
+  String get widgetHelpWrap;
+
+  /// What the widget ListView is
+  ///
+  /// In en, this message translates to:
+  /// **'A list that scrolls, built from its children.'**
+  String get widgetHelpListView;
+
+  /// What the widget GridView is
+  ///
+  /// In en, this message translates to:
+  /// **'A grid that scrolls, with a fixed number of columns.'**
+  String get widgetHelpGridView;
+
+  /// What the widget Text is
+  ///
+  /// In en, this message translates to:
+  /// **'Shows a piece of text, with a size, a weight and a colour.'**
+  String get widgetHelpText;
+
+  /// What the widget Image is
+  ///
+  /// In en, this message translates to:
+  /// **'Shows a picture from the web, from the project or from a file.'**
+  String get widgetHelpImage;
+
+  /// What the widget Icon is
+  ///
+  /// In en, this message translates to:
+  /// **'Shows one of the Material icons.'**
+  String get widgetHelpIcon;
+
+  /// What the widget ElevatedButton is
+  ///
+  /// In en, this message translates to:
+  /// **'A button with a raised look, for an important action.'**
+  String get widgetHelpElevatedButton;
+
+  /// What the widget FilledButton is
+  ///
+  /// In en, this message translates to:
+  /// **'A button filled with colour, for the main action.'**
+  String get widgetHelpFilledButton;
+
+  /// What the widget OutlinedButton is
+  ///
+  /// In en, this message translates to:
+  /// **'A button with an outline and no fill, for a secondary action.'**
+  String get widgetHelpOutlinedButton;
+
+  /// What the widget TextButton is
+  ///
+  /// In en, this message translates to:
+  /// **'A flat button that looks like text, for the least important action.'**
+  String get widgetHelpTextButton;
+
+  /// What the widget IconButton is
+  ///
+  /// In en, this message translates to:
+  /// **'A button that shows only an icon.'**
+  String get widgetHelpIconButton;
+
+  /// What the widget TextField is
+  ///
+  /// In en, this message translates to:
+  /// **'A field where the user types text.'**
+  String get widgetHelpTextField;
+
+  /// What the widget Checkbox is
+  ///
+  /// In en, this message translates to:
+  /// **'A box the user ticks on or off.'**
+  String get widgetHelpCheckbox;
+
+  /// What the widget Switch is
+  ///
+  /// In en, this message translates to:
+  /// **'A switch the user turns on or off.'**
+  String get widgetHelpSwitch;
+
+  /// What the widget Slider is
+  ///
+  /// In en, this message translates to:
+  /// **'A bar with a handle for choosing a value in a range.'**
+  String get widgetHelpSlider;
+
+  /// What the widget Card is
+  ///
+  /// In en, this message translates to:
+  /// **'A panel with rounded corners and a slight shadow that groups related content.'**
+  String get widgetHelpCard;
+
+  /// What the widget ListTile is
+  ///
+  /// In en, this message translates to:
+  /// **'A row of a list with a title, a second line, and an icon at each end.'**
+  String get widgetHelpListTile;
+
+  /// What the widget Divider is
+  ///
+  /// In en, this message translates to:
+  /// **'A thin line that separates content.'**
+  String get widgetHelpDivider;
+
+  /// What the widget CircleAvatar is
+  ///
+  /// In en, this message translates to:
+  /// **'A circle that holds a picture, an icon or initials, as for a person.'**
+  String get widgetHelpCircleAvatar;
+
+  /// What the widget Chip is
+  ///
+  /// In en, this message translates to:
+  /// **'A small element with a label, for a tag, a choice or a filter.'**
+  String get widgetHelpChip;
+
+  /// What the widget InkWell is
+  ///
+  /// In en, this message translates to:
+  /// **'Makes its child respond to a tap with the ripple of Material design.'**
+  String get widgetHelpInkWell;
+
+  /// What the widget GestureDetector is
+  ///
+  /// In en, this message translates to:
+  /// **'Makes its child respond to taps and other gestures, with no visual effect.'**
+  String get widgetHelpGestureDetector;
+
+  /// What the widget Theme is
+  ///
+  /// In en, this message translates to:
+  /// **'Gives everything inside it a colour scheme made from one colour.'**
+  String get widgetHelpTheme;
+
+  /// What the widget Component is
+  ///
+  /// In en, this message translates to:
+  /// **'A use of a component of the project: it shows the component, and changing the component changes it here.'**
+  String get widgetHelpComponent;
+
+  /// About panel: About this widget
+  ///
+  /// In en, this message translates to:
+  /// **'About this widget'**
+  String get aboutTitle;
+
+  /// About panel: Category: {category}
+  ///
+  /// In en, this message translates to:
+  /// **'Category: {category}'**
+  String aboutCategory(String category);
+
+  /// About panel: A {category} widget.
+  ///
+  /// In en, this message translates to:
+  /// **'A {category} widget.'**
+  String aboutGeneric(String category);
+
+  /// About panel: Holds no other widget.
+  ///
+  /// In en, this message translates to:
+  /// **'Holds no other widget.'**
+  String get aboutNoChild;
+
+  /// About panel: Holds one widget.
+  ///
+  /// In en, this message translates to:
+  /// **'Holds one widget.'**
+  String get aboutOneChild;
+
+  /// About panel: Holds any number of widgets.
+  ///
+  /// In en, this message translates to:
+  /// **'Holds any number of widgets.'**
+  String get aboutManyChildren;
+
+  /// About panel: It needs a widget inside it.
+  ///
+  /// In en, this message translates to:
+  /// **'It needs a widget inside it.'**
+  String get aboutNeedsChild;
+
+  /// About panel: Can only go inside: {parents}.
+  ///
+  /// In en, this message translates to:
+  /// **'Can only go inside: {parents}.'**
+  String aboutOnlyIn(String parents);
+
+  /// About panel: Cannot go inside: {parents}.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot go inside: {parents}.'**
+  String aboutNotIn(String parents);
+
+  /// About panel: Needs a Material surface around it: {ancestors}.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs a Material surface around it: {ancestors}.'**
+  String aboutNeedsMaterial(String ancestors);
+
+  /// About panel: Inside a Row or Column it is placed in an Expanded for you.
+  ///
+  /// In en, this message translates to:
+  /// **'Inside a Row or Column it is placed in an Expanded for you.'**
+  String get aboutWrapped;
+
+  /// About panel: Flutter documentation
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter documentation'**
+  String get aboutDocs;
+
+  /// About panel: Copy the link
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the link'**
+  String get aboutCopyLink;
 }
 
 class _AppLocalizationsDelegate

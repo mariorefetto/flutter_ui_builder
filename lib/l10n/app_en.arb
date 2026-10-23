@@ -1435,5 +1435,250 @@
   "templateOnboarding": "Onboarding",
   "@templateOnboarding": {
     "description": "Screen template: Onboarding"
+  },
+  "widgetHelpScaffold": "The basic structure of a screen: it holds an app bar, a body, a floating button and a bottom bar, and gives its content a Material surface.",
+  "@widgetHelpScaffold": {
+    "description": "What the widget Scaffold is"
+  },
+  "widgetHelpAppBar": "The bar at the top of a screen, with a title and room for icons that act on the screen.",
+  "@widgetHelpAppBar": {
+    "description": "What the widget AppBar is"
+  },
+  "widgetHelpBottomAppBar": "A bar at the bottom of a screen that holds actions, often next to a floating button.",
+  "@widgetHelpBottomAppBar": {
+    "description": "What the widget BottomAppBar is"
+  },
+  "widgetHelpNavigationBar": "The bar at the bottom for moving between the main places of an app.",
+  "@widgetHelpNavigationBar": {
+    "description": "What the widget NavigationBar is"
+  },
+  "widgetHelpFloatingActionButton": "A round button that floats over the content for the main action of the screen.",
+  "@widgetHelpFloatingActionButton": {
+    "description": "What the widget FloatingActionButton is"
+  },
+  "widgetHelpColumn": "Places its children one under the other.",
+  "@widgetHelpColumn": {
+    "description": "What the widget Column is"
+  },
+  "widgetHelpRow": "Places its children side by side.",
+  "@widgetHelpRow": {
+    "description": "What the widget Row is"
+  },
+  "widgetHelpStack": "Puts its children on top of each other, so they can overlap.",
+  "@widgetHelpStack": {
+    "description": "What the widget Stack is"
+  },
+  "widgetHelpContainer": "A box that can have a size, a margin, a padding, a colour, a border, a shadow and a shape.",
+  "@widgetHelpContainer": {
+    "description": "What the widget Container is"
+  },
+  "widgetHelpPadding": "Adds empty space around its child.",
+  "@widgetHelpPadding": {
+    "description": "What the widget Padding is"
+  },
+  "widgetHelpCenter": "Puts its child in the middle of the space it has.",
+  "@widgetHelpCenter": {
+    "description": "What the widget Center is"
+  },
+  "widgetHelpAlign": "Puts its child at a chosen place in the space it has.",
+  "@widgetHelpAlign": {
+    "description": "What the widget Align is"
+  },
+  "widgetHelpSizedBox": "A box of a fixed size. Without a child it is an empty gap.",
+  "@widgetHelpSizedBox": {
+    "description": "What the widget SizedBox is"
+  },
+  "widgetHelpExpanded": "Makes its child fill the free space of a Row or Column.",
+  "@widgetHelpExpanded": {
+    "description": "What the widget Expanded is"
+  },
+  "widgetHelpFlexible": "Lets its child take free space in a Row or Column, without having to fill it.",
+  "@widgetHelpFlexible": {
+    "description": "What the widget Flexible is"
+  },
+  "widgetHelpSpacer": "An empty gap that takes the free space of a Row or Column.",
+  "@widgetHelpSpacer": {
+    "description": "What the widget Spacer is"
+  },
+  "widgetHelpSafeArea": "Keeps its child clear of the notch, the status bar and the other parts of the screen the system covers.",
+  "@widgetHelpSafeArea": {
+    "description": "What the widget SafeArea is"
+  },
+  "widgetHelpSingleChildScrollView": "Lets one child that is taller than the screen be scrolled.",
+  "@widgetHelpSingleChildScrollView": {
+    "description": "What the widget SingleChildScrollView is"
+  },
+  "widgetHelpWrap": "Places its children in a line and starts a new line when there is no room.",
+  "@widgetHelpWrap": {
+    "description": "What the widget Wrap is"
+  },
+  "widgetHelpListView": "A list that scrolls, built from its children.",
+  "@widgetHelpListView": {
+    "description": "What the widget ListView is"
+  },
+  "widgetHelpGridView": "A grid that scrolls, with a fixed number of columns.",
+  "@widgetHelpGridView": {
+    "description": "What the widget GridView is"
+  },
+  "widgetHelpText": "Shows a piece of text, with a size, a weight and a colour.",
+  "@widgetHelpText": {
+    "description": "What the widget Text is"
+  },
+  "widgetHelpImage": "Shows a picture from the web, from the project or from a file.",
+  "@widgetHelpImage": {
+    "description": "What the widget Image is"
+  },
+  "widgetHelpIcon": "Shows one of the Material icons.",
+  "@widgetHelpIcon": {
+    "description": "What the widget Icon is"
+  },
+  "widgetHelpElevatedButton": "A button with a raised look, for an important action.",
+  "@widgetHelpElevatedButton": {
+    "description": "What the widget ElevatedButton is"
+  },
+  "widgetHelpFilledButton": "A button filled with colour, for the main action.",
+  "@widgetHelpFilledButton": {
+    "description": "What the widget FilledButton is"
+  },
+  "widgetHelpOutlinedButton": "A button with an outline and no fill, for a secondary action.",
+  "@widgetHelpOutlinedButton": {
+    "description": "What the widget OutlinedButton is"
+  },
+  "widgetHelpTextButton": "A flat button that looks like text, for the least important action.",
+  "@widgetHelpTextButton": {
+    "description": "What the widget TextButton is"
+  },
+  "widgetHelpIconButton": "A button that shows only an icon.",
+  "@widgetHelpIconButton": {
+    "description": "What the widget IconButton is"
+  },
+  "widgetHelpTextField": "A field where the user types text.",
+  "@widgetHelpTextField": {
+    "description": "What the widget TextField is"
+  },
+  "widgetHelpCheckbox": "A box the user ticks on or off.",
+  "@widgetHelpCheckbox": {
+    "description": "What the widget Checkbox is"
+  },
+  "widgetHelpSwitch": "A switch the user turns on or off.",
+  "@widgetHelpSwitch": {
+    "description": "What the widget Switch is"
+  },
+  "widgetHelpSlider": "A bar with a handle for choosing a value in a range.",
+  "@widgetHelpSlider": {
+    "description": "What the widget Slider is"
+  },
+  "widgetHelpCard": "A panel with rounded corners and a slight shadow that groups related content.",
+  "@widgetHelpCard": {
+    "description": "What the widget Card is"
+  },
+  "widgetHelpListTile": "A row of a list with a title, a second line, and an icon at each end.",
+  "@widgetHelpListTile": {
+    "description": "What the widget ListTile is"
+  },
+  "widgetHelpDivider": "A thin line that separates content.",
+  "@widgetHelpDivider": {
+    "description": "What the widget Divider is"
+  },
+  "widgetHelpCircleAvatar": "A circle that holds a picture, an icon or initials, as for a person.",
+  "@widgetHelpCircleAvatar": {
+    "description": "What the widget CircleAvatar is"
+  },
+  "widgetHelpChip": "A small element with a label, for a tag, a choice or a filter.",
+  "@widgetHelpChip": {
+    "description": "What the widget Chip is"
+  },
+  "widgetHelpInkWell": "Makes its child respond to a tap with the ripple of Material design.",
+  "@widgetHelpInkWell": {
+    "description": "What the widget InkWell is"
+  },
+  "widgetHelpGestureDetector": "Makes its child respond to taps and other gestures, with no visual effect.",
+  "@widgetHelpGestureDetector": {
+    "description": "What the widget GestureDetector is"
+  },
+  "widgetHelpTheme": "Gives everything inside it a colour scheme made from one colour.",
+  "@widgetHelpTheme": {
+    "description": "What the widget Theme is"
+  },
+  "widgetHelpComponent": "A use of a component of the project: it shows the component, and changing the component changes it here.",
+  "@widgetHelpComponent": {
+    "description": "What the widget Component is"
+  },
+  "aboutTitle": "About this widget",
+  "@aboutTitle": {
+    "description": "About panel: About this widget"
+  },
+  "aboutCategory": "Category: {category}",
+  "@aboutCategory": {
+    "description": "About panel: Category: {category}",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutGeneric": "A {category} widget.",
+  "@aboutGeneric": {
+    "description": "About panel: A {category} widget.",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutNoChild": "Holds no other widget.",
+  "@aboutNoChild": {
+    "description": "About panel: Holds no other widget."
+  },
+  "aboutOneChild": "Holds one widget.",
+  "@aboutOneChild": {
+    "description": "About panel: Holds one widget."
+  },
+  "aboutManyChildren": "Holds any number of widgets.",
+  "@aboutManyChildren": {
+    "description": "About panel: Holds any number of widgets."
+  },
+  "aboutNeedsChild": "It needs a widget inside it.",
+  "@aboutNeedsChild": {
+    "description": "About panel: It needs a widget inside it."
+  },
+  "aboutOnlyIn": "Can only go inside: {parents}.",
+  "@aboutOnlyIn": {
+    "description": "About panel: Can only go inside: {parents}.",
+    "placeholders": {
+      "parents": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutNotIn": "Cannot go inside: {parents}.",
+  "@aboutNotIn": {
+    "description": "About panel: Cannot go inside: {parents}.",
+    "placeholders": {
+      "parents": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutNeedsMaterial": "Needs a Material surface around it: {ancestors}.",
+  "@aboutNeedsMaterial": {
+    "description": "About panel: Needs a Material surface around it: {ancestors}.",
+    "placeholders": {
+      "ancestors": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutWrapped": "Inside a Row or Column it is placed in an Expanded for you.",
+  "@aboutWrapped": {
+    "description": "About panel: Inside a Row or Column it is placed in an Expanded for you."
+  },
+  "aboutDocs": "Flutter documentation",
+  "@aboutDocs": {
+    "description": "About panel: Flutter documentation"
+  },
+  "aboutCopyLink": "Copy the link",
+  "@aboutCopyLink": {
+    "description": "About panel: Copy the link"
   }
 }

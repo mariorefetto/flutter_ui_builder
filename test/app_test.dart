@@ -1044,4 +1044,23 @@ class UntitledView extends StatelessWidget {
     expect(cubit.state.document.root.countNodes(), greaterThan(10));
     expect(find.text('Welcome back'), findsWidgets);
   });
+
+  testWidgets('the properties say what the selected widget is', (tester) async {
+    await pumpApp(tester);
+    editorOf(tester)
+      ..addNode(type: 'Text', parentId: 'node_2')
+      ..select('node_3');
+    await tester.pumpAndSettle();
+
+    expect(find.text('About this widget'), findsOneWidget);
+    expect(
+      find.text('Shows a piece of text, with a size, a weight and a colour.'),
+      findsOneWidget,
+    );
+    expect(find.text('Holds no other widget.'), findsOneWidget);
+
+    await tester.tap(find.text('About this widget'));
+    await tester.pumpAndSettle();
+    expect(find.text('Holds no other widget.'), findsNothing);
+  });
 }

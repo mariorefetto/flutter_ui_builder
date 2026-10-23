@@ -15,6 +15,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_sta
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/object_selector.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/prop_description.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/prop_row.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/widget_about.dart';
 
 /// The properties of the selected node, in the style of an IDE properties
 /// window: an object selector, a search field, categorized or alphabetical
@@ -56,6 +57,8 @@ class _PropertiesPanelState extends State<PropertiesPanel> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ObjectSelector(root: state.document.root, selectedId: selected),
+            if (node != null)
+              WidgetAbout(definition: widget.registry.definitionFor(node.type)),
             _toolbar(context),
             Expanded(
               child: node == null

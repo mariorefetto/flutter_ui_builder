@@ -1142,4 +1142,215 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get templateOnboarding => 'Benvenuto';
+
+  @override
+  String get widgetHelpScaffold =>
+      'La struttura base di una schermata: contiene barra superiore, corpo, pulsante flottante e barra inferiore, e dà ai contenuti una superficie Material.';
+
+  @override
+  String get widgetHelpAppBar =>
+      'La barra in cima a una schermata, con un titolo e spazio per icone che agiscono sulla schermata.';
+
+  @override
+  String get widgetHelpBottomAppBar =>
+      'Una barra in fondo alla schermata che contiene azioni, spesso accanto a un pulsante flottante.';
+
+  @override
+  String get widgetHelpNavigationBar =>
+      'La barra in basso per spostarsi tra i luoghi principali di un\'app.';
+
+  @override
+  String get widgetHelpFloatingActionButton =>
+      'Un pulsante tondo che galleggia sul contenuto per l\'azione principale della schermata.';
+
+  @override
+  String get widgetHelpColumn => 'Dispone i figli uno sotto l\'altro.';
+
+  @override
+  String get widgetHelpRow => 'Dispone i figli uno accanto all\'altro.';
+
+  @override
+  String get widgetHelpStack =>
+      'Sovrappone i figli, che possono quindi coprirsi a vicenda.';
+
+  @override
+  String get widgetHelpContainer =>
+      'Una scatola che può avere dimensioni, margine, padding, colore, bordo, ombra e forma.';
+
+  @override
+  String get widgetHelpPadding => 'Aggiunge spazio vuoto attorno al figlio.';
+
+  @override
+  String get widgetHelpCenter =>
+      'Mette il figlio al centro dello spazio disponibile.';
+
+  @override
+  String get widgetHelpAlign =>
+      'Mette il figlio in un punto scelto dello spazio disponibile.';
+
+  @override
+  String get widgetHelpSizedBox =>
+      'Una scatola di dimensioni fisse. Senza figlio è uno spazio vuoto.';
+
+  @override
+  String get widgetHelpExpanded =>
+      'Fa riempire al figlio lo spazio libero di una Row o di una Column.';
+
+  @override
+  String get widgetHelpFlexible =>
+      'Lascia che il figlio prenda spazio libero in una Row o Column, senza doverlo riempire.';
+
+  @override
+  String get widgetHelpSpacer =>
+      'Uno spazio vuoto che prende lo spazio libero di una Row o Column.';
+
+  @override
+  String get widgetHelpSafeArea =>
+      'Tiene il figlio lontano da notch, barra di stato e dalle altre parti dello schermo coperte dal sistema.';
+
+  @override
+  String get widgetHelpSingleChildScrollView =>
+      'Permette di scorrere un figlio più alto dello schermo.';
+
+  @override
+  String get widgetHelpWrap =>
+      'Dispone i figli in una riga e va a capo quando non c\'è più spazio.';
+
+  @override
+  String get widgetHelpListView =>
+      'Un elenco che scorre, costruito dai suoi figli.';
+
+  @override
+  String get widgetHelpGridView =>
+      'Una griglia che scorre, con un numero fisso di colonne.';
+
+  @override
+  String get widgetHelpText =>
+      'Mostra un testo, con dimensione, peso e colore.';
+
+  @override
+  String get widgetHelpImage =>
+      'Mostra un\'immagine dal web, dal progetto o da un file.';
+
+  @override
+  String get widgetHelpIcon => 'Mostra una delle icone Material.';
+
+  @override
+  String get widgetHelpElevatedButton =>
+      'Un pulsante in rilievo, per un\'azione importante.';
+
+  @override
+  String get widgetHelpFilledButton =>
+      'Un pulsante pieno di colore, per l\'azione principale.';
+
+  @override
+  String get widgetHelpOutlinedButton =>
+      'Un pulsante con bordo e senza riempimento, per un\'azione secondaria.';
+
+  @override
+  String get widgetHelpTextButton =>
+      'Un pulsante piatto che sembra testo, per l\'azione meno importante.';
+
+  @override
+  String get widgetHelpIconButton => 'Un pulsante che mostra solo un\'icona.';
+
+  @override
+  String get widgetHelpTextField =>
+      'Un campo in cui l\'utente scrive del testo.';
+
+  @override
+  String get widgetHelpCheckbox => 'Una casella che l\'utente spunta o toglie.';
+
+  @override
+  String get widgetHelpSwitch =>
+      'Un interruttore che l\'utente accende o spegne.';
+
+  @override
+  String get widgetHelpSlider =>
+      'Una barra con un cursore per scegliere un valore in un intervallo.';
+
+  @override
+  String get widgetHelpCard =>
+      'Un pannello con angoli arrotondati e una leggera ombra che raggruppa contenuti collegati.';
+
+  @override
+  String get widgetHelpListTile =>
+      'Una riga di un elenco con un titolo, una seconda riga e un\'icona a ciascun estremo.';
+
+  @override
+  String get widgetHelpDivider => 'Una linea sottile che separa i contenuti.';
+
+  @override
+  String get widgetHelpCircleAvatar =>
+      'Un cerchio che contiene un\'immagine, un\'icona o delle iniziali, come per una persona.';
+
+  @override
+  String get widgetHelpChip =>
+      'Un piccolo elemento con un\'etichetta, per un tag, una scelta o un filtro.';
+
+  @override
+  String get widgetHelpInkWell =>
+      'Fa rispondere il figlio al tocco con l\'increspatura del Material design.';
+
+  @override
+  String get widgetHelpGestureDetector =>
+      'Fa rispondere il figlio a tocchi e altri gesti, senza effetti visivi.';
+
+  @override
+  String get widgetHelpTheme =>
+      'Dà a tutto ciò che contiene uno schema di colori ricavato da un solo colore.';
+
+  @override
+  String get widgetHelpComponent =>
+      'Un uso di un componente del progetto: mostra il componente, e modificare il componente lo cambia anche qui.';
+
+  @override
+  String get aboutTitle => 'Informazioni sul widget';
+
+  @override
+  String aboutCategory(String category) {
+    return 'Categoria: $category';
+  }
+
+  @override
+  String aboutGeneric(String category) {
+    return 'Un widget della categoria $category.';
+  }
+
+  @override
+  String get aboutNoChild => 'Non contiene altri widget.';
+
+  @override
+  String get aboutOneChild => 'Contiene un solo widget.';
+
+  @override
+  String get aboutManyChildren => 'Contiene un numero qualsiasi di widget.';
+
+  @override
+  String get aboutNeedsChild => 'Ha bisogno di un widget al suo interno.';
+
+  @override
+  String aboutOnlyIn(String parents) {
+    return 'Può stare solo dentro: $parents.';
+  }
+
+  @override
+  String aboutNotIn(String parents) {
+    return 'Non può stare dentro: $parents.';
+  }
+
+  @override
+  String aboutNeedsMaterial(String ancestors) {
+    return 'Ha bisogno di una superficie Material attorno: $ancestors.';
+  }
+
+  @override
+  String get aboutWrapped =>
+      'In una Row o Column viene messo in un Expanded per te.';
+
+  @override
+  String get aboutDocs => 'Documentazione di Flutter';
+
+  @override
+  String get aboutCopyLink => 'Copia il link';
 }
