@@ -4,14 +4,21 @@ import 'package:flutter_ui_builder/core/theme/app_constants.dart';
 import 'package:flutter_ui_builder/core/theme/app_icons.dart';
 import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/component_definitions.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/prop_categories.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_definition.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/component_param.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/prop_schema.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_binding.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_params.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_state.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/file/rename_dialog.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/object_selector.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/prop_description.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/prop_row.dart';
@@ -114,9 +121,10 @@ class _PropertiesPanelState extends State<PropertiesPanel> {
   Widget _rows(BuildContext context, WidgetNode node) {
     final definition = widget.registry.definitionFor(node.type);
     final query = _search.text.trim().toLowerCase();
-    final visible = definition.props
-        .where((prop) => prop.name.toLowerCase().contains(query))
-        .toList();
+    final visible = [
+      ...definition.props,
+      ..._parameterProps(node),
+    ].where((prop) => prop.name.toLowerCase().contains(query)).toList();
     return ListView(
       // A new node gets fresh field state instead of inheriting the old text.
       key: ValueKey(node.id),
@@ -163,24 +171,69 @@ class _PropertiesPanelState extends State<PropertiesPanel> {
     ];
   }
 
+  // A use of a component also has a property for each parameter of it.
+  List<PropSchema> _parameterProps(WidgetNode node) {
+    final name = node.props[componentProp];
+    if (node.type != componentType || name is! String) return const [];
+    final document = context.read<EditorCubit>().state.document;
+    final params = const ScreenEditor()
+        .entriesOf(document)
+        .where((e) => e.component && e.name == name)
+        .firstOrNull
+        ?.params;
+    return [
+      for (final param in params ?? const <ComponentParam>[])
+        PropSchema(
+          name: '$argumentPrefix${param.name}',
+          label: param.name,
+          argument: param.name,
+          type: param.type,
+          defaultValue: param.defaultValue,
+        ),
+    ];
+  }
+
+  Future<void> _bind(WidgetNode node, PropSchema prop) async {
+    final cubit = context.read<EditorCubit>();
+    final l10n = context.l10n;
+    final name = await showDialog<String>(
+      context: context,
+      builder: (context) => RenameDialog(
+        initialName: prop.name,
+        title: l10n.paramBindTitle,
+        hint: l10n.paramNameHint,
+      ),
+    );
+    if (name != null) cubit.bindProp(node.id, prop.name, name.trim());
+  }
+
   Widget _row(WidgetNode node, WidgetDefinition definition, PropSchema prop) {
     final cubit = context.read<EditorCubit>();
+    final inComponent = cubit.state.document.component;
+    final bound = boundParam(node.props[prop.name]);
     return PropRow(
       key: ValueKey('prop-${prop.name}'),
       schema: prop,
       props: definition.resolve(node),
-      modified: node.props.containsKey(prop.name),
+      modified: node.props.containsKey(prop.name) && bound == null,
       focused: _focused == prop.name,
       onFocus: () => setState(() => _focused = prop.name),
       onChanged: (value) => cubit.updateProp(node.id, prop.name, value),
+      boundTo: bound,
+      // Only the properties of a component's own widgets can be parameters.
+      onBind: inComponent && canBindToParam(prop)
+          ? () => _bind(node, prop)
+          : null,
+      onUnbind: () => cubit.unbindProp(node.id, prop.name),
     );
   }
 
   Widget _description(WidgetNode node) {
     final definition = widget.registry.definitionFor(node.type);
-    final focused = definition.props
-        .where((prop) => prop.name == _focused)
-        .firstOrNull;
+    final focused = [
+      ...definition.props,
+      ..._parameterProps(node),
+    ].where((prop) => prop.name == _focused).firstOrNull;
     return focused == null
         ? const SizedBox.shrink()
         : PropDescription(schema: focused);

@@ -2,6 +2,7 @@ import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/import_result.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_binding.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/identifier_names.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
@@ -60,13 +61,23 @@ class DocumentReconciler {
     return a > b ? a : b;
   }
 
+  Map<String, Object?> _withBindings(WidgetNode old, WidgetNode node) => {
+    ...node.props,
+    for (final entry in old.props.entries)
+      if (boundParam(entry.value) != null && !node.props.containsKey(entry.key))
+        entry.key: entry.value,
+  };
+
   WidgetNode _carryIds(WidgetNode? old, WidgetNode node, _Counter counter) {
     final sameKind = old != null && old.type == node.type;
     final id = sameKind ? old.id : 'node_${counter.next()}';
     return node.copyWith(
       id: id,
-      // A widget that stayed where it was keeps the name the user gave it.
+      // A widget that stayed where it was keeps the name the user gave it,
+      // and the properties it had bound to a component's parameters: the code
+      // writes those as variables, which the importer cannot read back.
       label: sameKind ? old.label : null,
+      props: sameKind ? _withBindings(old, node) : node.props,
       children: [
         for (var i = 0; i < node.children.length; i++)
           _carryIds(

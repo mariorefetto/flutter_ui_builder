@@ -37,6 +37,7 @@ String messageFor(AppLocalizations l10n, Failure failure) => switch (failure) {
     DocumentFailureReason.duplicateScreenName => l10n.errorScreenDuplicate,
     DocumentFailureReason.lastScreen => l10n.errorScreenLast,
     DocumentFailureReason.unknownScreen => l10n.errorScreenUnknown,
+    DocumentFailureReason.invalidParameter => l10n.errorParameterInvalid,
     DocumentFailureReason.codeSyntax => l10n.errorCodeSyntax,
     DocumentFailureReason.codeNoWidget => l10n.errorCodeNoWidget,
   },

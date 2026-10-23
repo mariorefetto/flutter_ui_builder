@@ -1,11 +1,12 @@
 import 'dart:math' as math;
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_ui_builder/core/error/failures.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/component_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/edit_result.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_binding.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
 
 /// Structural edits of the widget tree. Every method returns a new document
@@ -81,14 +82,24 @@ class TreeEditor {
   }) {
     final node = document.root.find(nodeId);
     if (node == null) return _fail(TreeFailureReason.unknownNode);
-    final schema = _registry
-        .definitionFor(node.type)
-        .props
-        .where((prop) => prop.name == name)
-        .firstOrNull;
-    if (schema == null) return _fail(TreeFailureReason.unknownProp);
-    if (value != null && !schema.accepts(value)) {
-      return _fail(TreeFailureReason.invalidValue);
+    // A use of a component carries the values of its parameters, which no
+    // schema lists: a string, a number or a colour.
+    final isArgument =
+        node.type == componentType && name.startsWith(argumentPrefix);
+    if (isArgument) {
+      if (value != null && value is! String && value is! num) {
+        return _fail(TreeFailureReason.invalidValue);
+      }
+    } else {
+      final schema = _registry
+          .definitionFor(node.type)
+          .props
+          .where((prop) => prop.name == name)
+          .firstOrNull;
+      if (schema == null) return _fail(TreeFailureReason.unknownProp);
+      if (value != null && !schema.accepts(value)) {
+        return _fail(TreeFailureReason.invalidValue);
+      }
     }
     final props = {...node.props};
     value == null ? props.remove(name) : props[name] = value;

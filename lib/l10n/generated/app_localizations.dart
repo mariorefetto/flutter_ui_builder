@@ -2815,6 +2815,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The colour behind the row.'**
   String get propHelpTileColor;
+
+  /// Message: invalid component parameter
+  ///
+  /// In en, this message translates to:
+  /// **'This property cannot be a parameter, or the name is not valid. Use a name like title or cardColor.'**
+  String get errorParameterInvalid;
+
+  /// Component parameter: Make a parameter: each use of the compon
+  ///
+  /// In en, this message translates to:
+  /// **'Make a parameter: each use of the component can give its own value'**
+  String get paramBind;
+
+  /// Component parameter: Free from the parameter
+  ///
+  /// In en, this message translates to:
+  /// **'Free from the parameter'**
+  String get paramUnbind;
+
+  /// Component parameter: Parameter name
+  ///
+  /// In en, this message translates to:
+  /// **'Parameter name'**
+  String get paramBindTitle;
+
+  /// Component parameter: A name like title or cardColor
+  ///
+  /// In en, this message translates to:
+  /// **'A name like title or cardColor'**
+  String get paramNameHint;
 }
 
 class _AppLocalizationsDelegate

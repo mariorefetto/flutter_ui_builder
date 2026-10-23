@@ -30,6 +30,14 @@ _EditorDocumentModel _$EditorDocumentModelFromJson(Map<String, dynamic> json) =>
           (v) => (v as num?)?.toInt() ?? 0,
         ),
         component: $checkedConvert('component', (v) => v as bool? ?? false),
+        params: $checkedConvert(
+          'params',
+          (v) =>
+              (v as List<dynamic>?)
+                  ?.map((e) => e as Map<String, dynamic>)
+                  .toList() ??
+              const <Map<String, dynamic>>[],
+        ),
         assets: $checkedConvert(
           'assets',
           (v) =>
@@ -60,6 +68,7 @@ Map<String, dynamic> _$EditorDocumentModelToJson(
   'screens': instance.screens.map((e) => e.toJson()).toList(),
   'activeIndex': instance.activeIndex,
   'component': instance.component,
+  'params': instance.params,
   'assets': instance.assets.map((e) => e.toJson()).toList(),
   'theme': instance.theme,
   'schemaVersion': instance.schemaVersion,

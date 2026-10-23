@@ -4,6 +4,7 @@ import 'package:flutter_ui_builder/core/theme/app_icons.dart';
 import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/component_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_binding.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/component_scope.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_builder.dart';
 
@@ -21,12 +22,19 @@ final Map<String, PreviewBuilder> componentPreviews = {
     if (scope == null || root == null || scope.depth >= _maxDepth) {
       return _Missing(name: name);
     }
+    // The component as this use gives its parameters their values.
+    final bound = bindArguments(
+      root,
+      scope.params[name] ?? const [],
+      props.withPrefix(argumentPrefix),
+    );
     return IgnorePointer(
       child: ComponentScope(
         roots: scope.roots,
+        params: scope.params,
         build: scope.build,
         depth: scope.depth + 1,
-        child: Builder(builder: (inner) => scope.build(inner, root)),
+        child: Builder(builder: (inner) => scope.build(inner, bound)),
       ),
     );
   },

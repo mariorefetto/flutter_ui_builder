@@ -104,6 +104,9 @@ enum DocumentFailureReason {
   /// No screen has the name.
   unknownScreen,
 
+  /// A property cannot be bound to a parameter, or the name is not one.
+  invalidParameter,
+
   /// Pasted code that is not valid Dart.
   codeSyntax,
 

@@ -1352,4 +1352,79 @@ class UntitledView extends StatelessWidget {
       expect(code.map((f) => f.fileName), contains('app_theme.g.dart'));
     });
   });
+
+  group('component parameters', () {
+    testWidgets('a bound property becomes a field of each use', (tester) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..addNode(type: 'Text', parentId: 'node_2')
+        ..updateProp('node_3', 'text', 'Hello')
+        ..select('node_3')
+        ..extractSelectedAsComponent('Greeting')
+        ..openScreen('Greeting')
+        ..select('node_0');
+      await tester.pumpAndSettle();
+
+      // In the component, a property can be made a parameter.
+      await tester.tap(
+        find
+            .byTooltip(
+              'Make a parameter: each use of the component can give its own value',
+            )
+            .first,
+      );
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byType(TextField).last, 'words');
+      await tester.tap(find.text('OK'));
+      await tester.pumpAndSettle();
+      expect(cubit.state.document.params.single.name, 'words');
+      expect(cubit.state.document.params.single.defaultValue, 'Hello');
+      expect(find.text('words'), findsWidgets);
+
+      // The use then has a field of its own for it.
+      cubit
+        ..openScreen('untitled')
+        ..select('node_3');
+      await tester.pumpAndSettle();
+      expect(find.text('words'), findsOneWidget);
+
+      cubit.updateProp('node_3', 'arg.words', 'Goodbye');
+      await tester.pumpAndSettle();
+      expect(find.text('Goodbye'), findsWidgets);
+      expect(find.text('Hello'), findsNothing);
+    });
+
+    testWidgets('a parameter that cannot be named is refused', (tester) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..addNode(type: 'Text', parentId: 'node_2')
+        ..select('node_3')
+        ..extractSelectedAsComponent('Greeting')
+        ..openScreen('Greeting');
+
+      cubit.bindProp('node_0', 'text', 'Not valid');
+      await tester.pumpAndSettle();
+
+      expect(cubit.state.document.params, isEmpty);
+    });
+
+    testWidgets('a bound property can be freed again', (tester) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..addNode(type: 'Text', parentId: 'node_2')
+        ..updateProp('node_3', 'text', 'Hello')
+        ..select('node_3')
+        ..extractSelectedAsComponent('Greeting')
+        ..openScreen('Greeting')
+        ..select('node_0')
+        ..bindProp('node_0', 'text', 'words');
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byTooltip('Free from the parameter'));
+      await tester.pumpAndSettle();
+
+      expect(cubit.state.document.params, isEmpty);
+      expect(cubit.state.document.root.props['text'], 'Hello');
+    });
+  });
 }

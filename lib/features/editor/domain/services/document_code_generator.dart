@@ -4,9 +4,12 @@ import 'package:flutter_ui_builder/features/editor/domain/definitions/code_liter
 import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/project_theme_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/component_param.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/generated_file.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/prop_schema.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/code_formatter.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_binding.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 
@@ -89,7 +92,11 @@ ThemeData buildAppTheme() {
   }
 
   String _source(EditorDocument document, String className) {
-    final body = _registry.generateCode(document.root);
+    final params = document.component
+        ? document.params
+        : const <ComponentParam>[];
+    final standIns = standInsFor(document.root, params, _literal);
+    final body = standIns.apply(_registry.generateCode(standIns.root));
     final imports = _imports(document);
     return '''
 // $generatedFileMarker
@@ -99,8 +106,8 @@ ThemeData buildAppTheme() {
 $imports
 
 class $className extends StatelessWidget {
-  const $className({super.key});
-
+  const $className({super.key${_constructorParams(params)}});
+${_fields(params)}
   @override
   Widget build(BuildContext context) {
     return $body;
@@ -108,6 +115,32 @@ class $className extends StatelessWidget {
 }
 ''';
   }
+
+  // How a value of a parameter is written in code.
+  String _literal(Object value, PropType type) => switch (value) {
+    final String text => dartString(text),
+    final num number when type == PropType.number => dartDouble(
+      number.toDouble(),
+    ),
+    final int color => dartColor(color),
+    _ => '$value',
+  };
+
+  // The named parameters of a component's constructor, each with its default.
+  String _constructorParams(List<ComponentParam> params) => [
+    for (final param in params)
+      ', this.${param.name} = ${_literal(param.defaultValue, param.type)}',
+  ].join();
+
+  String _fields(List<ComponentParam> params) => params.isEmpty
+      ? ''
+      : '\n${[for (final param in params) '  final ${_dartType(param.type)} ${param.name};'].join('\n')}\n';
+
+  String _dartType(PropType type) => switch (type) {
+    PropType.string => 'String',
+    PropType.number => 'double',
+    _ => 'Color',
+  };
 
   String _imports(EditorDocument document) {
     final libraries = {

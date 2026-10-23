@@ -2,10 +2,12 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_ui_builder/core/error/failures.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/component_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/component_param.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/screen_templates.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_binding.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/identifier_names.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
 
@@ -138,6 +140,7 @@ class ScreenEditor {
                   name: all[i].name,
                   root: replaced,
                   component: all[i].component,
+                  params: all[i].params,
                 )
               : all[i],
         ProjectScreen(name: clean, component: true, root: node.renumbered(0)),
@@ -156,9 +159,15 @@ class ScreenEditor {
     if (node == null || node.type != componentType || name is! String) {
       return _unknown();
     }
-    final source = rootOf(document, name);
-    if (source == null) return _unknown();
-    final root = _inline(document.root, name, source, only: nodeId);
+    final entry = _all(document).where((s) => s.name == name).firstOrNull;
+    if (entry == null) return _unknown();
+    final root = _inline(
+      document.root,
+      name,
+      entry.root,
+      params: entry.params,
+      only: nodeId,
+    );
     return Right(document.copyWith(root: root));
   }
 
@@ -184,6 +193,7 @@ class ScreenEditor {
             name: screen.name == from ? clean : screen.name,
             root: _retarget(screen.root, {from: clean}),
             component: screen.component,
+            params: screen.params,
           ),
       ];
       return _build(document, renamed, document.activeIndex);
@@ -206,9 +216,10 @@ class ScreenEditor {
           ProjectScreen(
             name: screen.name,
             component: screen.component,
+            params: screen.params,
             root: _retarget(
               gone.component
-                  ? _inline(screen.root, name, gone.root)
+                  ? _inline(screen.root, name, gone.root, params: gone.params)
                   : screen.root,
               {name: null},
             ),
@@ -238,10 +249,7 @@ class ScreenEditor {
       copy = '$name $_copySuffix $n';
     }
     return Right(
-      _build(document, [
-        ...all,
-        ProjectScreen(name: copy, root: all[index].root),
-      ], all.length),
+      _build(document, [...all, all[index].copyWith(name: copy)], all.length),
     );
   }
 
@@ -266,6 +274,7 @@ class ScreenEditor {
       name: document.name,
       root: document.root,
       component: document.component,
+      params: document.params,
     );
     final at = document.activeIndex.clamp(0, document.screens.length);
     return [...document.screens.take(at), open, ...document.screens.skip(at)];
@@ -283,6 +292,7 @@ class ScreenEditor {
       name: open.name,
       root: open.root,
       component: open.component,
+      params: open.params,
       screens: [
         for (var i = 0; i < all.length; i++)
           if (i != active) all[i],
@@ -347,13 +357,19 @@ class ScreenEditor {
     WidgetNode root,
     String name,
     WidgetNode source, {
+    required List<ComponentParam> params,
     String? only,
   }) {
     var result = root;
     while (true) {
       final use = _firstUse(result, name, only);
       if (use == null) return result;
-      final copy = source.renumbered(result.highestSuffix() + 1);
+      // The copy has the values this use gave the component's parameters.
+      final copy = bindArguments(
+        source,
+        params,
+        argumentsOf(use),
+      ).renumbered(result.highestSuffix() + 1);
       result = _replaceNode(result, use.id, copy);
       if (only != null) return result;
     }

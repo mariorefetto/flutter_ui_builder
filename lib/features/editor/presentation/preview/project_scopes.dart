@@ -33,6 +33,10 @@ class ProjectScopes extends StatelessWidget {
           for (final entry in const ScreenEditor().entriesOf(document))
             if (entry.component) entry.name: entry.root,
         },
+        params: {
+          for (final entry in const ScreenEditor().entriesOf(document))
+            if (entry.component) entry.name: entry.params,
+        },
         build: previews.build,
         // The project's own theme, not the editor's: the screens are drawn as
         // the app will be.

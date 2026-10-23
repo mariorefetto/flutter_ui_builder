@@ -452,5 +452,10 @@
   "propHelpThickness": "Quanto è spessa la linea.",
   "propHelpIconColor": "Il colore delle icone.",
   "propHelpTextColor": "Il colore del testo.",
-  "propHelpTileColor": "Il colore dietro la riga."
+  "propHelpTileColor": "Il colore dietro la riga.",
+  "errorParameterInvalid": "Questa proprietà non può essere un parametro, oppure il nome non è valido. Usa un nome come titolo o coloreCard.",
+  "paramBind": "Rendi un parametro: ogni uso del componente può dare il suo valore",
+  "paramUnbind": "Libera dal parametro",
+  "paramBindTitle": "Nome del parametro",
+  "paramNameHint": "Un nome come titolo o coloreCard"
 }

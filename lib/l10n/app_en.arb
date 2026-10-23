@@ -1953,5 +1953,25 @@
   "propHelpTileColor": "The colour behind the row.",
   "@propHelpTileColor": {
     "description": "Tooltip of the property tileColor"
+  },
+  "errorParameterInvalid": "This property cannot be a parameter, or the name is not valid. Use a name like title or cardColor.",
+  "@errorParameterInvalid": {
+    "description": "Message: invalid component parameter"
+  },
+  "paramBind": "Make a parameter: each use of the component can give its own value",
+  "@paramBind": {
+    "description": "Component parameter: Make a parameter: each use of the compon"
+  },
+  "paramUnbind": "Free from the parameter",
+  "@paramUnbind": {
+    "description": "Component parameter: Free from the parameter"
+  },
+  "paramBindTitle": "Parameter name",
+  "@paramBindTitle": {
+    "description": "Component parameter: Parameter name"
+  },
+  "paramNameHint": "A name like title or cardColor",
+  "@paramNameHint": {
+    "description": "Component parameter: A name like title or cardColor"
   }
 }

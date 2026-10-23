@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/component_param.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 
 /// Draws a tree of widgets, for a component to be shown where it is used.
@@ -13,12 +14,16 @@ class ComponentScope extends InheritedWidget {
     required this.roots,
     required this.build,
     required super.child,
+    this.params = const {},
     this.depth = 0,
     super.key,
   });
 
   /// The root of each component, by name.
   final Map<String, WidgetNode> roots;
+
+  /// What each component takes, by name.
+  final Map<String, List<ComponentParam>> params;
   final ComponentBuilder build;
   final int depth;
 
@@ -27,5 +32,7 @@ class ComponentScope extends InheritedWidget {
 
   @override
   bool updateShouldNotify(ComponentScope oldWidget) =>
-      roots != oldWidget.roots || depth != oldWidget.depth;
+      roots != oldWidget.roots ||
+      params != oldWidget.params ||
+      depth != oldWidget.depth;
 }

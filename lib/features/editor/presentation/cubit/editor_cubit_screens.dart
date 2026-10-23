@@ -118,4 +118,32 @@ extension EditorScreens on EditorCubit {
         _reportFailure,
         (document) => _commit(document, selectedId: state.selectedId),
       );
+
+  /// Binds a property of the open component to the parameter [param], making
+  /// the parameter when it is new. Each use of the component can then give it
+  /// a value of its own.
+  void bindProp(String nodeId, String prop, String param) => _useCases
+      .bindProp(
+        ComponentParams(
+          document: state.document,
+          nodeId: nodeId,
+          prop: prop,
+          name: param,
+        ),
+      )
+      .fold(
+        _reportFailure,
+        (document) => _commit(document, selectedId: state.selectedId),
+      );
+
+  /// Frees a property from its parameter, keeping the parameter's default as
+  /// the property's own value.
+  void unbindProp(String nodeId, String prop) => _useCases
+      .unbindProp(
+        ComponentParams(document: state.document, nodeId: nodeId, prop: prop),
+      )
+      .fold(
+        _reportFailure,
+        (document) => _commit(document, selectedId: state.selectedId),
+      );
 }

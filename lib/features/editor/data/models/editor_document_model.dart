@@ -1,3 +1,4 @@
+import 'package:flutter_ui_builder/features/editor/data/models/component_param_json.dart';
 import 'package:flutter_ui_builder/features/editor/data/models/media_asset_model.dart';
 import 'package:flutter_ui_builder/features/editor/data/models/project_screen_model.dart';
 import 'package:flutter_ui_builder/features/editor/data/models/widget_node_model.dart';
@@ -20,6 +21,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
     @Default(<ProjectScreenModel>[]) List<ProjectScreenModel> screens,
     @Default(0) int activeIndex,
     @Default(false) bool component,
+    @Default(<Map<String, dynamic>>[]) List<Map<String, dynamic>> params,
     @Default(<MediaAssetModel>[]) List<MediaAssetModel> assets,
     @Default(<String, dynamic>{}) Map<String, dynamic> theme,
     @Default(currentSchemaVersion) int schemaVersion,
@@ -35,6 +37,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
         screens: document.screens.map(ProjectScreenModel.fromEntity).toList(),
         activeIndex: document.activeIndex,
         component: document.component,
+        params: paramsToJson(document.params),
         assets: document.assets.map(MediaAssetModel.fromEntity).toList(),
         theme: {
           for (final entry in document.theme.parts.entries)
@@ -52,6 +55,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
     screens: screens.map((s) => s.toEntity()).toList(),
     activeIndex: activeIndex.clamp(0, screens.length),
     component: component,
+    params: paramsFromJson(params),
     assets: assets.map((a) => a.toEntity()).toList(),
     theme: ProjectTheme(parts: _themeParts(theme)),
     schemaVersion: schemaVersion,

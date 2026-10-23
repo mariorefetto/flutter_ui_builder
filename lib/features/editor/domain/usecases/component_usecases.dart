@@ -3,6 +3,7 @@ import 'package:flutter_ui_builder/core/error/failures.dart';
 import 'package:flutter_ui_builder/core/usecase/usecase.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_params.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/component_rules.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 
@@ -11,6 +12,7 @@ class ComponentParams {
     required this.document,
     this.name = '',
     this.nodeId = '',
+    this.prop = '',
   });
 
   final EditorDocument document;
@@ -20,6 +22,9 @@ class ComponentParams {
 
   /// The widget the operation is about.
   final String nodeId;
+
+  /// The property of the widget, for binding it to a parameter.
+  final String prop;
 }
 
 class AddComponent implements SyncUseCase<EditorDocument, ComponentParams> {
@@ -59,4 +64,26 @@ class DetachComponent implements SyncUseCase<EditorDocument, ComponentParams> {
   @override
   Either<Failure, EditorDocument> call(ComponentParams params) =>
       _editor.detach(params.document, params.nodeId);
+}
+
+/// Binds a property of the open component to a parameter. The parameter's
+/// name is in [ComponentParams.name].
+class BindProp implements SyncUseCase<EditorDocument, ComponentParams> {
+  const BindProp(this._params);
+
+  final ComponentParamsEditor _params;
+
+  @override
+  Either<Failure, EditorDocument> call(ComponentParams params) =>
+      _params.bind(params.document, params.nodeId, params.prop, params.name);
+}
+
+class UnbindProp implements SyncUseCase<EditorDocument, ComponentParams> {
+  const UnbindProp(this._params);
+
+  final ComponentParamsEditor _params;
+
+  @override
+  Either<Failure, EditorDocument> call(ComponentParams params) =>
+      _params.unbind(params.document, params.nodeId, params.prop);
 }

@@ -64,4 +64,6 @@ abstract final class AppIcons {
   static const IconData tour = LucideIcons.compass;
   static const IconData overview = LucideIcons.galleryHorizontal;
   static const IconData faq = LucideIcons.messageCircleQuestionMark;
+  static const IconData link = LucideIcons.link;
+  static const IconData unlink = LucideIcons.unlink;
 }

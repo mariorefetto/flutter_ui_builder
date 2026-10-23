@@ -23,6 +23,13 @@ class NodeProps {
   EdgeInsetsValue? edgeInsets(String name) =>
       EdgeInsetsValue.tryParse(_values[name]);
 
+  /// The values whose names start with [prefix], by the rest of the name.
+  Map<String, Object?> withPrefix(String prefix) => {
+    for (final entry in _values.entries)
+      if (entry.key.startsWith(prefix))
+        entry.key.substring(prefix.length): entry.value,
+  };
+
   /// Like [string] but fails loudly: use for properties with a schema default.
   String requiredString(String name) => _required(name, string(name));
 

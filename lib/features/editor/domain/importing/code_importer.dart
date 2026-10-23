@@ -13,6 +13,7 @@ import 'package:flutter_ui_builder/features/editor/domain/importing/code_value.d
 import 'package:flutter_ui_builder/features/editor/domain/importing/import_hooks.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/import_result.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/value_reader.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_binding.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/identifier_names.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
 
@@ -152,7 +153,6 @@ class CodeImporter {
     final isUse =
         call.constructor == null &&
         call.positional.isEmpty &&
-        call.named.isEmpty &&
         name.endsWith(componentClassSuffix) &&
         name.length > componentClassSuffix.length &&
         !_registry.contains(name);
@@ -165,9 +165,20 @@ class CodeImporter {
           0,
           name.length - componentClassSuffix.length,
         ),
+        // The values given to its parameters, as strings, numbers and colours.
+        for (final MapEntry(:key, :value) in call.named.entries)
+          '$argumentPrefix$key': ?_argument(value),
       },
     );
   }
+
+  // The value of an argument of a component: a text, a number (always kept as
+  // a fractional one, so it is not taken for a colour) or a colour.
+  Object? _argument(CodeValue value) => switch (value) {
+    CodeString(:final value) => value,
+    CodeNumber(:final value) => value,
+    _ => _reader.color(value),
+  };
 
   // A callback that pushes a screen or pops one, as the generator writes it.
   void _readNavigation(

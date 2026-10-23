@@ -2,10 +2,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_ui_builder/core/error/exceptions.dart';
 import 'package:flutter_ui_builder/core/error/failures.dart';
 import 'package:flutter_ui_builder/features/editor/data/services/document_json_codec.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/component_param.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/media_asset.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/project_theme.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/prop_schema.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 
 void main() {
@@ -140,5 +142,52 @@ void main() {
     );
 
     expect(decoded.theme.parts.keys, ['card']);
+  });
+
+  test('the parameters of a component survive a save and an open', () {
+    const project = EditorDocument(
+      name: 'Badge',
+      component: true,
+      root: WidgetNode(id: 'node_0', type: 'Container'),
+      params: [
+        ComponentParam(
+          name: 'title',
+          type: PropType.string,
+          defaultValue: 'Hi',
+        ),
+        ComponentParam(
+          name: 'tint',
+          type: PropType.color,
+          defaultValue: 4278190080,
+        ),
+        ComponentParam(name: 'size', type: PropType.number, defaultValue: 8.0),
+      ],
+      screens: [
+        ProjectScreen(
+          name: 'Other',
+          component: true,
+          root: WidgetNode(id: 'node_0', type: 'Container'),
+          params: [
+            ComponentParam(
+              name: 'label',
+              type: PropType.string,
+              defaultValue: 'x',
+            ),
+          ],
+        ),
+      ],
+    );
+
+    expect(codec.decode(codec.encode(project)), project);
+  });
+
+  test('a parameter that is not understood is dropped, not fatal', () {
+    final decoded = codec.decode(
+      '{"name":"B","component":true,"root":{"id":"node_0","type":"Container"},'
+      '"params":[{"name":"ok","type":"string","defaultValue":"x"},'
+      '{"name":"bad","type":"nope","defaultValue":1}]}',
+    );
+
+    expect(decoded.params.map((p) => p.name), ['ok']);
   });
 }

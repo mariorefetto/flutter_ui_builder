@@ -1,3 +1,4 @@
+import 'package:flutter_ui_builder/features/editor/domain/entities/component_param.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/media_asset.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/project_theme.dart';
@@ -30,6 +31,9 @@ abstract class EditorDocument with _$EditorDocument {
 
     /// Whether the open one is a component rather than a screen.
     @Default(false) bool component,
+
+    /// The parameters of the open component.
+    @Default(<ComponentParam>[]) List<ComponentParam> params,
 
     /// The pictures of the project, shared by all its screens.
     @Default(<MediaAsset>[]) List<MediaAsset> assets,

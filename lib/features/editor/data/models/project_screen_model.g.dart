@@ -15,6 +15,14 @@ _ProjectScreenModel _$ProjectScreenModelFromJson(Map<String, dynamic> json) =>
           (v) => WidgetNodeModel.fromJson(v as Map<String, dynamic>),
         ),
         component: $checkedConvert('component', (v) => v as bool? ?? false),
+        params: $checkedConvert(
+          'params',
+          (v) =>
+              (v as List<dynamic>?)
+                  ?.map((e) => e as Map<String, dynamic>)
+                  .toList() ??
+              const <Map<String, dynamic>>[],
+        ),
       );
       return val;
     });
@@ -24,4 +32,5 @@ Map<String, dynamic> _$ProjectScreenModelToJson(_ProjectScreenModel instance) =>
       'name': instance.name,
       'root': instance.root.toJson(),
       'component': instance.component,
+      'params': instance.params,
     };

@@ -4,6 +4,7 @@ import 'package:flutter_ui_builder/features/editor/domain/entities/generated_chi
 import 'package:flutter_ui_builder/features/editor/domain/entities/node_props.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/prop_schema.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_binding.dart';
 
 /// Produces the Dart source for a node.
 /// [children] are the already generated sources of the node's children.
@@ -109,6 +110,11 @@ class WidgetDefinition {
     for (final prop in props) {
       final stored = node.props[prop.name];
       values[prop.name] = prop.accepts(stored) ? stored : prop.defaultValue;
+    }
+    // The values a use of a component gives its parameters are not in the
+    // schema, which does not know what the component takes.
+    for (final entry in node.props.entries) {
+      if (entry.key.startsWith(argumentPrefix)) values[entry.key] = entry.value;
     }
     return NodeProps(values);
   }

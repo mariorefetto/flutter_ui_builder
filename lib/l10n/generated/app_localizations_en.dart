@@ -1547,4 +1547,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get propHelpTileColor => 'The colour behind the row.';
+
+  @override
+  String get errorParameterInvalid =>
+      'This property cannot be a parameter, or the name is not valid. Use a name like title or cardColor.';
+
+  @override
+  String get paramBind =>
+      'Make a parameter: each use of the component can give its own value';
+
+  @override
+  String get paramUnbind => 'Free from the parameter';
+
+  @override
+  String get paramBindTitle => 'Parameter name';
+
+  @override
+  String get paramNameHint => 'A name like title or cardColor';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/document_reconciler.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_params.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/drop_planner.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/media_editor.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
@@ -46,6 +47,8 @@ class EditorUseCases {
     required this.removeAsset,
     required this.setThemeValue,
     required this.resetThemePart,
+    required this.bindProp,
+    required this.unbindProp,
   });
 
   /// Builds the use cases over one tree editor and one drop planner.
@@ -81,6 +84,8 @@ class EditorUseCases {
     removeAsset: const RemoveAsset(MediaEditor()),
     setThemeValue: const SetThemeValue(ThemeEditor()),
     resetThemePart: const ResetThemePart(ThemeEditor()),
+    bindProp: BindProp(ComponentParamsEditor(registry)),
+    unbindProp: UnbindProp(ComponentParamsEditor(registry)),
   );
 
   final AddNode addNode;
@@ -110,4 +115,6 @@ class EditorUseCases {
   final RemoveAsset removeAsset;
   final SetThemeValue setThemeValue;
   final ResetThemePart resetThemePart;
+  final BindProp bindProp;
+  final UnbindProp unbindProp;
 }

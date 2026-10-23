@@ -5,6 +5,7 @@ import 'package:flutter_ui_builder/core/theme/app_constants.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/child_policy.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/component_binding.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_state.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_cubit.dart';
@@ -122,7 +123,11 @@ class EditorCanvas extends StatelessWidget {
         previews: previews,
         builder: (context) => previews.build(
           context,
-          state.document.root,
+          // A component being edited is drawn with its parameters at their
+          // defaults, so a bound property still shows a value.
+          state.document.component
+              ? bindArguments(state.document.root, state.document.params, {})
+              : state.document.root,
           wrapper: (context, node, built) => CanvasNode(
             node: node,
             isRoot: node.id == rootId,

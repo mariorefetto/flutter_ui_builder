@@ -24,6 +24,9 @@ class PropRow extends StatelessWidget {
     required this.focused,
     required this.onFocus,
     required this.onChanged,
+    this.boundTo,
+    this.onBind,
+    this.onUnbind,
     super.key,
   });
 
@@ -35,6 +38,22 @@ class PropRow extends StatelessWidget {
   final bool focused;
   final VoidCallback onFocus;
   final ValueChanged<Object?> onChanged;
+
+  /// The parameter of the open component this property is bound to.
+  final String? boundTo;
+
+  /// Binds the property to a parameter; null when it cannot be bound.
+  final VoidCallback? onBind;
+  final VoidCallback? onUnbind;
+
+  // How many small buttons the row shows at its end: at least the room of
+  // one, so the editors line up.
+  int get _buttons {
+    final count = boundTo != null
+        ? 1
+        : (onBind != null ? 1 : 0) + (modified ? 1 : 0);
+    return count < 1 ? 1 : count;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,26 +99,108 @@ class PropRow extends StatelessWidget {
                 onFocusChange: (hasFocus) {
                   if (hasFocus) onFocus();
                 },
-                child: PropField(
-                  schema: schema,
-                  props: props,
-                  onChanged: onChanged,
-                ),
+                child: boundTo == null
+                    ? PropField(
+                        schema: schema,
+                        props: props,
+                        onChanged: onChanged,
+                      )
+                    : _Bound(name: boundTo!),
               ),
             ),
             SizedBox(
-              width: AppConstants.buttonHeightSmall,
-              child: modified
-                  ? IconButton(
-                      tooltip: context.l10n.propsReset,
-                      visualDensity: VisualDensity.compact,
-                      icon: const Icon(AppIcons.reset),
-                      onPressed: () => onChanged(null),
+              width: AppConstants.buttonHeightSmall * _buttons,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (boundTo != null)
+                    _MiniButton(
+                      tooltip: context.l10n.paramUnbind,
+                      icon: AppIcons.unlink,
+                      onPressed: onUnbind,
                     )
-                  : null,
+                  else ...[
+                    if (onBind != null)
+                      _MiniButton(
+                        tooltip: context.l10n.paramBind,
+                        icon: AppIcons.link,
+                        onPressed: onBind,
+                      ),
+                    if (modified)
+                      _MiniButton(
+                        tooltip: context.l10n.propsReset,
+                        icon: AppIcons.reset,
+                        onPressed: () => onChanged(null),
+                      ),
+                  ],
+                ],
+              ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// What a property bound to a parameter shows in place of its editor.
+class _Bound extends StatelessWidget {
+  const _Bound({required this.name});
+
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colorScheme;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppConstants.spacingSM),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: colors.primaryContainer,
+          borderRadius: BorderRadius.circular(AppConstants.radiusFull),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppConstants.spacingSM,
+            vertical: AppConstants.spacingXS,
+          ),
+          child: Text(
+            name,
+            overflow: TextOverflow.ellipsis,
+            style: context.textTheme.labelMedium?.copyWith(
+              color: colors.onPrimaryContainer,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A button at the end of a row, as big as the room the row gives it whatever
+/// the theme makes of an icon button.
+class _MiniButton extends StatelessWidget {
+  const _MiniButton({
+    required this.tooltip,
+    required this.icon,
+    required this.onPressed,
+  });
+
+  final String tooltip;
+  final IconData icon;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      tooltip: tooltip,
+      onPressed: onPressed,
+      icon: Icon(icon),
+      style: IconButton.styleFrom(
+        padding: EdgeInsets.zero,
+        minimumSize: const Size.square(AppConstants.buttonHeightSmall),
+        maximumSize: const Size.square(AppConstants.buttonHeightSmall),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
     );
   }

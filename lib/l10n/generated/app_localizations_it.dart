@@ -1570,4 +1570,21 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get propHelpTileColor => 'Il colore dietro la riga.';
+
+  @override
+  String get errorParameterInvalid =>
+      'Questa proprietà non può essere un parametro, oppure il nome non è valido. Usa un nome come titolo o coloreCard.';
+
+  @override
+  String get paramBind =>
+      'Rendi un parametro: ogni uso del componente può dare il suo valore';
+
+  @override
+  String get paramUnbind => 'Libera dal parametro';
+
+  @override
+  String get paramBindTitle => 'Nome del parametro';
+
+  @override
+  String get paramNameHint => 'Un nome come titolo o coloreCard';
 }
