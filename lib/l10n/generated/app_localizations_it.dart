@@ -1623,4 +1623,8 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get menuNamedRoutes => 'Apri le schermate per nome di rotta';
+
+  @override
+  String get designerGuidelines =>
+      'Mostra le linee guida dei widget: i loro riquadri e, per il selezionato, margine, padding e dimensioni';
 }

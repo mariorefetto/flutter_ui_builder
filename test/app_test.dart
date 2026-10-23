@@ -17,6 +17,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_screen.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_node.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/editor_canvas.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/guidelines_overlay.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/scaled_box.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/code/code_view.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/code/highlighting_controller.dart';
@@ -1735,4 +1736,28 @@ class UntitledView extends StatelessWidget {
       );
     },
   );
+
+  testWidgets('the guidelines show on the widgets only when asked for', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+    final cubit = editorOf(tester);
+    cubit.select(cubit.state.document.root.id);
+    await tester.pumpAndSettle();
+    expect(find.byType(GuidelinesOverlay), findsNothing);
+
+    await tester.tap(find.byTooltip(RegExp('^Show the guidelines')));
+    await tester.pumpAndSettle();
+    expect(find.byType(GuidelinesOverlay), findsWidgets);
+    expect(
+      tester
+          .widgetList<GuidelinesOverlay>(find.byType(GuidelinesOverlay))
+          .where((overlay) => overlay.selected),
+      hasLength(1),
+    );
+
+    await tester.tap(find.byTooltip(RegExp('^Show the guidelines')));
+    await tester.pumpAndSettle();
+    expect(find.byType(GuidelinesOverlay), findsNothing);
+  });
 }

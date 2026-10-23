@@ -34,6 +34,7 @@ class DesignerToolbar extends StatelessWidget {
             previous.showSafeArea != current.showSafeArea ||
             previous.statusBar != current.statusBar ||
             previous.prototype != current.prototype ||
+            previous.showGuidelines != current.showGuidelines ||
             previous.zoom != current.zoom,
         builder: (context, state) => _Scrolling(
           child: Row(
@@ -64,6 +65,13 @@ class DesignerToolbar extends StatelessWidget {
                     visualDensity: VisualDensity.compact,
                     icon: const Icon(AppIcons.overview),
                     onPressed: () => showScreensOverview(context),
+                  ),
+                  IconButton(
+                    tooltip: l10n.designerGuidelines,
+                    visualDensity: VisualDensity.compact,
+                    isSelected: state.showGuidelines,
+                    icon: const Icon(AppIcons.guidelines),
+                    onPressed: cubit.toggleGuidelines,
                   ),
                   IconButton(
                     tooltip: l10n.designerPrototype,

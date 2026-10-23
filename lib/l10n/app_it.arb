@@ -466,5 +466,6 @@
   "importAlsoFound": "Trovate anche altre {screens} schermate e {components} componenti, che entrano nel progetto",
   "themeLight": "Chiaro",
   "themeDark": "Scuro",
-  "menuNamedRoutes": "Apri le schermate per nome di rotta"
+  "menuNamedRoutes": "Apri le schermate per nome di rotta",
+  "designerGuidelines": "Mostra le linee guida dei widget: i loro riquadri e, per il selezionato, margine, padding e dimensioni"
 }

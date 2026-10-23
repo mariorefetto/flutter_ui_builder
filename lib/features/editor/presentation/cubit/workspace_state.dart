@@ -73,6 +73,9 @@ abstract class WorkspaceState with _$WorkspaceState {
     /// Draw and edit the dark theme of the project rather than the light one.
     @Default(false) bool darkTheme,
 
+    /// Draw the box of every widget and the spacing of the selected one.
+    @Default(false) bool showGuidelines,
+
     /// The screens opened by clicking in prototype mode, oldest first, so a
     /// widget that goes back returns to the one before.
     @Default(<String>[]) List<String> screenTrail,

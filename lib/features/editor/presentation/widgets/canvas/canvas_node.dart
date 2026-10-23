@@ -5,6 +5,7 @@ import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/drop_plan.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/edge_insets_value.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/drag_session_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/editor_dimension
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_screen.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/shortcuts.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_context_menu.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/guidelines_overlay.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag/dashed_outline.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag/drop_label.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag_feedback.dart';
@@ -115,10 +117,23 @@ class _CanvasNodeState extends State<CanvasNode> {
         : 0.0;
     final border = decoration.border;
     final rounded = radius > 0 && (border == null || border.isUniform);
+    final guidelines = context.select(
+      (WorkspaceCubit c) => c.state.showGuidelines,
+    );
     return Stack(
       fit: StackFit.passthrough,
       children: [
         child,
+        if (guidelines)
+          Positioned.fill(
+            child: GuidelinesOverlay(
+              selected: context.select(
+                (EditorCubit c) => c.state.selectedId == widget.node.id,
+              ),
+              margin: EdgeInsetsValue.tryParse(widget.node.props['margin']),
+              padding: EdgeInsetsValue.tryParse(widget.node.props['padding']),
+            ),
+          ),
         Positioned.fill(
           top: topInset,
           child: IgnorePointer(

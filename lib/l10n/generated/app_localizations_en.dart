@@ -1600,4 +1600,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get menuNamedRoutes => 'Open screens by route name';
+
+  @override
+  String get designerGuidelines =>
+      'Show the guidelines of the widgets: their boxes, and the margin, padding and size of the selected one';
 }

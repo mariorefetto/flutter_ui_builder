@@ -2899,6 +2899,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open screens by route name'**
   String get menuNamedRoutes;
+
+  /// Tooltip: show layout guidelines
+  ///
+  /// In en, this message translates to:
+  /// **'Show the guidelines of the widgets: their boxes, and the margin, padding and size of the selected one'**
+  String get designerGuidelines;
 }
 
 class _AppLocalizationsDelegate

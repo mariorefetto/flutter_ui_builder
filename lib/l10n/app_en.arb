@@ -2027,5 +2027,9 @@
   "menuNamedRoutes": "Open screens by route name",
   "@menuNamedRoutes": {
     "description": "Menu: named routes"
+  },
+  "designerGuidelines": "Show the guidelines of the widgets: their boxes, and the margin, padding and size of the selected one",
+  "@designerGuidelines": {
+    "description": "Tooltip: show layout guidelines"
   }
 }
