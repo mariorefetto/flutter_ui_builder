@@ -1481,7 +1481,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get themeIntro =>
-      'The colours and fonts of the whole app, and how each kind of widget looks. The screens are drawn with this theme, and the code gets it as buildAppTheme.';
+      'The colours and fonts of the whole app, and how each kind of widget looks. Light and dark are two themes: the dark one starts as the light one and differs only where you change it. The screens are drawn with the one chosen, and the code gets both as buildAppTheme and buildAppDarkTheme.';
 
   @override
   String get themeReset => 'Back to the defaults';
@@ -1591,4 +1591,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String importAlsoFound(int screens, int components) {
     return 'Also found $screens other screens and $components components, which join the project';
   }
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
 }

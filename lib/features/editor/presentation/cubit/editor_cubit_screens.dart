@@ -103,13 +103,19 @@ extension EditorScreens on EditorCubit {
       );
 
   /// Sets a value of the theme of the app; null puts the default back.
-  void setThemeValue(String part, String name, Object? value) => _useCases
+  void setThemeValue(
+    String part,
+    String name,
+    Object? value, {
+    bool dark = false,
+  }) => _useCases
       .setThemeValue(
         ThemeParams(
           document: state.document,
           part: part,
           name: name,
           value: value,
+          dark: dark,
         ),
       )
       .fold(
@@ -118,8 +124,10 @@ extension EditorScreens on EditorCubit {
       );
 
   /// Puts a part of the theme back to the defaults.
-  void resetThemePart(String part) => _useCases
-      .resetThemePart(ThemeParams(document: state.document, part: part))
+  void resetThemePart(String part, {bool dark = false}) => _useCases
+      .resetThemePart(
+        ThemeParams(document: state.document, part: part, dark: dark),
+      )
       .fold(
         _reportFailure,
         (document) => _commit(document, selectedId: state.selectedId),

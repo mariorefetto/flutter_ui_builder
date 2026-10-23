@@ -124,6 +124,10 @@ class _Thumbnail extends StatelessWidget {
                       size: size,
                       insets: EdgeInsets.zero,
                       child: ProjectScopes(
+                        darkTheme: context
+                            .read<WorkspaceCubit>()
+                            .state
+                            .darkTheme,
                         document: document,
                         previews: previews,
                         builder: (context) =>

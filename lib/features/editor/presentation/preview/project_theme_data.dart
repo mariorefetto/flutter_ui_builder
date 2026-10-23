@@ -3,8 +3,8 @@ import 'package:flutter_ui_builder/features/editor/domain/definitions/project_th
 import 'package:flutter_ui_builder/features/editor/domain/entities/node_props.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/project_theme.dart';
 
-NodeProps _values(ProjectTheme theme, String part) =>
-    theme.valuesOf(part, themePartNamed(part)?.props ?? const []);
+NodeProps _values(ProjectTheme theme, String part, {bool dark = false}) =>
+    theme.valuesOf(part, themePartNamed(part)?.props ?? const [], dark: dark);
 
 Color? _color(NodeProps values, String name) {
   final value = values.color(name);
@@ -18,43 +18,40 @@ OutlinedBorder? _shape(NodeProps values) {
       : RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius));
 }
 
-/// Whether the theme is the dark one.
-bool themeIsDark(ProjectTheme theme) =>
-    _values(theme, 'scheme').choice('brightness') == 'dark';
-
 ProjectTheme? _lastTheme;
+bool? _lastDark;
 ThemeData? _lastData;
 
 /// Like [themeDataOf] but remembers the last one: the designer asks for the
 /// theme on every change of the screen, and building a colour scheme from a
 /// seed is not free.
-ThemeData cachedThemeDataOf(ProjectTheme theme) {
+ThemeData cachedThemeDataOf(ProjectTheme theme, {bool dark = false}) {
   final last = _lastData;
-  if (last != null && _lastTheme == theme) return last;
-  final data = themeDataOf(theme);
+  if (last != null && _lastTheme == theme && _lastDark == dark) return last;
+  final data = themeDataOf(theme, dark: dark);
   _lastTheme = theme;
+  _lastDark = dark;
   _lastData = data;
   return data;
 }
 
 /// The Flutter theme the project's theme describes, the same one the code
 /// of `buildAppTheme` builds, so the designer shows what the app will be.
-ThemeData themeDataOf(ProjectTheme theme) {
-  final scheme = _values(theme, 'scheme');
-  final appBar = _values(theme, 'appBar');
-  final card = _values(theme, 'card');
-  final input = _values(theme, 'inputDecoration');
-  final fab = _values(theme, 'floatingActionButton');
-  final listTile = _values(theme, 'listTile');
-  final divider = _values(theme, 'divider');
+ThemeData themeDataOf(ProjectTheme theme, {bool dark = false}) {
+  NodeProps values(String part) => _values(theme, part, dark: dark);
+  final scheme = values('scheme');
+  final appBar = values('appBar');
+  final card = values('card');
+  final input = values('inputDecoration');
+  final fab = values('floatingActionButton');
+  final listTile = values('listTile');
+  final divider = values('divider');
   final family = scheme.string('fontFamily');
   return ThemeData(
     useMaterial3: scheme.boolean('useMaterial3') ?? true,
     colorScheme: ColorScheme.fromSeed(
       seedColor: Color(scheme.color('seedColor') ?? defaultThemeSeed),
-      brightness: scheme.choice('brightness') == 'dark'
-          ? Brightness.dark
-          : Brightness.light,
+      brightness: dark ? Brightness.dark : Brightness.light,
     ),
     fontFamily: family == null || family.isEmpty ? null : family,
     appBarTheme: AppBarTheme(
@@ -64,22 +61,16 @@ ThemeData themeDataOf(ProjectTheme theme) {
       centerTitle: appBar.boolean('centerTitle'),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: _button(
-        _values(theme, 'elevatedButton'),
-        ElevatedButton.styleFrom,
-      ),
+      style: _button(values('elevatedButton'), ElevatedButton.styleFrom),
     ),
     filledButtonTheme: FilledButtonThemeData(
-      style: _button(_values(theme, 'filledButton'), FilledButton.styleFrom),
+      style: _button(values('filledButton'), FilledButton.styleFrom),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
-      style: _button(
-        _values(theme, 'outlinedButton'),
-        OutlinedButton.styleFrom,
-      ),
+      style: _button(values('outlinedButton'), OutlinedButton.styleFrom),
     ),
     textButtonTheme: TextButtonThemeData(
-      style: _button(_values(theme, 'textButton'), TextButton.styleFrom),
+      style: _button(values('textButton'), TextButton.styleFrom),
     ),
     cardTheme: CardThemeData(
       color: _color(card, 'color'),

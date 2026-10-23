@@ -52,7 +52,7 @@ void main() {
         themePartNamed('scheme')!.props,
       );
       expect(scheme.color('seedColor'), 0xFF009688);
-      expect(scheme.choice('brightness'), 'light');
+      expect(scheme.boolean('useMaterial3'), isTrue);
       expect(doc.theme.isDefault, isFalse);
     });
 
@@ -129,18 +129,83 @@ void main() {
       );
     });
 
-    test('dark, font and Material 2 are written', () {
+    test('the font and Material 2 are written', () {
       final code = themeCode(
         themed([
-          ('scheme', 'brightness', 'dark'),
           ('scheme', 'fontFamily', 'Roboto'),
           ('scheme', 'useMaterial3', false),
         ]),
       );
 
-      expect(code, contains('brightness:Brightness.dark'));
       expect(code, contains("fontFamily:'Roboto'"));
       expect(code, contains('useMaterial3:false'));
+    });
+
+    test('there is a light theme and a dark one', () {
+      final code = themeCode(themed([('scheme', 'seedColor', 0xFF009688)]));
+
+      expect(code, contains('ThemeDatabuildAppTheme()'));
+      expect(code, contains('ThemeDatabuildAppDarkTheme()'));
+      expect(
+        code,
+        contains(
+          'ColorScheme.fromSeed(seedColor:Color(0xFF009688),'
+          'brightness:Brightness.dark)',
+        ),
+      );
+    });
+
+    test('the dark theme has the light values and its own over them', () {
+      final doc = themed([
+        ('card', 'elevation', 4.0),
+        ('card', 'borderRadius', 8.0),
+      ]);
+      final both = editor
+          .set(doc, 'card', 'elevation', 0.0, dark: true)
+          .getOrElse(() => throw StateError('refused'));
+
+      final code = themeCode(both);
+
+      expect(code.split('buildAppDarkTheme').last, contains('elevation:0.0'));
+      expect(code.split('buildAppDarkTheme').last, contains('circular(8.0)'));
+      expect(code.split('buildAppDarkTheme').first, contains('elevation:4.0'));
+    });
+
+    test('a value for dark can be put back to the light one', () {
+      final doc = editor
+          .set(
+            themed([('card', 'elevation', 4.0)]),
+            'card',
+            'elevation',
+            0.0,
+            dark: true,
+          )
+          .getOrElse(() => throw StateError('refused'));
+      final back = editor
+          .set(doc, 'card', 'elevation', null, dark: true)
+          .getOrElse(() => throw StateError('refused'));
+
+      expect(back.theme.parts.keys, ['card']);
+      expect(back.theme.ownValues('card', dark: true), isEmpty);
+    });
+
+    test('a part can be reset in the dark theme alone', () {
+      final doc = editor
+          .set(
+            themed([('card', 'elevation', 4.0)]),
+            'card',
+            'elevation',
+            0.0,
+            dark: true,
+          )
+          .getOrElse(() => throw StateError('refused'));
+
+      final reset = editor
+          .reset(doc, 'card', dark: true)
+          .getOrElse(() => throw StateError('refused'));
+
+      expect(reset.theme.ownValues('card', dark: false), {'elevation': 4.0});
+      expect(reset.theme.ownValues('card', dark: true), isEmpty);
     });
 
     test('the theme of a widget is written as its theme data', () {
@@ -185,9 +250,8 @@ void main() {
     });
 
     test('a theme with every part changed is valid Dart', () async {
-      final doc = themed([
+      final light = themed([
         ('scheme', 'seedColor', 0xFF009688),
-        ('scheme', 'brightness', 'dark'),
         ('scheme', 'fontFamily', 'Roboto'),
         ('appBar', 'backgroundColor', 0xFF112233),
         ('appBar', 'foregroundColor', 0xFFFFFFFF),
@@ -220,6 +284,11 @@ void main() {
         ('divider', 'color', 0xFF999999),
         ('divider', 'thickness', 2.0),
       ]);
+      // The dark theme has values of its own over these.
+      final doc = editor
+          .set(light, 'scheme', 'seedColor', 0xFF445566, dark: true)
+          .flatMap((d) => editor.set(d, 'card', 'elevation', 0.0, dark: true))
+          .getOrElse(() => throw StateError('refused'));
       final directory = Directory('lib/tmp_theme_check')..createSync();
       addTearDown(() => directory.deleteSync(recursive: true));
       final file = generator.generateTheme(doc);

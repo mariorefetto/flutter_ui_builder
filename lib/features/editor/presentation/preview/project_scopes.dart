@@ -14,12 +14,16 @@ class ProjectScopes extends StatelessWidget {
     required this.document,
     required this.previews,
     required this.builder,
+    this.darkTheme = false,
     super.key,
   });
 
   final EditorDocument document;
   final PreviewRegistry previews;
   final WidgetBuilder builder;
+
+  /// Draws the screens with the dark theme of the project.
+  final bool darkTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +45,7 @@ class ProjectScopes extends StatelessWidget {
         // The project's own theme, not the editor's: the screens are drawn as
         // the app will be.
         child: Theme(
-          data: cachedThemeDataOf(document.theme),
+          data: cachedThemeDataOf(document.theme, dark: darkTheme),
           child: Builder(builder: builder),
         ),
       ),

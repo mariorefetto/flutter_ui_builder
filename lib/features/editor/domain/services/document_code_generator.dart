@@ -68,10 +68,11 @@ class DocumentCodeGenerator {
     return Right(files);
   }
 
-  /// The theme of the app as a file with one function, `buildAppTheme`, to
-  /// give to `MaterialApp(theme: ...)`.
+  /// The theme of the app as a file with two functions, `buildAppTheme` and
+  /// `buildAppDarkTheme`, for `MaterialApp(theme:, darkTheme:)`.
   GeneratedFile generateTheme(EditorDocument document) {
-    final arguments = dartArguments(themeArguments(document.theme));
+    final light = dartArguments(themeArguments(document.theme));
+    final dark = dartArguments(themeArguments(document.theme, dark: true));
     final source =
         '''
 // $generatedFileMarker
@@ -80,9 +81,15 @@ class DocumentCodeGenerator {
 
 import 'package:flutter/material.dart';
 
-/// The theme of the app. Use it as `MaterialApp(theme: buildAppTheme())`.
+/// The light theme of the app.
 ThemeData buildAppTheme() {
-  return ThemeData($arguments);
+  return ThemeData($light);
+}
+
+/// The dark theme of the app. Use both as
+/// `MaterialApp(theme: buildAppTheme(), darkTheme: buildAppDarkTheme())`.
+ThemeData buildAppDarkTheme() {
+  return ThemeData($dark);
 }
 ''';
     return GeneratedFile(

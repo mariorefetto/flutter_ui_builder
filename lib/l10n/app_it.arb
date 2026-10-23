@@ -431,7 +431,7 @@
   "faqUndoQuestion": "Come annullo una modifica?",
   "faqUndoAnswer": "Con il pulsante annulla o Cmd/Ctrl+Z, e ripeti con Cmd/Ctrl+Shift+Z. Aprire un'altra schermata non è una modifica e non si annulla.",
   "panelTheme": "Tema",
-  "themeIntro": "I colori e i caratteri di tutta l'app, e l'aspetto di ogni tipo di widget. Le schermate sono disegnate con questo tema e il codice lo riceve come buildAppTheme.",
+  "themeIntro": "I colori e i caratteri di tutta l'app, e l'aspetto di ogni tipo di widget. Chiaro e scuro sono due temi: quello scuro parte come il chiaro e cambia solo dove lo modifichi. Le schermate sono disegnate con quello scelto e il codice li riceve entrambi come buildAppTheme e buildAppDarkTheme.",
   "themeReset": "Torna ai valori predefiniti",
   "themeScheme": "Colori e caratteri",
   "themeAppBar": "Barra superiore",
@@ -463,5 +463,7 @@
   "errorNotSiblings": "Si possono avvolgere insieme solo widget affiancati, nello stesso genitore",
   "statusSelected": "{count} widget selezionati",
   "multiSelectionNote": "Modifica di {count} widget insieme",
-  "importAlsoFound": "Trovate anche altre {screens} schermate e {components} componenti, che entrano nel progetto"
+  "importAlsoFound": "Trovate anche altre {screens} schermate e {components} componenti, che entrano nel progetto",
+  "themeLight": "Chiaro",
+  "themeDark": "Scuro"
 }

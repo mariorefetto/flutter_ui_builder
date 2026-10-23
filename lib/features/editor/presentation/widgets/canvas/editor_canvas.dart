@@ -13,7 +13,6 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_registry.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_screen.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/project_scopes.dart';
-import 'package:flutter_ui_builder/features/editor/presentation/preview/project_theme_data.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/prototype_scope.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/status_bar_appearance.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_context_menu.dart';
@@ -57,7 +56,7 @@ class EditorCanvas extends StatelessWidget {
     final appearance = statusBarAppearance(
       state.document,
       workspace.statusBar,
-      themeIsDark: themeIsDark(state.document.theme),
+      themeIsDark: workspace.darkTheme,
     );
     final insets = device.insets(
       landscape: workspace.landscape,
@@ -122,6 +121,7 @@ class EditorCanvas extends StatelessWidget {
       child: PrototypeScope(
         prototype: context.select((WorkspaceCubit c) => c.state.prototype),
         child: ProjectScopes(
+          darkTheme: context.select((WorkspaceCubit c) => c.state.darkTheme),
           document: state.document,
           previews: previews,
           builder: (context) => previews.build(

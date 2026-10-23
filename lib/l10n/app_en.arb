@@ -1866,7 +1866,7 @@
   "@panelTheme": {
     "description": "Theme panel: Theme"
   },
-  "themeIntro": "The colours and fonts of the whole app, and how each kind of widget looks. The screens are drawn with this theme, and the code gets it as buildAppTheme.",
+  "themeIntro": "The colours and fonts of the whole app, and how each kind of widget looks. Light and dark are two themes: the dark one starts as the light one and differs only where you change it. The screens are drawn with the one chosen, and the code gets both as buildAppTheme and buildAppDarkTheme.",
   "@themeIntro": {
     "description": "Theme panel: The colours and fonts of the whole app, and how ea"
   },
@@ -2015,5 +2015,13 @@
         "type": "int"
       }
     }
+  },
+  "themeLight": "Light",
+  "@themeLight": {
+    "description": "Theme panel: Light"
+  },
+  "themeDark": "Dark",
+  "@themeDark": {
+    "description": "Theme panel: Dark"
   }
 }

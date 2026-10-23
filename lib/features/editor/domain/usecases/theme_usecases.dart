@@ -10,6 +10,7 @@ class ThemeParams {
     required this.part,
     this.name = '',
     this.value,
+    this.dark = false,
   });
 
   final EditorDocument document;
@@ -22,6 +23,9 @@ class ThemeParams {
 
   /// The new value; null puts the default back.
   final Object? value;
+
+  /// The change is to the dark theme.
+  final bool dark;
 }
 
 class SetThemeValue implements SyncUseCase<EditorDocument, ThemeParams> {
@@ -30,8 +34,13 @@ class SetThemeValue implements SyncUseCase<EditorDocument, ThemeParams> {
   final ThemeEditor _editor;
 
   @override
-  Either<Failure, EditorDocument> call(ThemeParams params) =>
-      _editor.set(params.document, params.part, params.name, params.value);
+  Either<Failure, EditorDocument> call(ThemeParams params) => _editor.set(
+    params.document,
+    params.part,
+    params.name,
+    params.value,
+    dark: params.dark,
+  );
 }
 
 class ResetThemePart implements SyncUseCase<EditorDocument, ThemeParams> {
@@ -41,5 +50,5 @@ class ResetThemePart implements SyncUseCase<EditorDocument, ThemeParams> {
 
   @override
   Either<Failure, EditorDocument> call(ThemeParams params) =>
-      _editor.reset(params.document, params.part);
+      _editor.reset(params.document, params.part, dark: params.dark);
 }

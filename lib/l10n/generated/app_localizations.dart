@@ -2687,7 +2687,7 @@ abstract class AppLocalizations {
   /// Theme panel: The colours and fonts of the whole app, and how ea
   ///
   /// In en, this message translates to:
-  /// **'The colours and fonts of the whole app, and how each kind of widget looks. The screens are drawn with this theme, and the code gets it as buildAppTheme.'**
+  /// **'The colours and fonts of the whole app, and how each kind of widget looks. Light and dark are two themes: the dark one starts as the light one and differs only where you change it. The screens are drawn with the one chosen, and the code gets both as buildAppTheme and buildAppDarkTheme.'**
   String get themeIntro;
 
   /// Theme panel: Back to the defaults
@@ -2881,6 +2881,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Also found {screens} other screens and {components} components, which join the project'**
   String importAlsoFound(int screens, int components);
+
+  /// Theme panel: Light
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// Theme panel: Dark
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
 }
 
 class _AppLocalizationsDelegate

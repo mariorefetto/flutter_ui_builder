@@ -126,7 +126,8 @@ void main() {
       root: WidgetNode(id: 'node_0', type: 'Column'),
       theme: ProjectTheme(
         parts: {
-          'scheme': {'seedColor': 4278190080, 'brightness': 'dark'},
+          'scheme': {'seedColor': 4278190080},
+          'dark:scheme': {'seedColor': 4278255360},
           'card': {'elevation': 2.0},
         },
       ),

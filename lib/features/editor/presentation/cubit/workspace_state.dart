@@ -70,6 +70,9 @@ abstract class WorkspaceState with _$WorkspaceState {
     /// when clicked, and nothing is selected or dragged.
     @Default(false) bool prototype,
 
+    /// Draw and edit the dark theme of the project rather than the light one.
+    @Default(false) bool darkTheme,
+
     /// The screens opened by clicking in prototype mode, oldest first, so a
     /// widget that goes back returns to the one before.
     @Default(<String>[]) List<String> screenTrail,

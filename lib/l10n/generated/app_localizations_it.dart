@@ -1503,7 +1503,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get themeIntro =>
-      'I colori e i caratteri di tutta l\'app, e l\'aspetto di ogni tipo di widget. Le schermate sono disegnate con questo tema e il codice lo riceve come buildAppTheme.';
+      'I colori e i caratteri di tutta l\'app, e l\'aspetto di ogni tipo di widget. Chiaro e scuro sono due temi: quello scuro parte come il chiaro e cambia solo dove lo modifichi. Le schermate sono disegnate con quello scelto e il codice li riceve entrambi come buildAppTheme e buildAppDarkTheme.';
 
   @override
   String get themeReset => 'Torna ai valori predefiniti';
@@ -1614,4 +1614,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String importAlsoFound(int screens, int components) {
     return 'Trovate anche altre $screens schermate e $components componenti, che entrano nel progetto';
   }
+
+  @override
+  String get themeLight => 'Chiaro';
+
+  @override
+  String get themeDark => 'Scuro';
 }

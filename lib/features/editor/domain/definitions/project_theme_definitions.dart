@@ -8,9 +8,6 @@ import 'package:flutter_ui_builder/features/editor/domain/entities/prop_schema.d
 /// The color the seed of a new theme has: the Material 3 baseline purple.
 const int defaultThemeSeed = 0xFF6750A4;
 
-/// Light or dark.
-const List<String> themeBrightnessOptions = ['light', 'dark'];
-
 /// The look of the borders of text fields.
 const List<String> inputBorderStyles = ['outline', 'underline', 'none'];
 
@@ -27,15 +24,15 @@ class ThemePart {
   /// The key the part's values are stored under.
   final String name;
   final List<PropSchema> props;
-  final Map<String, String?> Function(NodeProps values) arguments;
+  final Map<String, String?> Function(NodeProps values, {required bool dark})
+  arguments;
 }
 
 String _radius(double value) =>
     'RoundedRectangleBorder(borderRadius: BorderRadius.circular(${dartDouble(value)}))';
 
-Map<String, String?> _scheme(NodeProps values) {
+Map<String, String?> _scheme(NodeProps values, {required bool dark}) {
   final seed = values.color('seedColor') ?? defaultThemeSeed;
-  final dark = values.choice('brightness') == 'dark';
   final custom = seed != defaultThemeSeed || dark;
   return {
     if (values.boolean('useMaterial3') == false) 'useMaterial3': 'false',
@@ -48,7 +45,7 @@ Map<String, String?> _scheme(NodeProps values) {
   };
 }
 
-Map<String, String?> _appBar(NodeProps values) {
+Map<String, String?> _appBar(NodeProps values, {required bool dark}) {
   final arguments = _own(_appBarProps, values);
   return {
     if (arguments.isNotEmpty)
@@ -80,7 +77,7 @@ ThemePart _buttonPart(String name, String widget, {bool background = true}) {
   return ThemePart(
     name: name,
     props: props,
-    arguments: (values) {
+    arguments: (values, {required dark}) {
       final style = {
         for (final entry in _own(
           props.where((p) => p.name != 'borderRadius').toList(),
@@ -148,7 +145,6 @@ final List<ThemePart> themeParts = [
     name: 'scheme',
     props: [
       colorProp('seedColor', defaultValue: defaultThemeSeed),
-      choiceProp('brightness', themeBrightnessOptions, defaultValue: 'light'),
       boolProp('useMaterial3', defaultValue: true),
       stringProp('fontFamily'),
     ],
@@ -162,7 +158,7 @@ final List<ThemePart> themeParts = [
   ThemePart(
     name: 'card',
     props: _cardProps,
-    arguments: (values) {
+    arguments: (values, {required dark}) {
       final arguments = {
         ..._own(
           _cardProps.where((p) => p.name != 'borderRadius').toList(),
@@ -180,7 +176,7 @@ final List<ThemePart> themeParts = [
   ThemePart(
     name: 'inputDecoration',
     props: _inputProps,
-    arguments: (values) {
+    arguments: (values, {required dark}) {
       final radius = values.number('borderRadius');
       final border = switch (values.choice('border')) {
         'outline' =>
@@ -207,7 +203,7 @@ final List<ThemePart> themeParts = [
   ThemePart(
     name: 'floatingActionButton',
     props: _fabProps,
-    arguments: (values) => _simple(
+    arguments: (values, {required dark}) => _simple(
       'floatingActionButtonTheme',
       'FloatingActionButtonThemeData',
       _fabProps,
@@ -217,13 +213,13 @@ final List<ThemePart> themeParts = [
   ThemePart(
     name: 'listTile',
     props: _listTileProps,
-    arguments: (values) =>
+    arguments: (values, {required dark}) =>
         _simple('listTileTheme', 'ListTileThemeData', _listTileProps, values),
   ),
   ThemePart(
     name: 'divider',
     props: _dividerProps,
-    arguments: (values) =>
+    arguments: (values, {required dark}) =>
         _simple('dividerTheme', 'DividerThemeData', _dividerProps, values),
   ),
 ];
@@ -233,7 +229,14 @@ ThemePart? themePartNamed(String name) =>
     themeParts.where((p) => p.name == name).firstOrNull;
 
 /// The arguments `ThemeData(...)` needs to be the theme [theme] describes.
-Map<String, String?> themeArguments(ProjectTheme theme) => {
-  for (final part in themeParts)
-    ...part.arguments(theme.valuesOf(part.name, part.props)),
-};
+///
+/// For the dark theme, [dark] is set: its colour scheme is the dark one and
+/// its values come over those of the light theme.
+Map<String, String?> themeArguments(ProjectTheme theme, {bool dark = false}) =>
+    {
+      for (final part in themeParts)
+        ...part.arguments(
+          theme.valuesOf(part.name, part.props, dark: dark),
+          dark: dark,
+        ),
+    };

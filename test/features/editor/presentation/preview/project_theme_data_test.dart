@@ -15,33 +15,52 @@ void main() {
     );
   });
 
-  test('the seed and the brightness make the colour scheme', () {
-    final data = themeDataOf(
-      const ProjectTheme(
-        parts: {
-          'scheme': {'seedColor': 0xFF009688, 'brightness': 'dark'},
-        },
-      ),
+  test('the seed makes the colour scheme, light or dark', () {
+    const theme = ProjectTheme(
+      parts: {
+        'scheme': {'seedColor': 0xFF009688},
+      },
     );
 
-    expect(data.brightness, Brightness.dark);
     expect(
-      data.colorScheme,
+      themeDataOf(theme).colorScheme,
+      ColorScheme.fromSeed(seedColor: const Color(0xFF009688)),
+    );
+    final dark = themeDataOf(theme, dark: true);
+    expect(dark.brightness, Brightness.dark);
+    expect(
+      dark.colorScheme,
       ColorScheme.fromSeed(
         seedColor: const Color(0xFF009688),
         brightness: Brightness.dark,
       ),
     );
-    expect(
-      themeIsDark(
-        const ProjectTheme(
-          parts: {
-            'scheme': {'brightness': 'dark'},
-          },
-        ),
-      ),
-      isTrue,
+  });
+
+  test('the dark theme differs from the light one only where told to', () {
+    const theme = ProjectTheme(
+      parts: {
+        'card': {'elevation': 4.0, 'borderRadius': 8.0},
+        'dark:card': {'elevation': 0.0},
+        'dark:scheme': {'seedColor': 0xFF112233},
+      },
     );
+
+    final light = themeDataOf(theme);
+    final dark = themeDataOf(theme, dark: true);
+
+    expect(light.cardTheme.elevation, 4);
+    expect(dark.cardTheme.elevation, 0);
+    // The radius was not changed for dark, so it is the light one's.
+    expect(dark.cardTheme.shape, light.cardTheme.shape);
+    expect(
+      dark.colorScheme,
+      ColorScheme.fromSeed(
+        seedColor: const Color(0xFF112233),
+        brightness: Brightness.dark,
+      ),
+    );
+    expect(light.colorScheme.primary, isNot(dark.colorScheme.primary));
   });
 
   test('the theme of a widget reaches its theme data', () {
@@ -75,7 +94,7 @@ void main() {
     );
   });
 
-  test('the same theme gives the same data object', () {
+  test('the same theme gives the same data object, per variant', () {
     const theme = ProjectTheme(
       parts: {
         'scheme': {'seedColor': 0xFF009688},

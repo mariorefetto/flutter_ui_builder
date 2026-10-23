@@ -55,6 +55,9 @@ class WorkspaceCubit extends Cubit<WorkspaceState> {
     ),
   );
 
+  void setDarkTheme({required bool dark}) =>
+      emit(state.copyWith(darkTheme: dark));
+
   void togglePrototype() =>
       emit(state.copyWith(prototype: !state.prototype, screenTrail: const []));
 

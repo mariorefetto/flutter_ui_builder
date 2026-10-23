@@ -13,6 +13,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/code_cubit
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/code_edit_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/code_state.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_screen.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/canvas_node.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/editor_canvas.dart';
@@ -1305,7 +1306,10 @@ class UntitledView extends StatelessWidget {
         tester.element(find.byType(MenuBar)),
       ).brightness;
 
-      editorOf(tester).setThemeValue('scheme', 'brightness', 'dark');
+      tester
+          .element(find.byType(MenuBar))
+          .read<WorkspaceCubit>()
+          .setDarkTheme(dark: true);
       await tester.pumpAndSettle();
 
       final preview = Theme.of(tester.element(find.byType(AppBar)));
@@ -1326,17 +1330,52 @@ class UntitledView extends StatelessWidget {
       await tester.pumpAndSettle();
       expect(find.text('Colours and fonts'), findsOneWidget);
 
-      await tester.tap(find.text('light'));
+      await tester.tap(find.text('Card'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('dark').last);
+      cubit.setThemeValue('card', 'elevation', 4.0);
       await tester.pumpAndSettle();
-      expect(cubit.state.document.theme.parts['scheme'], {
-        'brightness': 'dark',
-      });
+      expect(cubit.state.document.theme.parts['card'], {'elevation': 4.0});
 
       await tester.tap(find.byTooltip('Back to the defaults'));
       await tester.pumpAndSettle();
       expect(cubit.state.document.theme.isDefault, isTrue);
+    });
+
+    testWidgets('the panel edits the dark theme on its own', (tester) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..setThemeValue('appBar', 'centerTitle', true);
+
+      await tester.tap(find.byTooltip('Theme').first);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Dark'));
+      await tester.pumpAndSettle();
+      expect(
+        tester
+            .element(find.byType(MenuBar))
+            .read<WorkspaceCubit>()
+            .state
+            .darkTheme,
+        isTrue,
+      );
+      // The dark theme starts as the light one, so this one is changed in it.
+      cubit.setThemeValue('appBar', 'centerTitle', false, dark: true);
+      await tester.pumpAndSettle();
+
+      expect(cubit.state.document.theme.parts['appBar'], {'centerTitle': true});
+      expect(cubit.state.document.theme.parts['dark:appBar'], {
+        'centerTitle': false,
+      });
+      final preview = Theme.of(tester.element(find.byType(AppBar)));
+      expect(preview.brightness, Brightness.dark);
+      expect(preview.appBarTheme.centerTitle, isFalse);
+
+      await tester.tap(find.text('Light'));
+      await tester.pumpAndSettle();
+      expect(
+        Theme.of(tester.element(find.byType(AppBar))).appBarTheme.centerTitle,
+        isTrue,
+      );
     });
 
     testWidgets('the theme file is part of the exported code', (tester) async {

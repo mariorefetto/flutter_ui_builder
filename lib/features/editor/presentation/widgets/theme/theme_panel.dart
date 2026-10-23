@@ -7,6 +7,7 @@ import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/project_theme_definitions.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_state.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/prop_row.dart';
 import 'package:flutter_ui_builder/l10n/generated/app_localizations.dart';
 
@@ -35,8 +36,10 @@ class _ThemePanelState extends State<ThemePanel> {
           previous.document.theme != current.document.theme,
       builder: (context, state) {
         final theme = state.document.theme;
+        final dark = context.select((WorkspaceCubit c) => c.state.darkTheme);
         return ListView(
           children: [
+            _Variant(dark: dark),
             Padding(
               padding: const EdgeInsets.all(AppConstants.spacingSM),
               child: Text(
@@ -50,36 +53,73 @@ class _ThemePanelState extends State<ThemePanel> {
               _Header(
                 title: partTitle(l10n, part.name),
                 open: _open.contains(part.name),
-                changed: theme.parts[part.name]?.isNotEmpty ?? false,
+                changed: theme.ownValues(part.name, dark: dark).isNotEmpty,
                 onTap: () => setState(
                   () => _open.contains(part.name)
                       ? _open.remove(part.name)
                       : _open.add(part.name),
                 ),
-                onReset: () =>
-                    context.read<EditorCubit>().resetThemePart(part.name),
+                onReset: () => context.read<EditorCubit>().resetThemePart(
+                  part.name,
+                  dark: dark,
+                ),
               ),
               if (_open.contains(part.name))
                 for (final schema in part.props)
                   PropRow(
                     key: ValueKey('theme-${part.name}-${schema.name}'),
                     schema: schema,
-                    props: theme.valuesOf(part.name, part.props),
-                    modified:
-                        theme.parts[part.name]?.containsKey(schema.name) ??
-                        false,
+                    props: theme.valuesOf(part.name, part.props, dark: dark),
+                    modified: theme
+                        .ownValues(part.name, dark: dark)
+                        .containsKey(schema.name),
                     focused: _focused == '${part.name}.${schema.name}',
                     onFocus: () => setState(
                       () => _focused = '${part.name}.${schema.name}',
                     ),
-                    onChanged: (value) => context
-                        .read<EditorCubit>()
-                        .setThemeValue(part.name, schema.name, value),
+                    onChanged: (value) =>
+                        context.read<EditorCubit>().setThemeValue(
+                          part.name,
+                          schema.name,
+                          value,
+                          dark: dark,
+                        ),
                   ),
             ],
           ],
         );
       },
+    );
+  }
+}
+
+/// Chooses the theme being edited and shown: the light one or the dark one.
+/// The dark theme starts as the light one and differs only where it is told.
+class _Variant extends StatelessWidget {
+  const _Variant({required this.dark});
+
+  final bool dark;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppConstants.spacingSM,
+        0,
+        AppConstants.spacingSM,
+        AppConstants.spacingSM,
+      ),
+      child: SegmentedButton<bool>(
+        showSelectedIcon: false,
+        segments: [
+          ButtonSegment(value: false, label: Text(l10n.themeLight)),
+          ButtonSegment(value: true, label: Text(l10n.themeDark)),
+        ],
+        selected: {dark},
+        onSelectionChanged: (choice) =>
+            context.read<WorkspaceCubit>().setDarkTheme(dark: choice.single),
+      ),
     );
   }
 }
