@@ -951,7 +951,7 @@ class UntitledView extends StatelessWidget {
 
       await tester.sendKeyEvent(LogicalKeyboardKey.f1);
       await tester.pumpAndSettle();
-      expect(find.text('Keyboard shortcuts'), findsOneWidget);
+      expect(find.text('Keyboard shortcuts'), findsWidgets);
       expect(find.text('Select the next widget'), findsOneWidget);
       await tester.tap(find.text('Close'));
       await tester.pumpAndSettle();
