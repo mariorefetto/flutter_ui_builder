@@ -67,7 +67,11 @@ class CodeCubit extends Cubit<CodeState> {
     // A null directory means the user dismissed the dialog.
     if (directory == null) return _finish(null, files);
     final result = await _exportCode(
-      ExportCodeParams(directory: directory, files: files),
+      ExportCodeParams(
+        directory: directory,
+        files: files,
+        assets: _document.assets,
+      ),
     );
     if (isClosed) return;
     _finish(

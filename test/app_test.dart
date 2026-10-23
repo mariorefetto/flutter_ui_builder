@@ -1547,4 +1547,12 @@ class UntitledView extends StatelessWidget {
       expect(find.text('typed words'), findsOneWidget);
     });
   });
+
+  testWidgets('the menus start at the left edge of the window', (tester) async {
+    await pumpApp(tester);
+
+    final file = tester.getTopLeft(find.text('File'));
+
+    expect(file.dx, lessThan(100));
+  });
 }

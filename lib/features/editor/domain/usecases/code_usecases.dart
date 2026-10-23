@@ -3,6 +3,7 @@ import 'package:flutter_ui_builder/core/error/failures.dart';
 import 'package:flutter_ui_builder/core/usecase/usecase.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/generated_file.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/media_asset.dart';
 import 'package:flutter_ui_builder/features/editor/domain/repositories/code_export_repository.dart';
 import 'package:flutter_ui_builder/features/editor/domain/repositories/file_dialog_repository.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/document_code_generator.dart';
@@ -28,10 +29,17 @@ class PickExportDirectory implements UseCase<String?, NoParams> {
 }
 
 class ExportCodeParams {
-  const ExportCodeParams({required this.directory, required this.files});
+  const ExportCodeParams({
+    required this.directory,
+    required this.files,
+    this.assets = const [],
+  });
 
   final String directory;
   final List<GeneratedFile> files;
+
+  /// The pictures of the project, copied along with the code.
+  final List<MediaAsset> assets;
 }
 
 class ExportCode implements UseCase<List<String>, ExportCodeParams> {
@@ -41,5 +49,9 @@ class ExportCode implements UseCase<List<String>, ExportCodeParams> {
 
   @override
   Future<Either<Failure, List<String>>> call(ExportCodeParams params) =>
-      _repository.exportFiles(params.directory, params.files);
+      _repository.exportFiles(
+        params.directory,
+        params.files,
+        assets: params.assets,
+      );
 }

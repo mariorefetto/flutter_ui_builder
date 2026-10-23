@@ -56,6 +56,12 @@ enum StorageFailureReason {
 
   /// The target file exists but was not produced by the code generator.
   notGenerated,
+
+  /// A picture to copy would replace a different file of the same name.
+  assetConflict,
+
+  /// A picture to copy is no longer where it was taken from.
+  assetMissing,
 }
 
 final class StorageFailure extends Failure {

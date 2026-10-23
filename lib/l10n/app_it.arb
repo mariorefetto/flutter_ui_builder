@@ -457,5 +457,7 @@
   "paramBind": "Rendi un parametro: ogni uso del componente può dare il suo valore",
   "paramUnbind": "Libera dal parametro",
   "paramBindTitle": "Nome del parametro",
-  "paramNameHint": "Un nome come titolo o coloreCard"
+  "paramNameHint": "Un nome come titolo o coloreCard",
+  "errorStorageAssetConflict": "Nella cartella assets c'è già un file diverso con il nome di una delle immagini. Non è stato scritto nulla.",
+  "errorStorageAssetMissing": "Un'immagine non è più dove era stata presa, quindi non si può copiare. Non è stato scritto nulla."
 }

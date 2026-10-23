@@ -85,7 +85,7 @@ void main() {
         () => dialogs.pickDirectory(),
       ).thenAnswer((_) async => const Right('out'));
       when(
-        () => exporter.exportFiles(any(), any()),
+        () => exporter.exportFiles(any(), any(), assets: any(named: 'assets')),
       ).thenAnswer((_) async => const Right(['out/untitled_view.g.dart']));
     },
     build: build,
@@ -105,7 +105,9 @@ void main() {
     build: build,
     act: (cubit) => cubit.export(),
     expect: () => [isA<CodeExporting>(), isA<CodeReady>()],
-    verify: (_) => verifyNever(() => exporter.exportFiles(any(), any())),
+    verify: (_) => verifyNever(
+      () => exporter.exportFiles(any(), any(), assets: any(named: 'assets')),
+    ),
   );
 
   blocTest<CodeCubit, CodeState>(

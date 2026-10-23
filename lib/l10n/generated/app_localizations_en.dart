@@ -1564,4 +1564,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paramNameHint => 'A name like title or cardColor';
+
+  @override
+  String get errorStorageAssetConflict =>
+      'A different file with the name of one of the pictures is already in the assets folder. Nothing was written.';
+
+  @override
+  String get errorStorageAssetMissing =>
+      'A picture is no longer where it was taken from, so it cannot be copied. Nothing was written.';
 }

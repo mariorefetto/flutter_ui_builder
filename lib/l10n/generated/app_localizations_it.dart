@@ -1587,4 +1587,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get paramNameHint => 'Un nome come titolo o coloreCard';
+
+  @override
+  String get errorStorageAssetConflict =>
+      'Nella cartella assets c\'è già un file diverso con il nome di una delle immagini. Non è stato scritto nulla.';
+
+  @override
+  String get errorStorageAssetMissing =>
+      'Un\'immagine non è più dove era stata presa, quindi non si può copiare. Non è stato scritto nulla.';
 }

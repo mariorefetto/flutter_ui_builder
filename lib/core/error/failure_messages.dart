@@ -25,6 +25,8 @@ String messageFor(AppLocalizations l10n, Failure failure) => switch (failure) {
   StorageFailure(:final reason) => switch (reason) {
     StorageFailureReason.access => l10n.errorStorageAccess,
     StorageFailureReason.notGenerated => l10n.errorStorageNotGenerated,
+    StorageFailureReason.assetConflict => l10n.errorStorageAssetConflict,
+    StorageFailureReason.assetMissing => l10n.errorStorageAssetMissing,
   },
   DocumentFailure(:final reason) => switch (reason) {
     DocumentFailureReason.invalidFormat => l10n.errorDocumentInvalidFormat,

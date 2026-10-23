@@ -2845,6 +2845,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A name like title or cardColor'**
   String get paramNameHint;
+
+  /// Message: A different file with the name of one of the pictu
+  ///
+  /// In en, this message translates to:
+  /// **'A different file with the name of one of the pictures is already in the assets folder. Nothing was written.'**
+  String get errorStorageAssetConflict;
+
+  /// Message: A picture is no longer where it was taken from, so
+  ///
+  /// In en, this message translates to:
+  /// **'A picture is no longer where it was taken from, so it cannot be copied. Nothing was written.'**
+  String get errorStorageAssetMissing;
 }
 
 class _AppLocalizationsDelegate
