@@ -1708,5 +1708,69 @@
   "menuWidgetGuide": "Widget guide",
   "@menuWidgetGuide": {
     "description": "Widget guide: Widget guide"
+  },
+  "tourTitle": "Welcome: step {step} of {total}",
+  "@tourTitle": {
+    "description": "Welcome tour: Welcome: step {step} of {total}",
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "tourAddTitle": "Add widgets",
+  "@tourAddTitle": {
+    "description": "Welcome tour: Add widgets"
+  },
+  "tourAddBody": "Drag widgets from the toolbox onto the screen, or click one to add it where the selection is. The grid and list buttons change how they are shown.",
+  "@tourAddBody": {
+    "description": "Welcome tour: Drag widgets from the toolbox onto the screen, or click one to add it where the selection is. The grid and list buttons change how they are shown."
+  },
+  "tourEditTitle": "Change them",
+  "@tourEditTitle": {
+    "description": "Welcome tour: Change them"
+  },
+  "tourEditBody": "Select a widget to edit its properties on the right. Hover a property name to see what it does, and read About this widget for where it can go.",
+  "@tourEditBody": {
+    "description": "Welcome tour: Select a widget to edit its properties on the right. Hover a property name to see what it does, and read About this widget for where it can go."
+  },
+  "tourCodeTitle": "See the code",
+  "@tourCodeTitle": {
+    "description": "Welcome tour: See the code"
+  },
+  "tourCodeBody": "The code is written as you design, and you can edit it too. Put it beside the screen or below it with the buttons at the bottom.",
+  "@tourCodeBody": {
+    "description": "Welcome tour: The code is written as you design, and you can edit it too. Put it beside the screen or below it with the buttons at the bottom."
+  },
+  "tourProjectTitle": "Build the whole app",
+  "@tourProjectTitle": {
+    "description": "Welcome tour: Build the whole app"
+  },
+  "tourProjectBody": "Add screens and components with the plus above the screen, try the navigation with the play button, and export the code from the File menu.",
+  "@tourProjectBody": {
+    "description": "Welcome tour: Add screens and components with the plus above the screen, try the navigation with the play button, and export the code from the File menu."
+  },
+  "tourSkip": "Skip",
+  "@tourSkip": {
+    "description": "Welcome tour: Skip"
+  },
+  "tourBack": "Back",
+  "@tourBack": {
+    "description": "Welcome tour: Back"
+  },
+  "tourNext": "Next",
+  "@tourNext": {
+    "description": "Welcome tour: Next"
+  },
+  "tourDone": "Start",
+  "@tourDone": {
+    "description": "Welcome tour: Start"
+  },
+  "menuWelcomeTour": "Welcome tour",
+  "@menuWelcomeTour": {
+    "description": "Welcome tour: Welcome tour"
   }
 }

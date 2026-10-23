@@ -22,6 +22,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/designer_toolbar.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/canvas/editor_canvas.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/code/code_view.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/widgets/help/welcome_tour.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/media/media_panel.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/palette/widget_palette.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/problems/problems_panel.dart';
@@ -87,15 +88,17 @@ class EditorPage extends StatelessWidget {
           BlocListener<CodeCubit, CodeState>(listener: _onCodeEvent),
         ],
         child: EditorShortcuts(
-          child: Scaffold(
-            body: Column(
-              children: [
-                EditorMenuBar(registry: sl<WidgetRegistry>()),
-                const EditorToolbar(),
-                const Expanded(child: _Workspace()),
-                const _ProblemsDock(),
-                const StatusBar(),
-              ],
+          child: FirstRunTour(
+            child: Scaffold(
+              body: Column(
+                children: [
+                  EditorMenuBar(registry: sl<WidgetRegistry>()),
+                  const EditorToolbar(),
+                  const Expanded(child: _Workspace()),
+                  const _ProblemsDock(),
+                  const StatusBar(),
+                ],
+              ),
             ),
           ),
         ),

@@ -394,5 +394,19 @@
   "guideSearch": "Cerca tra i widget",
   "guideAll": "Tutti",
   "guideAdd": "Aggiungi",
-  "menuWidgetGuide": "Guida ai widget"
+  "menuWidgetGuide": "Guida ai widget",
+  "tourTitle": "Benvenuto: passo {step} di {total}",
+  "tourAddTitle": "Aggiungi i widget",
+  "tourAddBody": "Trascina i widget dalla casella degli strumenti sulla schermata, oppure fai clic su uno per aggiungerlo dove c'è la selezione. I pulsanti griglia ed elenco cambiano come sono mostrati.",
+  "tourEditTitle": "Modificali",
+  "tourEditBody": "Seleziona un widget per modificarne le proprietà a destra. Passa sul nome di una proprietà per vedere cosa fa e leggi Informazioni sul widget per sapere dove può stare.",
+  "tourCodeTitle": "Guarda il codice",
+  "tourCodeBody": "Il codice viene scritto mentre disegni e puoi modificarlo anche tu. Mettilo accanto alla schermata o sotto con i pulsanti in basso.",
+  "tourProjectTitle": "Costruisci tutta l'app",
+  "tourProjectBody": "Aggiungi schermate e componenti con il più sopra la schermata, prova la navigazione con il pulsante di riproduzione ed esporta il codice dal menu File.",
+  "tourSkip": "Salta",
+  "tourBack": "Indietro",
+  "tourNext": "Avanti",
+  "tourDone": "Inizia",
+  "menuWelcomeTour": "Tutorial di benvenuto"
 }

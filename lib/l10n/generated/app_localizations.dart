@@ -2467,6 +2467,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Widget guide'**
   String get menuWidgetGuide;
+
+  /// Welcome tour: Welcome: step {step} of {total}
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome: step {step} of {total}'**
+  String tourTitle(int step, int total);
+
+  /// Welcome tour: Add widgets
+  ///
+  /// In en, this message translates to:
+  /// **'Add widgets'**
+  String get tourAddTitle;
+
+  /// Welcome tour: Drag widgets from the toolbox onto the screen, or click one to add it where the selection is. The grid and list buttons change how they are shown.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag widgets from the toolbox onto the screen, or click one to add it where the selection is. The grid and list buttons change how they are shown.'**
+  String get tourAddBody;
+
+  /// Welcome tour: Change them
+  ///
+  /// In en, this message translates to:
+  /// **'Change them'**
+  String get tourEditTitle;
+
+  /// Welcome tour: Select a widget to edit its properties on the right. Hover a property name to see what it does, and read About this widget for where it can go.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a widget to edit its properties on the right. Hover a property name to see what it does, and read About this widget for where it can go.'**
+  String get tourEditBody;
+
+  /// Welcome tour: See the code
+  ///
+  /// In en, this message translates to:
+  /// **'See the code'**
+  String get tourCodeTitle;
+
+  /// Welcome tour: The code is written as you design, and you can edit it too. Put it beside the screen or below it with the buttons at the bottom.
+  ///
+  /// In en, this message translates to:
+  /// **'The code is written as you design, and you can edit it too. Put it beside the screen or below it with the buttons at the bottom.'**
+  String get tourCodeBody;
+
+  /// Welcome tour: Build the whole app
+  ///
+  /// In en, this message translates to:
+  /// **'Build the whole app'**
+  String get tourProjectTitle;
+
+  /// Welcome tour: Add screens and components with the plus above the screen, try the navigation with the play button, and export the code from the File menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Add screens and components with the plus above the screen, try the navigation with the play button, and export the code from the File menu.'**
+  String get tourProjectBody;
+
+  /// Welcome tour: Skip
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get tourSkip;
+
+  /// Welcome tour: Back
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get tourBack;
+
+  /// Welcome tour: Next
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get tourNext;
+
+  /// Welcome tour: Start
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get tourDone;
+
+  /// Welcome tour: Welcome tour
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome tour'**
+  String get menuWelcomeTour;
 }
 
 class _AppLocalizationsDelegate

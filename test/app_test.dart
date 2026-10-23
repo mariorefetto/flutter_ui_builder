@@ -31,6 +31,8 @@ void main() {
     // The settings of the person running the tests are left alone.
     await sl.unregister<SettingsRepository>();
     sl.registerSingleton<SettingsRepository>(MemorySettingsRepository());
+    // The welcome tour has its own tests; it would cover every other one.
+    await sl<SettingsCubit>().update((s) => s.copyWith(tourSeen: true));
   });
 
   tearDown(sl.reset);
@@ -1144,6 +1146,69 @@ class UntitledView extends StatelessWidget {
             .any((c) => c.type == 'Divider'),
         isTrue,
       );
+    });
+  });
+
+  group('welcome tour', () {
+    Future<void> pumpFirstRun(WidgetTester tester) async {
+      await sl<SettingsCubit>().update((s) => s.copyWith(tourSeen: false));
+      await pumpApp(tester);
+    }
+
+    testWidgets('the first time, the tour opens by itself', (tester) async {
+      await pumpFirstRun(tester);
+
+      expect(find.text('Welcome: step 1 of 4'), findsOneWidget);
+      expect(find.text('Add widgets'), findsOneWidget);
+    });
+
+    testWidgets('the steps go forward and back and the last one starts', (
+      tester,
+    ) async {
+      await pumpFirstRun(tester);
+
+      await tester.tap(find.text('Next'));
+      await tester.pumpAndSettle();
+      expect(find.text('Welcome: step 2 of 4'), findsOneWidget);
+      await tester.tap(find.text('Back'));
+      await tester.pumpAndSettle();
+      expect(find.text('Welcome: step 1 of 4'), findsOneWidget);
+
+      for (var i = 0; i < 3; i++) {
+        await tester.tap(find.text('Next'));
+        await tester.pumpAndSettle();
+      }
+      expect(find.text('Welcome: step 4 of 4'), findsOneWidget);
+      await tester.tap(find.text('Start'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(AlertDialog), findsNothing);
+      expect(sl<SettingsCubit>().state.tourSeen, isTrue);
+    });
+
+    testWidgets('skipping counts as seen and the tour does not come back', (
+      tester,
+    ) async {
+      await pumpFirstRun(tester);
+
+      await tester.tap(find.text('Skip'));
+      await tester.pumpAndSettle();
+      expect(sl<SettingsCubit>().state.tourSeen, isTrue);
+
+      await pumpApp(tester);
+      expect(find.byType(AlertDialog), findsNothing);
+    });
+
+    testWidgets('the Help menu opens it again', (tester) async {
+      await pumpApp(tester);
+      expect(find.byType(AlertDialog), findsNothing);
+
+      await tester.tap(find.text('Help'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Welcome tour'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Welcome: step 1 of 4'), findsOneWidget);
     });
   });
 }

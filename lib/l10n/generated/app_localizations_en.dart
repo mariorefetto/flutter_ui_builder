@@ -1354,4 +1354,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get menuWidgetGuide => 'Widget guide';
+
+  @override
+  String tourTitle(int step, int total) {
+    return 'Welcome: step $step of $total';
+  }
+
+  @override
+  String get tourAddTitle => 'Add widgets';
+
+  @override
+  String get tourAddBody =>
+      'Drag widgets from the toolbox onto the screen, or click one to add it where the selection is. The grid and list buttons change how they are shown.';
+
+  @override
+  String get tourEditTitle => 'Change them';
+
+  @override
+  String get tourEditBody =>
+      'Select a widget to edit its properties on the right. Hover a property name to see what it does, and read About this widget for where it can go.';
+
+  @override
+  String get tourCodeTitle => 'See the code';
+
+  @override
+  String get tourCodeBody =>
+      'The code is written as you design, and you can edit it too. Put it beside the screen or below it with the buttons at the bottom.';
+
+  @override
+  String get tourProjectTitle => 'Build the whole app';
+
+  @override
+  String get tourProjectBody =>
+      'Add screens and components with the plus above the screen, try the navigation with the play button, and export the code from the File menu.';
+
+  @override
+  String get tourSkip => 'Skip';
+
+  @override
+  String get tourBack => 'Back';
+
+  @override
+  String get tourNext => 'Next';
+
+  @override
+  String get tourDone => 'Start';
+
+  @override
+  String get menuWelcomeTour => 'Welcome tour';
 }
