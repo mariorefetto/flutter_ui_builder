@@ -38,50 +38,60 @@ class EditorMenuBar extends StatelessWidget {
           previous.history.canRedo != current.history.canRedo ||
           previous.selectedId != current.selectedId ||
           previous.clipboard != current.clipboard,
-      builder: (context, state) => MenuBar(
-        style: MenuStyle(
-          backgroundColor: WidgetStatePropertyAll(
-            context.colorScheme.surfaceContainerHighest,
-          ),
-          elevation: const WidgetStatePropertyAll(AppConstants.elevationLevel0),
-          shape: const WidgetStatePropertyAll(RoundedRectangleBorder()),
-        ),
-        children: [
-          SubmenuButton(
-            menuChildren: _fileItems(context),
-            child: Text(l10n.menuFile),
-          ),
-          SubmenuButton(
-            menuChildren: _editItems(context, state),
-            child: Text(l10n.menuEdit),
-          ),
-          SubmenuButton(
-            menuChildren: _viewItems(context),
-            child: Text(l10n.menuView),
-          ),
-          SubmenuButton(
-            menuChildren: [
-              MenuItemButton(
-                onPressed: () => showWelcomeTour(context),
-                child: Text(l10n.menuWelcomeTour),
+      // The bar is as wide as its entries and the window's column centres it,
+      // so it is put at the left edge, on a band as wide as the window.
+      builder: (context, state) => ColoredBox(
+        color: context.colorScheme.surfaceContainerHighest,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: MenuBar(
+            style: MenuStyle(
+              backgroundColor: WidgetStatePropertyAll(
+                context.colorScheme.surfaceContainerHighest,
               ),
-              MenuItemButton(
-                onPressed: () => showWidgetGuide(context),
-                child: Text(l10n.menuWidgetGuide),
+              elevation: const WidgetStatePropertyAll(
+                AppConstants.elevationLevel0,
               ),
-              MenuItemButton(
-                onPressed: () => showFaq(context),
-                child: Text(l10n.menuFaq),
+              shape: const WidgetStatePropertyAll(RoundedRectangleBorder()),
+            ),
+            children: [
+              SubmenuButton(
+                menuChildren: _fileItems(context),
+                child: Text(l10n.menuFile),
               ),
-              MenuItemButton(
-                shortcut: const SingleActivator(LogicalKeyboardKey.f1),
-                onPressed: () => showShortcuts(context),
-                child: Text(l10n.menuShortcuts),
+              SubmenuButton(
+                menuChildren: _editItems(context, state),
+                child: Text(l10n.menuEdit),
+              ),
+              SubmenuButton(
+                menuChildren: _viewItems(context),
+                child: Text(l10n.menuView),
+              ),
+              SubmenuButton(
+                menuChildren: [
+                  MenuItemButton(
+                    onPressed: () => showWelcomeTour(context),
+                    child: Text(l10n.menuWelcomeTour),
+                  ),
+                  MenuItemButton(
+                    onPressed: () => showWidgetGuide(context),
+                    child: Text(l10n.menuWidgetGuide),
+                  ),
+                  MenuItemButton(
+                    onPressed: () => showFaq(context),
+                    child: Text(l10n.menuFaq),
+                  ),
+                  MenuItemButton(
+                    shortcut: const SingleActivator(LogicalKeyboardKey.f1),
+                    onPressed: () => showShortcuts(context),
+                    child: Text(l10n.menuShortcuts),
+                  ),
+                ],
+                child: Text(l10n.menuHelp),
               ),
             ],
-            child: Text(l10n.menuHelp),
           ),
-        ],
+        ),
       ),
     );
   }
