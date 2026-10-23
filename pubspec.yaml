@@ -1,7 +1,7 @@
 name: flutter_ui_builder
 description: Drag and drop builder for Flutter user interfaces.
 publish_to: none
-version: 0.0.1+1
+version: 0.0.2+1
 
 environment:
   sdk: ^3.8.0
