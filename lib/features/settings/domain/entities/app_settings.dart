@@ -27,5 +27,11 @@ abstract class AppSettings with _$AppSettings {
 
     /// Where the code starts: tab, right or bottom.
     @Default('tab') String codePlacement,
+
+    /// Whether the palette shows its widgets as a grid rather than a list.
+    @Default(false) bool paletteGrid,
+
+    /// Whether the welcome tour has been seen, so it is not shown again.
+    @Default(false) bool tourSeen,
   }) = _AppSettings;
 }

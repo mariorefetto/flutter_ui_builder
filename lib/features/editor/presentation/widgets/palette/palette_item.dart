@@ -16,6 +16,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/widgets/drag_fee
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/widget_icons.dart';
 
 const double _paletteIconBox = 24;
+const double _gridIconBox = 32;
 const double _tintOpacity = 0.12;
 
 /// One widget of the palette: its icon in the colour of its category, its name
@@ -28,6 +29,7 @@ class PaletteItem extends StatefulWidget {
     required this.query,
     this.keyPrefix = '',
     this.instance,
+    this.grid = false,
     super.key,
   });
 
@@ -35,6 +37,9 @@ class PaletteItem extends StatefulWidget {
 
   /// What the palette is searched for, in lower case; empty for nothing.
   final String query;
+
+  /// Drawn as a tile, with the icon above the name, for a grid.
+  final bool grid;
 
   /// The component this entry adds a use of, when it is one of the project's
   /// components rather than a widget.
@@ -60,60 +65,67 @@ class _PaletteItemState extends State<PaletteItem> {
     final tint = colorForCategory(colors, definition.category);
     final session = context.read<DragSessionCubit>();
     final workspace = context.read<WorkspaceCubit>();
-    final row = MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: InkWell(
-        onTap: () {
-          context.read<EditorCubit>().addToSelection(
-            definition.type,
-            props: _props,
-          );
-          workspace.noteAdded(definition.type);
-        },
-        child: Container(
-          height: treeRowHeight,
-          color: _hovered
-              ? colors.onSurface.withValues(alpha: hoverTintOpacity)
-              : null,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppConstants.spacingSM,
-          ),
-          child: Opacity(
-            opacity: canAdd ? 1 : disabledOpacity,
-            child: Row(
-              children: [
-                const SizedBox(width: AppConstants.spacingMD),
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: tint.withValues(alpha: _tintOpacity),
-                    borderRadius: BorderRadius.circular(AppConstants.radiusSM),
-                  ),
-                  child: SizedBox.square(
-                    dimension: _paletteIconBox,
-                    child: Icon(
-                      widget.instance == null
-                          ? iconForWidget(definition.type, definition.category)
-                          : AppIcons.component,
-                      size: treeIconSize,
-                      color: tint,
-                    ),
+    final row = widget.grid
+        ? _tile(context, canAdd, tint)
+        : MouseRegion(
+            onEnter: (_) => setState(() => _hovered = true),
+            onExit: (_) => setState(() => _hovered = false),
+            child: InkWell(
+              onTap: () {
+                context.read<EditorCubit>().addToSelection(
+                  definition.type,
+                  props: _props,
+                );
+                workspace.noteAdded(definition.type);
+              },
+              child: Container(
+                height: treeRowHeight,
+                color: _hovered
+                    ? colors.onSurface.withValues(alpha: hoverTintOpacity)
+                    : null,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppConstants.spacingSM,
+                ),
+                child: Opacity(
+                  opacity: canAdd ? 1 : disabledOpacity,
+                  child: Row(
+                    children: [
+                      const SizedBox(width: AppConstants.spacingMD),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: tint.withValues(alpha: _tintOpacity),
+                          borderRadius: BorderRadius.circular(
+                            AppConstants.radiusSM,
+                          ),
+                        ),
+                        child: SizedBox.square(
+                          dimension: _paletteIconBox,
+                          child: Icon(
+                            widget.instance == null
+                                ? iconForWidget(
+                                    definition.type,
+                                    definition.category,
+                                  )
+                                : AppIcons.component,
+                            size: treeIconSize,
+                            color: tint,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: AppConstants.spacingSM),
+                      Expanded(child: _name(context)),
+                      if (_hovered && canAdd)
+                        Icon(
+                          AppIcons.add,
+                          size: treeIconSize,
+                          color: colors.onSurfaceVariant,
+                        ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: AppConstants.spacingSM),
-                Expanded(child: _name(context)),
-                if (_hovered && canAdd)
-                  Icon(
-                    AppIcons.add,
-                    size: treeIconSize,
-                    color: colors.onSurfaceVariant,
-                  ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
     return Draggable<DragPayload>(
       data: NewWidgetPayload(definition.type, props: _props),
       dragAnchorStrategy: pointerDragAnchorStrategy,
@@ -126,6 +138,57 @@ class _PaletteItemState extends State<PaletteItem> {
         richMessage: TextSpan(text: _tooltip(context, canAdd)),
         waitDuration: const Duration(milliseconds: 500),
         child: row,
+      ),
+    );
+  }
+
+  // The entry as a tile: the icon on top and the name under it.
+  Widget _tile(BuildContext context, bool canAdd, Color tint) {
+    final definition = widget.definition;
+    final colors = context.colorScheme;
+    return InkWell(
+      onTap: () {
+        context.read<EditorCubit>().addToSelection(
+          definition.type,
+          props: _props,
+        );
+        context.read<WorkspaceCubit>().noteAdded(definition.type);
+      },
+      child: Opacity(
+        opacity: canAdd ? 1 : disabledOpacity,
+        child: Padding(
+          padding: const EdgeInsets.all(AppConstants.spacingXS),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: tint.withValues(alpha: _tintOpacity),
+                  borderRadius: BorderRadius.circular(AppConstants.radiusMD),
+                ),
+                child: SizedBox.square(
+                  dimension: _gridIconBox,
+                  child: Icon(
+                    widget.instance == null
+                        ? iconForWidget(definition.type, definition.category)
+                        : AppIcons.component,
+                    color: tint,
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppConstants.spacingXS),
+              Text(
+                _label,
+                maxLines: 1,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: context.textTheme.labelSmall?.copyWith(
+                  color: colors.onSurface,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

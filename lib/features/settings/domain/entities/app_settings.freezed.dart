@@ -19,7 +19,9 @@ mixin _$AppSettings {
  String get device;/// Whether the designer starts with the body of the device drawn.
  bool get showFrame;/// How the status bar starts: auto, light, dark or hidden.
  String get statusBar; bool get showSafeArea;/// Where the code starts: tab, right or bottom.
- String get codePlacement;
+ String get codePlacement;/// Whether the palette shows its widgets as a grid rather than a list.
+ bool get paletteGrid;/// Whether the welcome tour has been seen, so it is not shown again.
+ bool get tourSeen;
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,16 +32,16 @@ $AppSettingsCopyWith<AppSettings> get copyWith => _$AppSettingsCopyWithImpl<AppS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode)&&(identical(other.device, device) || other.device == device)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode)&&(identical(other.device, device) || other.device == device)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.paletteGrid, paletteGrid) || other.paletteGrid == paletteGrid)&&(identical(other.tourSeen, tourSeen) || other.tourSeen == tourSeen));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,theme,languageCode,device,showFrame,statusBar,showSafeArea,codePlacement);
+int get hashCode => Object.hash(runtimeType,theme,languageCode,device,showFrame,statusBar,showSafeArea,codePlacement,paletteGrid,tourSeen);
 
 @override
 String toString() {
-  return 'AppSettings(theme: $theme, languageCode: $languageCode, device: $device, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, codePlacement: $codePlacement)';
+  return 'AppSettings(theme: $theme, languageCode: $languageCode, device: $device, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, codePlacement: $codePlacement, paletteGrid: $paletteGrid, tourSeen: $tourSeen)';
 }
 
 
@@ -50,7 +52,7 @@ abstract mixin class $AppSettingsCopyWith<$Res>  {
   factory $AppSettingsCopyWith(AppSettings value, $Res Function(AppSettings) _then) = _$AppSettingsCopyWithImpl;
 @useResult
 $Res call({
- ThemeChoice theme, String? languageCode, String device, bool showFrame, String statusBar, bool showSafeArea, String codePlacement
+ ThemeChoice theme, String? languageCode, String device, bool showFrame, String statusBar, bool showSafeArea, String codePlacement, bool paletteGrid, bool tourSeen
 });
 
 
@@ -67,7 +69,7 @@ class _$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? theme = null,Object? languageCode = freezed,Object? device = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? codePlacement = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? theme = null,Object? languageCode = freezed,Object? device = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? codePlacement = null,Object? paletteGrid = null,Object? tourSeen = null,}) {
   return _then(_self.copyWith(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as ThemeChoice,languageCode: freezed == languageCode ? _self.languageCode : languageCode // ignore: cast_nullable_to_non_nullable
@@ -76,7 +78,9 @@ as String,showFrame: null == showFrame ? _self.showFrame : showFrame // ignore: 
 as bool,statusBar: null == statusBar ? _self.statusBar : statusBar // ignore: cast_nullable_to_non_nullable
 as String,showSafeArea: null == showSafeArea ? _self.showSafeArea : showSafeArea // ignore: cast_nullable_to_non_nullable
 as bool,codePlacement: null == codePlacement ? _self.codePlacement : codePlacement // ignore: cast_nullable_to_non_nullable
-as String,
+as String,paletteGrid: null == paletteGrid ? _self.paletteGrid : paletteGrid // ignore: cast_nullable_to_non_nullable
+as bool,tourSeen: null == tourSeen ? _self.tourSeen : tourSeen // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -161,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeChoice theme,  String? languageCode,  String device,  bool showFrame,  String statusBar,  bool showSafeArea,  String codePlacement)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeChoice theme,  String? languageCode,  String device,  bool showFrame,  String statusBar,  bool showSafeArea,  String codePlacement,  bool paletteGrid,  bool tourSeen)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.codePlacement);case _:
+return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.codePlacement,_that.paletteGrid,_that.tourSeen);case _:
   return orElse();
 
 }
@@ -182,10 +186,10 @@ return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeChoice theme,  String? languageCode,  String device,  bool showFrame,  String statusBar,  bool showSafeArea,  String codePlacement)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeChoice theme,  String? languageCode,  String device,  bool showFrame,  String statusBar,  bool showSafeArea,  String codePlacement,  bool paletteGrid,  bool tourSeen)  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings():
-return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.codePlacement);case _:
+return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.codePlacement,_that.paletteGrid,_that.tourSeen);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +206,10 @@ return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeChoice theme,  String? languageCode,  String device,  bool showFrame,  String statusBar,  bool showSafeArea,  String codePlacement)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeChoice theme,  String? languageCode,  String device,  bool showFrame,  String statusBar,  bool showSafeArea,  String codePlacement,  bool paletteGrid,  bool tourSeen)?  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.codePlacement);case _:
+return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.codePlacement,_that.paletteGrid,_that.tourSeen);case _:
   return null;
 
 }
@@ -217,7 +221,7 @@ return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_tha
 
 
 class _AppSettings implements AppSettings {
-  const _AppSettings({this.theme = ThemeChoice.system, this.languageCode, this.device = 'phone', this.showFrame = true, this.statusBar = 'auto', this.showSafeArea = false, this.codePlacement = 'tab'});
+  const _AppSettings({this.theme = ThemeChoice.system, this.languageCode, this.device = 'phone', this.showFrame = true, this.statusBar = 'auto', this.showSafeArea = false, this.codePlacement = 'tab', this.paletteGrid = false, this.tourSeen = false});
   
 
 @override@JsonKey() final  ThemeChoice theme;
@@ -232,6 +236,10 @@ class _AppSettings implements AppSettings {
 @override@JsonKey() final  bool showSafeArea;
 /// Where the code starts: tab, right or bottom.
 @override@JsonKey() final  String codePlacement;
+/// Whether the palette shows its widgets as a grid rather than a list.
+@override@JsonKey() final  bool paletteGrid;
+/// Whether the welcome tour has been seen, so it is not shown again.
+@override@JsonKey() final  bool tourSeen;
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
@@ -243,16 +251,16 @@ _$AppSettingsCopyWith<_AppSettings> get copyWith => __$AppSettingsCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode)&&(identical(other.device, device) || other.device == device)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode)&&(identical(other.device, device) || other.device == device)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.paletteGrid, paletteGrid) || other.paletteGrid == paletteGrid)&&(identical(other.tourSeen, tourSeen) || other.tourSeen == tourSeen));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,theme,languageCode,device,showFrame,statusBar,showSafeArea,codePlacement);
+int get hashCode => Object.hash(runtimeType,theme,languageCode,device,showFrame,statusBar,showSafeArea,codePlacement,paletteGrid,tourSeen);
 
 @override
 String toString() {
-  return 'AppSettings(theme: $theme, languageCode: $languageCode, device: $device, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, codePlacement: $codePlacement)';
+  return 'AppSettings(theme: $theme, languageCode: $languageCode, device: $device, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, codePlacement: $codePlacement, paletteGrid: $paletteGrid, tourSeen: $tourSeen)';
 }
 
 
@@ -263,7 +271,7 @@ abstract mixin class _$AppSettingsCopyWith<$Res> implements $AppSettingsCopyWith
   factory _$AppSettingsCopyWith(_AppSettings value, $Res Function(_AppSettings) _then) = __$AppSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- ThemeChoice theme, String? languageCode, String device, bool showFrame, String statusBar, bool showSafeArea, String codePlacement
+ ThemeChoice theme, String? languageCode, String device, bool showFrame, String statusBar, bool showSafeArea, String codePlacement, bool paletteGrid, bool tourSeen
 });
 
 
@@ -280,7 +288,7 @@ class __$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? theme = null,Object? languageCode = freezed,Object? device = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? codePlacement = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? theme = null,Object? languageCode = freezed,Object? device = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? codePlacement = null,Object? paletteGrid = null,Object? tourSeen = null,}) {
   return _then(_AppSettings(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as ThemeChoice,languageCode: freezed == languageCode ? _self.languageCode : languageCode // ignore: cast_nullable_to_non_nullable
@@ -289,7 +297,9 @@ as String,showFrame: null == showFrame ? _self.showFrame : showFrame // ignore: 
 as bool,statusBar: null == statusBar ? _self.statusBar : statusBar // ignore: cast_nullable_to_non_nullable
 as String,showSafeArea: null == showSafeArea ? _self.showSafeArea : showSafeArea // ignore: cast_nullable_to_non_nullable
 as bool,codePlacement: null == codePlacement ? _self.codePlacement : codePlacement // ignore: cast_nullable_to_non_nullable
-as String,
+as String,paletteGrid: null == paletteGrid ? _self.paletteGrid : paletteGrid // ignore: cast_nullable_to_non_nullable
+as bool,tourSeen: null == tourSeen ? _self.tourSeen : tourSeen // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

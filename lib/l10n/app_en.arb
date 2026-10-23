@@ -1680,5 +1680,13 @@
   "aboutCopyLink": "Copy the link",
   "@aboutCopyLink": {
     "description": "About panel: Copy the link"
+  },
+  "paletteShowGrid": "Show the widgets as a grid",
+  "@paletteShowGrid": {
+    "description": "Palette: Show the widgets as a grid"
+  },
+  "paletteShowList": "Show the widgets as a list",
+  "@paletteShowList": {
+    "description": "Palette: Show the widgets as a list"
   }
 }

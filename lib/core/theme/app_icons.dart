@@ -59,4 +59,9 @@ abstract final class AppIcons {
   static const IconData media = LucideIcons.images;
   static const IconData template = LucideIcons.layoutPanelTop;
   static const IconData help = LucideIcons.circleHelp;
+  static const IconData grid = LucideIcons.layoutGrid;
+  static const IconData guide = LucideIcons.bookOpen;
+  static const IconData tour = LucideIcons.compass;
+  static const IconData overview = LucideIcons.galleryHorizontal;
+  static const IconData faq = LucideIcons.messageCircleQuestionMark;
 }

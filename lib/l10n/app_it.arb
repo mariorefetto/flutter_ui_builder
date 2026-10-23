@@ -387,5 +387,7 @@
   "aboutNeedsMaterial": "Ha bisogno di una superficie Material attorno: {ancestors}.",
   "aboutWrapped": "In una Row o Column viene messo in un Expanded per te.",
   "aboutDocs": "Documentazione di Flutter",
-  "aboutCopyLink": "Copia il link"
+  "aboutCopyLink": "Copia il link",
+  "paletteShowGrid": "Mostra i widget in griglia",
+  "paletteShowList": "Mostra i widget in elenco"
 }

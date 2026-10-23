@@ -15,6 +15,8 @@ _AppSettingsModel _$AppSettingsModelFromJson(Map<String, dynamic> json) =>
       statusBar: json['statusBar'] as String? ?? 'auto',
       showSafeArea: json['showSafeArea'] as bool? ?? false,
       codePlacement: json['codePlacement'] as String? ?? 'tab',
+      paletteGrid: json['paletteGrid'] as bool? ?? false,
+      tourSeen: json['tourSeen'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$AppSettingsModelToJson(_AppSettingsModel instance) =>
@@ -26,4 +28,6 @@ Map<String, dynamic> _$AppSettingsModelToJson(_AppSettingsModel instance) =>
       'statusBar': instance.statusBar,
       'showSafeArea': instance.showSafeArea,
       'codePlacement': instance.codePlacement,
+      'paletteGrid': instance.paletteGrid,
+      'tourSeen': instance.tourSeen,
     };

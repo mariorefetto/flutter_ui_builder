@@ -15,6 +15,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/category_labels.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/palette/palette_item.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/widget_icons.dart';
+import 'package:flutter_ui_builder/features/settings/presentation/cubit/settings_cubit.dart';
 
 /// Lists the registered widgets by category, as the Flutter widget catalog
 /// does, with a search field, the widgets added lately, and a filter down to
@@ -48,6 +49,7 @@ class _WidgetPaletteState extends State<WidgetPalette> {
   @override
   Widget build(BuildContext context) {
     final query = _search.text.trim().toLowerCase();
+    final grid = context.select((SettingsCubit c) => c.state.paletteGrid);
     // The fit of each widget depends on the selection and the document.
     return BlocBuilder<EditorCubit, EditorState>(
       builder: (context, _) {
@@ -69,10 +71,14 @@ class _WidgetPaletteState extends State<WidgetPalette> {
           children: [
             _SearchBar(
               controller: _search,
+              grid: grid,
               onlyFitting: _onlyFitting,
               onChanged: () => setState(() {}),
               onToggleFilter: () =>
                   setState(() => _onlyFitting = !_onlyFitting),
+              onToggleGrid: () => context.read<SettingsCubit>().update(
+                (s) => s.copyWith(paletteGrid: !s.paletteGrid),
+              ),
             ),
             Expanded(
               child: groups.isEmpty && recents.isEmpty && components.isEmpty
@@ -86,12 +92,14 @@ class _WidgetPaletteState extends State<WidgetPalette> {
                             collapsed: _collapsed.contains(_recentKey),
                             count: recents.length,
                             onToggle: () => _toggle(_recentKey),
+                            grid: grid,
                             children: [
                               for (final d in recents)
                                 PaletteItem(
                                   definition: d,
                                   query: query,
                                   keyPrefix: _recentKey,
+                                  grid: grid,
                                 ),
                             ],
                           ),
@@ -111,6 +119,7 @@ class _WidgetPaletteState extends State<WidgetPalette> {
                                 _collapsed.contains(componentsCategory),
                             count: components.length,
                             onToggle: () => _toggle(componentsCategory),
+                            grid: grid,
                             children: [
                               for (final name in components)
                                 PaletteItem(
@@ -119,6 +128,7 @@ class _WidgetPaletteState extends State<WidgetPalette> {
                                   ),
                                   instance: name,
                                   query: query,
+                                  grid: grid,
                                 ),
                             ],
                           ),
@@ -132,9 +142,14 @@ class _WidgetPaletteState extends State<WidgetPalette> {
                                 query.isEmpty && _collapsed.contains(key),
                             count: value.length,
                             onToggle: () => _toggle(key),
+                            grid: grid,
                             children: [
                               for (final d in value)
-                                PaletteItem(definition: d, query: query),
+                                PaletteItem(
+                                  definition: d,
+                                  query: query,
+                                  grid: grid,
+                                ),
                             ],
                           ),
                       ],
@@ -198,18 +213,25 @@ class _WidgetPaletteState extends State<WidgetPalette> {
       definition.category.toLowerCase().contains(query);
 }
 
+/// Tiles in a row of the grid.
+const int _gridColumns = 3;
+
 class _SearchBar extends StatelessWidget {
   const _SearchBar({
     required this.controller,
     required this.onlyFitting,
+    required this.grid,
     required this.onChanged,
     required this.onToggleFilter,
+    required this.onToggleGrid,
   });
 
   final TextEditingController controller;
   final bool onlyFitting;
+  final bool grid;
   final VoidCallback onChanged;
   final VoidCallback onToggleFilter;
+  final VoidCallback onToggleGrid;
 
   @override
   Widget build(BuildContext context) {
@@ -226,6 +248,13 @@ class _SearchBar extends StatelessWidget {
                 hintText: context.l10n.editorPaletteSearch,
               ),
             ),
+          ),
+          IconButton(
+            tooltip: grid
+                ? context.l10n.paletteShowList
+                : context.l10n.paletteShowGrid,
+            icon: Icon(grid ? AppIcons.list : AppIcons.grid),
+            onPressed: onToggleGrid,
           ),
           IconButton(
             tooltip: context.l10n.paletteOnlyFitting,
@@ -248,6 +277,7 @@ class _Section extends StatelessWidget {
     required this.count,
     required this.onToggle,
     required this.children,
+    required this.grid,
     this.color,
   });
 
@@ -258,6 +288,19 @@ class _Section extends StatelessWidget {
   final int count;
   final VoidCallback onToggle;
   final List<Widget> children;
+
+  /// The widgets are laid out as a grid of tiles rather than as rows.
+  final bool grid;
+
+  Widget _layout() => grid
+      ? GridView.count(
+          crossAxisCount: _gridColumns,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(AppConstants.spacingSM),
+          children: children,
+        )
+      : Column(children: children);
 
   @override
   Widget build(BuildContext context) {
@@ -301,7 +344,7 @@ class _Section extends StatelessWidget {
             ),
           ),
         ),
-        if (!collapsed) ...children,
+        if (!collapsed) _layout(),
       ],
     );
   }

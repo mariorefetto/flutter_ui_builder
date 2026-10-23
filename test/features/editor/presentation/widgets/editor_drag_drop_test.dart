@@ -21,6 +21,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/widgets/palette/
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/prop_row.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/properties/properties_panel.dart';
 import 'package:flutter_ui_builder/l10n/generated/app_localizations.dart';
+import '../../../../support/memory_settings_repository.dart';
 
 /// A Column root accepts any number of children, unlike a Scaffold.
 EditorDocument columnDocument() => const EditorDocument(
@@ -54,6 +55,7 @@ void main() {
         providers: [
           BlocProvider.value(value: cubit),
           BlocProvider(create: (_) => WorkspaceCubit()),
+          BlocProvider(create: (_) => memorySettingsCubit()),
           BlocProvider(create: (_) => DragSessionCubit()),
         ],
         child: Scaffold(
@@ -316,5 +318,38 @@ void main() {
     // cannot be one.
     expect(find.widgetWithText(PaletteItem, 'Scaffold'), findsNothing);
     expect(find.widgetWithText(PaletteItem, 'Row'), findsOneWidget);
+  });
+
+  testWidgets('the palette can show its widgets as a grid and back', (
+    tester,
+  ) async {
+    await pumpEditor(tester);
+    final row = tester.getSize(find.widgetWithText(PaletteItem, 'Row'));
+
+    await tester.tap(find.byTooltip('Show the widgets as a grid'));
+    await tester.pumpAndSettle();
+    final tile = tester.getSize(find.widgetWithText(PaletteItem, 'Row'));
+
+    // A tile is a cell of three in a row, not a row of the whole width.
+    expect(tile.width, lessThan(row.width / 2));
+    expect(find.byTooltip('Show the widgets as a list'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Show the widgets as a list'));
+    await tester.pumpAndSettle();
+    expect(
+      tester.getSize(find.widgetWithText(PaletteItem, 'Row')).width,
+      row.width,
+    );
+  });
+
+  testWidgets('a tile adds its widget like a row does', (tester) async {
+    await pumpEditor(tester);
+    await tester.tap(find.byTooltip('Show the widgets as a grid'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(PaletteItem, 'Row'));
+    await tester.pumpAndSettle();
+
+    expect(cubit.state.document.root.children.single.type, 'Row');
   });
 }

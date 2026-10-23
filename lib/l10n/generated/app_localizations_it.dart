@@ -1353,4 +1353,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get aboutCopyLink => 'Copia il link';
+
+  @override
+  String get paletteShowGrid => 'Mostra i widget in griglia';
+
+  @override
+  String get paletteShowList => 'Mostra i widget in elenco';
 }

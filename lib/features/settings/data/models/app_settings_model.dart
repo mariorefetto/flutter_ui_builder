@@ -17,6 +17,8 @@ abstract class AppSettingsModel with _$AppSettingsModel {
     @Default('auto') String statusBar,
     @Default(false) bool showSafeArea,
     @Default('tab') String codePlacement,
+    @Default(false) bool paletteGrid,
+    @Default(false) bool tourSeen,
   }) = _AppSettingsModel;
 
   factory AppSettingsModel.fromJson(Map<String, dynamic> json) =>
@@ -42,5 +44,7 @@ abstract class AppSettingsModel with _$AppSettingsModel {
     statusBar: statusBar,
     showSafeArea: showSafeArea,
     codePlacement: codePlacement,
+    paletteGrid: paletteGrid,
+    tourSeen: tourSeen,
   );
 }

@@ -2425,6 +2425,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Copy the link'**
   String get aboutCopyLink;
+
+  /// Palette: Show the widgets as a grid
+  ///
+  /// In en, this message translates to:
+  /// **'Show the widgets as a grid'**
+  String get paletteShowGrid;
+
+  /// Palette: Show the widgets as a list
+  ///
+  /// In en, this message translates to:
+  /// **'Show the widgets as a list'**
+  String get paletteShowList;
 }
 
 class _AppLocalizationsDelegate
