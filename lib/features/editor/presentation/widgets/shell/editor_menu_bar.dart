@@ -43,6 +43,7 @@ class EditorMenuBar extends StatelessWidget {
           previous.history.canUndo != current.history.canUndo ||
           previous.history.canRedo != current.history.canRedo ||
           previous.selectedId != current.selectedId ||
+          previous.document.namedRoutes != current.document.namedRoutes ||
           previous.clipboard != current.clipboard,
       // The bar is as wide as its entries and the window's column centres it,
       // so it is put at the left edge, on a band as wide as the window.
@@ -135,6 +136,15 @@ class EditorMenuBar extends StatelessWidget {
         shortcut: commandKey(LogicalKeyboardKey.keyE),
         onPressed: () => context.read<CodeCubit>().export(),
         child: Text(l10n.menuExportCode),
+      ),
+      const Divider(),
+      _CheckedItem(
+        label: l10n.menuNamedRoutes,
+        checked: context.read<EditorCubit>().state.document.namedRoutes,
+        onPressed: () {
+          final editor = context.read<EditorCubit>();
+          editor.setNamedRoutes(named: !editor.state.document.namedRoutes);
+        },
       ),
       const Divider(),
       MenuItemButton(

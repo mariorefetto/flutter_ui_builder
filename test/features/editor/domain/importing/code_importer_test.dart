@@ -205,6 +205,13 @@ class HomeView extends StatelessWidget {
       );
     });
 
+    test('opening a screen by its route is read as that screen', () {
+      expect(
+        targetOf("() => Navigator.pushNamed(context, '/my_settings')"),
+        'my settings',
+      );
+    });
+
     test('a pop is read as going back', () {
       expect(targetOf('() => Navigator.pop(context)'), ':back');
     });

@@ -20,7 +20,9 @@ mixin _$EditorDocument {
  bool get component;/// The parameters of the open component.
  List<ComponentParam> get params;/// The pictures of the project, shared by all its screens.
  List<MediaAsset> get assets;/// The theme of the designed app, shared by all its screens.
- ProjectTheme get theme; int get schemaVersion;
+ ProjectTheme get theme;/// Screens open each other by route name, with a file that lists the
+/// routes, rather than by pushing the class of the screen.
+ bool get namedRoutes; int get schemaVersion;
 /// Create a copy of EditorDocument
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -31,16 +33,16 @@ $EditorDocumentCopyWith<EditorDocument> get copyWith => _$EditorDocumentCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditorDocument&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&const DeepCollectionEquality().equals(other.screens, screens)&&(identical(other.activeIndex, activeIndex) || other.activeIndex == activeIndex)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other.params, params)&&const DeepCollectionEquality().equals(other.assets, assets)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.schemaVersion, schemaVersion) || other.schemaVersion == schemaVersion));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditorDocument&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&const DeepCollectionEquality().equals(other.screens, screens)&&(identical(other.activeIndex, activeIndex) || other.activeIndex == activeIndex)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other.params, params)&&const DeepCollectionEquality().equals(other.assets, assets)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.namedRoutes, namedRoutes) || other.namedRoutes == namedRoutes)&&(identical(other.schemaVersion, schemaVersion) || other.schemaVersion == schemaVersion));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,root,const DeepCollectionEquality().hash(screens),activeIndex,component,const DeepCollectionEquality().hash(params),const DeepCollectionEquality().hash(assets),theme,schemaVersion);
+int get hashCode => Object.hash(runtimeType,name,root,const DeepCollectionEquality().hash(screens),activeIndex,component,const DeepCollectionEquality().hash(params),const DeepCollectionEquality().hash(assets),theme,namedRoutes,schemaVersion);
 
 @override
 String toString() {
-  return 'EditorDocument(name: $name, root: $root, screens: $screens, activeIndex: $activeIndex, component: $component, params: $params, assets: $assets, theme: $theme, schemaVersion: $schemaVersion)';
+  return 'EditorDocument(name: $name, root: $root, screens: $screens, activeIndex: $activeIndex, component: $component, params: $params, assets: $assets, theme: $theme, namedRoutes: $namedRoutes, schemaVersion: $schemaVersion)';
 }
 
 
@@ -51,7 +53,7 @@ abstract mixin class $EditorDocumentCopyWith<$Res>  {
   factory $EditorDocumentCopyWith(EditorDocument value, $Res Function(EditorDocument) _then) = _$EditorDocumentCopyWithImpl;
 @useResult
 $Res call({
- String name, WidgetNode root, List<ProjectScreen> screens, int activeIndex, bool component, List<ComponentParam> params, List<MediaAsset> assets, ProjectTheme theme, int schemaVersion
+ String name, WidgetNode root, List<ProjectScreen> screens, int activeIndex, bool component, List<ComponentParam> params, List<MediaAsset> assets, ProjectTheme theme, bool namedRoutes, int schemaVersion
 });
 
 
@@ -68,7 +70,7 @@ class _$EditorDocumentCopyWithImpl<$Res>
 
 /// Create a copy of EditorDocument
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? root = null,Object? screens = null,Object? activeIndex = null,Object? component = null,Object? params = null,Object? assets = null,Object? theme = null,Object? schemaVersion = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? root = null,Object? screens = null,Object? activeIndex = null,Object? component = null,Object? params = null,Object? assets = null,Object? theme = null,Object? namedRoutes = null,Object? schemaVersion = null,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,root: null == root ? _self.root : root // ignore: cast_nullable_to_non_nullable
@@ -78,7 +80,8 @@ as int,component: null == component ? _self.component : component // ignore: cas
 as bool,params: null == params ? _self.params : params // ignore: cast_nullable_to_non_nullable
 as List<ComponentParam>,assets: null == assets ? _self.assets : assets // ignore: cast_nullable_to_non_nullable
 as List<MediaAsset>,theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
-as ProjectTheme,schemaVersion: null == schemaVersion ? _self.schemaVersion : schemaVersion // ignore: cast_nullable_to_non_nullable
+as ProjectTheme,namedRoutes: null == namedRoutes ? _self.namedRoutes : namedRoutes // ignore: cast_nullable_to_non_nullable
+as bool,schemaVersion: null == schemaVersion ? _self.schemaVersion : schemaVersion // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -182,10 +185,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  WidgetNode root,  List<ProjectScreen> screens,  int activeIndex,  bool component,  List<ComponentParam> params,  List<MediaAsset> assets,  ProjectTheme theme,  int schemaVersion)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  WidgetNode root,  List<ProjectScreen> screens,  int activeIndex,  bool component,  List<ComponentParam> params,  List<MediaAsset> assets,  ProjectTheme theme,  bool namedRoutes,  int schemaVersion)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _EditorDocument() when $default != null:
-return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.component,_that.params,_that.assets,_that.theme,_that.schemaVersion);case _:
+return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.component,_that.params,_that.assets,_that.theme,_that.namedRoutes,_that.schemaVersion);case _:
   return orElse();
 
 }
@@ -203,10 +206,10 @@ return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.comp
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  WidgetNode root,  List<ProjectScreen> screens,  int activeIndex,  bool component,  List<ComponentParam> params,  List<MediaAsset> assets,  ProjectTheme theme,  int schemaVersion)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  WidgetNode root,  List<ProjectScreen> screens,  int activeIndex,  bool component,  List<ComponentParam> params,  List<MediaAsset> assets,  ProjectTheme theme,  bool namedRoutes,  int schemaVersion)  $default,) {final _that = this;
 switch (_that) {
 case _EditorDocument():
-return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.component,_that.params,_that.assets,_that.theme,_that.schemaVersion);case _:
+return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.component,_that.params,_that.assets,_that.theme,_that.namedRoutes,_that.schemaVersion);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -223,10 +226,10 @@ return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.comp
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  WidgetNode root,  List<ProjectScreen> screens,  int activeIndex,  bool component,  List<ComponentParam> params,  List<MediaAsset> assets,  ProjectTheme theme,  int schemaVersion)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  WidgetNode root,  List<ProjectScreen> screens,  int activeIndex,  bool component,  List<ComponentParam> params,  List<MediaAsset> assets,  ProjectTheme theme,  bool namedRoutes,  int schemaVersion)?  $default,) {final _that = this;
 switch (_that) {
 case _EditorDocument() when $default != null:
-return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.component,_that.params,_that.assets,_that.theme,_that.schemaVersion);case _:
+return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.component,_that.params,_that.assets,_that.theme,_that.namedRoutes,_that.schemaVersion);case _:
   return null;
 
 }
@@ -238,7 +241,7 @@ return $default(_that.name,_that.root,_that.screens,_that.activeIndex,_that.comp
 
 
 class _EditorDocument implements EditorDocument {
-  const _EditorDocument({required this.name, required this.root, final  List<ProjectScreen> screens = const <ProjectScreen>[], this.activeIndex = 0, this.component = false, final  List<ComponentParam> params = const <ComponentParam>[], final  List<MediaAsset> assets = const <MediaAsset>[], this.theme = const ProjectTheme(), this.schemaVersion = currentSchemaVersion}): _screens = screens,_params = params,_assets = assets;
+  const _EditorDocument({required this.name, required this.root, final  List<ProjectScreen> screens = const <ProjectScreen>[], this.activeIndex = 0, this.component = false, final  List<ComponentParam> params = const <ComponentParam>[], final  List<MediaAsset> assets = const <MediaAsset>[], this.theme = const ProjectTheme(), this.namedRoutes = false, this.schemaVersion = currentSchemaVersion}): _screens = screens,_params = params,_assets = assets;
   
 
 @override final  String name;
@@ -276,6 +279,9 @@ class _EditorDocument implements EditorDocument {
 
 /// The theme of the designed app, shared by all its screens.
 @override@JsonKey() final  ProjectTheme theme;
+/// Screens open each other by route name, with a file that lists the
+/// routes, rather than by pushing the class of the screen.
+@override@JsonKey() final  bool namedRoutes;
 @override@JsonKey() final  int schemaVersion;
 
 /// Create a copy of EditorDocument
@@ -288,16 +294,16 @@ _$EditorDocumentCopyWith<_EditorDocument> get copyWith => __$EditorDocumentCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EditorDocument&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&const DeepCollectionEquality().equals(other._screens, _screens)&&(identical(other.activeIndex, activeIndex) || other.activeIndex == activeIndex)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other._params, _params)&&const DeepCollectionEquality().equals(other._assets, _assets)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.schemaVersion, schemaVersion) || other.schemaVersion == schemaVersion));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EditorDocument&&(identical(other.name, name) || other.name == name)&&(identical(other.root, root) || other.root == root)&&const DeepCollectionEquality().equals(other._screens, _screens)&&(identical(other.activeIndex, activeIndex) || other.activeIndex == activeIndex)&&(identical(other.component, component) || other.component == component)&&const DeepCollectionEquality().equals(other._params, _params)&&const DeepCollectionEquality().equals(other._assets, _assets)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.namedRoutes, namedRoutes) || other.namedRoutes == namedRoutes)&&(identical(other.schemaVersion, schemaVersion) || other.schemaVersion == schemaVersion));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,root,const DeepCollectionEquality().hash(_screens),activeIndex,component,const DeepCollectionEquality().hash(_params),const DeepCollectionEquality().hash(_assets),theme,schemaVersion);
+int get hashCode => Object.hash(runtimeType,name,root,const DeepCollectionEquality().hash(_screens),activeIndex,component,const DeepCollectionEquality().hash(_params),const DeepCollectionEquality().hash(_assets),theme,namedRoutes,schemaVersion);
 
 @override
 String toString() {
-  return 'EditorDocument(name: $name, root: $root, screens: $screens, activeIndex: $activeIndex, component: $component, params: $params, assets: $assets, theme: $theme, schemaVersion: $schemaVersion)';
+  return 'EditorDocument(name: $name, root: $root, screens: $screens, activeIndex: $activeIndex, component: $component, params: $params, assets: $assets, theme: $theme, namedRoutes: $namedRoutes, schemaVersion: $schemaVersion)';
 }
 
 
@@ -308,7 +314,7 @@ abstract mixin class _$EditorDocumentCopyWith<$Res> implements $EditorDocumentCo
   factory _$EditorDocumentCopyWith(_EditorDocument value, $Res Function(_EditorDocument) _then) = __$EditorDocumentCopyWithImpl;
 @override @useResult
 $Res call({
- String name, WidgetNode root, List<ProjectScreen> screens, int activeIndex, bool component, List<ComponentParam> params, List<MediaAsset> assets, ProjectTheme theme, int schemaVersion
+ String name, WidgetNode root, List<ProjectScreen> screens, int activeIndex, bool component, List<ComponentParam> params, List<MediaAsset> assets, ProjectTheme theme, bool namedRoutes, int schemaVersion
 });
 
 
@@ -325,7 +331,7 @@ class __$EditorDocumentCopyWithImpl<$Res>
 
 /// Create a copy of EditorDocument
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? root = null,Object? screens = null,Object? activeIndex = null,Object? component = null,Object? params = null,Object? assets = null,Object? theme = null,Object? schemaVersion = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? root = null,Object? screens = null,Object? activeIndex = null,Object? component = null,Object? params = null,Object? assets = null,Object? theme = null,Object? namedRoutes = null,Object? schemaVersion = null,}) {
   return _then(_EditorDocument(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,root: null == root ? _self.root : root // ignore: cast_nullable_to_non_nullable
@@ -335,7 +341,8 @@ as int,component: null == component ? _self.component : component // ignore: cas
 as bool,params: null == params ? _self._params : params // ignore: cast_nullable_to_non_nullable
 as List<ComponentParam>,assets: null == assets ? _self._assets : assets // ignore: cast_nullable_to_non_nullable
 as List<MediaAsset>,theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
-as ProjectTheme,schemaVersion: null == schemaVersion ? _self.schemaVersion : schemaVersion // ignore: cast_nullable_to_non_nullable
+as ProjectTheme,namedRoutes: null == namedRoutes ? _self.namedRoutes : namedRoutes // ignore: cast_nullable_to_non_nullable
+as bool,schemaVersion: null == schemaVersion ? _self.schemaVersion : schemaVersion // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

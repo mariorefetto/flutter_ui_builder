@@ -618,4 +618,12 @@ void main() {
       );
     });
   });
+
+  test('named routes are a choice of the project and an undo step', () {
+    final cubit = _cubit()..setNamedRoutes(named: true);
+
+    expect(cubit.state.document.namedRoutes, isTrue);
+    cubit.undo();
+    expect(cubit.state.document.namedRoutes, isFalse);
+  });
 }

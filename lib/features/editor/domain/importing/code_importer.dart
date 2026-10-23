@@ -294,6 +294,7 @@ class CodeImporter {
     final body = callback.body;
     if (body is! CodeCall || body.name != 'Navigator') return null;
     if (body.constructor == 'pop') return navigateBack;
+    if (body.constructor == 'pushNamed') return _routeTarget(body);
     if (body.constructor != 'push' || body.positional.length < 2) return null;
     final route = body.positional[1];
     if (route is! CodeCall || route.name != 'MaterialPageRoute') return null;
@@ -301,6 +302,17 @@ class CodeImporter {
     final screen = builder is CodeFunction ? builder.body : null;
     if (screen is! CodeCall) return null;
     return _screenName(screen.name);
+  }
+
+  // `Navigator.pushNamed(context, '/my_screen')` opens the screen "my_screen",
+  // which the editor ties to the screen "my screen" of the project, written
+  // the same way.
+  String? _routeTarget(CodeCall call) {
+    if (call.positional.length < 2) return null;
+    final route = call.positional[1];
+    if (route is! CodeString) return null;
+    final name = route.value.replaceFirst('/', '').replaceAll('_', ' ').trim();
+    return name.isEmpty ? null : name;
   }
 
   // `SettingsView` is the screen "Settings".

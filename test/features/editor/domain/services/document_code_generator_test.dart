@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_ui_builder/features/editor/data/services/dart_style_code_formatter.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/builtin_definitions.dart';
+import 'package:flutter_ui_builder/features/editor/domain/definitions/navigation.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/generated_file.dart';
@@ -270,5 +271,96 @@ void main() {
         'profile_card_widget.g.dart',
       ]);
     });
+  });
+
+  group('named routes', () {
+    String compact(String code) => code
+        .replaceAll(RegExp(r'\s+'), '')
+        .replaceAll(',)', ')')
+        .replaceAll(',}', '}');
+
+    EditorDocument project({bool named = true}) => EditorDocument(
+      name: 'Home',
+      namedRoutes: named,
+      root: const WidgetNode(
+        id: 'node_0',
+        type: 'Column',
+        children: [
+          WidgetNode(
+            id: 'node_1',
+            type: 'ElevatedButton',
+            props: {'navigateTo': 'my settings'},
+            children: [WidgetNode(id: 'node_2', type: 'Text')],
+          ),
+        ],
+      ),
+      screens: const [
+        ProjectScreen(
+          name: 'my settings',
+          root: WidgetNode(id: 'node_0', type: 'Column'),
+        ),
+      ],
+    );
+
+    List<GeneratedFile> filesOf(EditorDocument doc) => generator
+        .generateAll(doc)
+        .getOrElse(() => throw StateError('generation failed'));
+
+    test('a screen is opened by its route', () {
+      final code = compact(filesOf(project()).first.content);
+
+      expect(code, contains("Navigator.pushNamed(context,'/my_settings')"));
+      expect(code, isNot(contains('MaterialPageRoute')));
+    });
+
+    test('a screen does not import the screens it opens by name', () {
+      final code = filesOf(project()).first.content;
+
+      expect(code, isNot(contains('my_settings_view.g.dart')));
+    });
+
+    test('without named routes the screens are pushed as before', () {
+      final files = filesOf(project(named: false));
+
+      expect(compact(files.first.content), contains('MaterialPageRoute'));
+      expect(files.map((f) => f.fileName), isNot(contains(routesFileName)));
+    });
+
+    test('a file lists the routes, the first screen being the start', () {
+      final files = filesOf(project());
+      final routes = compact(
+        files.firstWhere((f) => f.fileName == routesFileName).content,
+      );
+
+      expect(routes, contains("staticconstStringrouteHome='/home';"));
+      expect(
+        routes,
+        contains("staticconstStringrouteMySettings='/my_settings';"),
+      );
+      expect(routes, contains('staticconstStringinitial=routeHome;'));
+      expect(
+        routes,
+        contains('routeMySettings:(context)=>constMySettingsView()'),
+      );
+      expect(routes, contains("import'my_settings_view.g.dart';"));
+    });
+
+    test('the project with routes is valid Dart', () async {
+      final directory = Directory('lib/tmp_routes_check')..createSync();
+      addTearDown(() => directory.deleteSync(recursive: true));
+      for (final file in filesOf(project())) {
+        File(
+          '${directory.path}/${file.fileName}',
+        ).writeAsStringSync(file.content);
+      }
+
+      final result = await Process.run('dart', [
+        'analyze',
+        '--fatal-infos',
+        directory.path,
+      ]);
+
+      expect(result.exitCode, 0, reason: '${result.stdout}');
+    }, timeout: const Timeout(Duration(minutes: 3)));
   });
 }

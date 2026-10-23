@@ -2893,6 +2893,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark'**
   String get themeDark;
+
+  /// Menu: named routes
+  ///
+  /// In en, this message translates to:
+  /// **'Open screens by route name'**
+  String get menuNamedRoutes;
 }
 
 class _AppLocalizationsDelegate

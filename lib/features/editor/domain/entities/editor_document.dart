@@ -40,6 +40,10 @@ abstract class EditorDocument with _$EditorDocument {
 
     /// The theme of the designed app, shared by all its screens.
     @Default(ProjectTheme()) ProjectTheme theme,
+
+    /// Screens open each other by route name, with a file that lists the
+    /// routes, rather than by pushing the class of the screen.
+    @Default(false) bool namedRoutes,
     @Default(currentSchemaVersion) int schemaVersion,
   }) = _EditorDocument;
 }

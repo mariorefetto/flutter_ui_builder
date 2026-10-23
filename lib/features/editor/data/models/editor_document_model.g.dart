@@ -52,6 +52,7 @@ _EditorDocumentModel _$EditorDocumentModelFromJson(Map<String, dynamic> json) =>
           'theme',
           (v) => v as Map<String, dynamic>? ?? const <String, dynamic>{},
         ),
+        namedRoutes: $checkedConvert('namedRoutes', (v) => v as bool? ?? false),
         schemaVersion: $checkedConvert(
           'schemaVersion',
           (v) => (v as num?)?.toInt() ?? currentSchemaVersion,
@@ -71,5 +72,6 @@ Map<String, dynamic> _$EditorDocumentModelToJson(
   'params': instance.params,
   'assets': instance.assets.map((e) => e.toJson()).toList(),
   'theme': instance.theme,
+  'namedRoutes': instance.namedRoutes,
   'schemaVersion': instance.schemaVersion,
 };

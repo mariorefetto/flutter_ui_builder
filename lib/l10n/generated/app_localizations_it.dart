@@ -1620,4 +1620,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get themeDark => 'Scuro';
+
+  @override
+  String get menuNamedRoutes => 'Apri le schermate per nome di rotta';
 }

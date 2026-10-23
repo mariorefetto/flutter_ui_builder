@@ -191,4 +191,14 @@ void main() {
 
     expect(decoded.params.map((p) => p.name), ['ok']);
   });
+
+  test('named routes survive a save and an open', () {
+    const project = EditorDocument(
+      name: 'Home',
+      root: WidgetNode(id: 'node_0', type: 'Column'),
+      namedRoutes: true,
+    );
+
+    expect(codec.decode(codec.encode(project)).namedRoutes, isTrue);
+  });
 }

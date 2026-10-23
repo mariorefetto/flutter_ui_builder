@@ -15,6 +15,15 @@ String screenClassName(String name) => '${pascalCase(name)}$screenClassSuffix';
 /// The file the code of the screen called [name] is written to.
 String screenFileName(String name) => '${snakeCase(name)}$screenFileSuffix';
 
+/// The file that lists the routes of a project that opens screens by name.
+const String routesFileName = 'app_routes.g.dart';
+
+/// The route of the screen called [name]: `/settings`.
+String routeName(String name) => '/${snakeCase(name)}';
+
+/// The constant that holds the route of the screen called [name].
+String routeIdentifier(String name) => 'route${pascalCase(name)}';
+
 /// The callback a widget runs when pressed: it pushes the screen [target], or
 /// goes back for [navigateBack]. Null when there is nowhere to go.
 String? navigationCallback(String? target) {

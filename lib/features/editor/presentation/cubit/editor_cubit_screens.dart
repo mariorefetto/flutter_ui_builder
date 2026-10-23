@@ -160,4 +160,11 @@ extension EditorScreens on EditorCubit {
         _reportFailure,
         (document) => _commit(document, selectedId: state.selectedId),
       );
+
+  /// Makes the screens open each other by route name, or by class again.
+  void setNamedRoutes({required bool named}) => _commit(
+    state.document.copyWith(namedRoutes: named),
+    selectedId: state.selectedId,
+    keepSelection: true,
+  );
 }

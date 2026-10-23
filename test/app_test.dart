@@ -1710,4 +1710,29 @@ class UntitledView extends StatelessWidget {
       expect(checked(tester, 'Light'), isFalse);
     });
   });
+
+  testWidgets(
+    'the File menu switches the screens to route names and shows it',
+    (tester) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester);
+
+      await tester.tap(find.text('File'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Open screens by route name'));
+      await tester.pumpAndSettle();
+      expect(cubit.state.document.namedRoutes, isTrue);
+
+      await tester.tap(find.text('File'));
+      await tester.pumpAndSettle();
+      final item = find.ancestor(
+        of: find.text('Open screens by route name'),
+        matching: find.byType(MenuItemButton),
+      );
+      expect(
+        find.descendant(of: item.first, matching: find.byIcon(AppIcons.check)),
+        findsOneWidget,
+      );
+    },
+  );
 }

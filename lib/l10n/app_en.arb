@@ -2023,5 +2023,9 @@
   "themeDark": "Dark",
   "@themeDark": {
     "description": "Theme panel: Dark"
+  },
+  "menuNamedRoutes": "Open screens by route name",
+  "@menuNamedRoutes": {
+    "description": "Menu: named routes"
   }
 }

@@ -24,6 +24,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
     @Default(<Map<String, dynamic>>[]) List<Map<String, dynamic>> params,
     @Default(<MediaAssetModel>[]) List<MediaAssetModel> assets,
     @Default(<String, dynamic>{}) Map<String, dynamic> theme,
+    @Default(false) bool namedRoutes,
     @Default(currentSchemaVersion) int schemaVersion,
   }) = _EditorDocumentModel;
 
@@ -39,6 +40,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
         component: document.component,
         params: paramsToJson(document.params),
         assets: document.assets.map(MediaAssetModel.fromEntity).toList(),
+        namedRoutes: document.namedRoutes,
         theme: {
           for (final entry in document.theme.parts.entries)
             if (entry.value.isNotEmpty) entry.key: entry.value,
@@ -58,6 +60,7 @@ abstract class EditorDocumentModel with _$EditorDocumentModel {
     params: paramsFromJson(params),
     assets: assets.map((a) => a.toEntity()).toList(),
     theme: ProjectTheme(parts: _themeParts(theme)),
+    namedRoutes: namedRoutes,
     schemaVersion: schemaVersion,
   );
 }

@@ -465,5 +465,6 @@
   "multiSelectionNote": "Modifica di {count} widget insieme",
   "importAlsoFound": "Trovate anche altre {screens} schermate e {components} componenti, che entrano nel progetto",
   "themeLight": "Chiaro",
-  "themeDark": "Scuro"
+  "themeDark": "Scuro",
+  "menuNamedRoutes": "Apri le schermate per nome di rotta"
 }
