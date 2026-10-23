@@ -35,9 +35,14 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/import_cub
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/problems_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/project_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_cubit.dart';
+import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_settings.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/builtin_previews.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_registry.dart';
-import 'package:flutter_ui_builder/features/settings/presentation/cubit/theme_cubit.dart';
+import 'package:flutter_ui_builder/features/settings/data/datasources/settings_path.dart';
+import 'package:flutter_ui_builder/features/settings/data/repositories/settings_repository_impl.dart';
+import 'package:flutter_ui_builder/features/settings/domain/repositories/settings_repository.dart';
+import 'package:flutter_ui_builder/features/settings/domain/usecases/settings_usecases.dart';
+import 'package:flutter_ui_builder/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:talker/talker.dart';
 
@@ -52,12 +57,21 @@ Future<void> configureDependencies() async {
 void _initCore() {
   sl
     ..registerSingleton<Talker>(Talker())
-    ..registerLazySingleton(ThemeCubit.new);
+    ..registerLazySingleton<SettingsRepository>(
+      () => SettingsRepositoryImpl(sl(), settingsFilePath()),
+    )
+    ..registerLazySingleton(() => LoadSettings(sl()))
+    ..registerLazySingleton(() => SaveSettings(sl()))
+    ..registerLazySingleton(
+      () => SettingsCubit(loadSettings: sl(), saveSettings: sl()),
+    );
 }
 
 void _initEditor() {
   sl
-    ..registerFactory(WorkspaceCubit.new)
+    ..registerFactory(
+      () => WorkspaceCubit(workspaceFromSettings(sl<SettingsCubit>().state)),
+    )
     ..registerFactory(DragSessionCubit.new)
     ..registerFactory(() => CodeEditCubit(importCode: sl()))
     ..registerFactory(() => ImportCubit(importCode: sl(), pickDartSource: sl()))

@@ -54,4 +54,9 @@ abstract final class AppIcons {
   static const IconData component = LucideIcons.puzzle;
   static const IconData extract = LucideIcons.packagePlus;
   static const IconData detach = LucideIcons.unlink;
+  static const IconData settings = LucideIcons.settings;
+  static const IconData keyboard = LucideIcons.keyboard;
+  static const IconData media = LucideIcons.images;
+  static const IconData template = LucideIcons.layoutPanelTop;
+  static const IconData help = LucideIcons.circleHelp;
 }

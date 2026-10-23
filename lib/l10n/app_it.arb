@@ -295,5 +295,19 @@
   "componentEdit": "Modifica il componente",
   "componentNone": "Nessun componente",
   "componentOpenTarget": "Apri il componente",
-  "screenNewScreen": "Nuova schermata"
+  "screenNewScreen": "Nuova schermata",
+  "settingsTitle": "Impostazioni",
+  "settingsGeneral": "Generali",
+  "settingsDesigner": "Designer",
+  "settingsEditor": "Editor",
+  "settingsLanguage": "Lingua",
+  "settingsLanguageSystem": "Segui il sistema",
+  "settingsTheme": "Tema",
+  "settingsDevice": "Dispositivo",
+  "settingsStatusBar": "Barra di stato",
+  "settingsShowFrame": "Disegna la cornice del dispositivo",
+  "settingsShowSafeArea": "Mostra l'area sicura",
+  "settingsCodePlacement": "Pannello del codice",
+  "menuSettings": "Impostazioni...",
+  "commonClose": "Chiudi"
 }

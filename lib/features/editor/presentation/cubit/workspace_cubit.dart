@@ -5,7 +5,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_
 /// Holds the window layout. It is interface state only and never touches the
 /// document.
 class WorkspaceCubit extends Cubit<WorkspaceState> {
-  WorkspaceCubit() : super(const WorkspaceState());
+  WorkspaceCubit([super.initialState = const WorkspaceState()]);
 
   /// Opens [panel], or collapses the left dock when it is already open.
   void toggleLeftPanel(LeftPanel panel) =>

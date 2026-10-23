@@ -15,7 +15,8 @@ import 'package:flutter_ui_builder/features/editor/presentation/shortcuts.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/file/file_commands.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/file/rename_dialog.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/node_menu_items.dart';
-import 'package:flutter_ui_builder/features/settings/presentation/cubit/theme_cubit.dart';
+import 'package:flutter_ui_builder/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:flutter_ui_builder/features/settings/presentation/widgets/open_settings.dart';
 
 /// The File, Edit and View menus. The shortcuts shown next to the entries are
 /// active for the whole window.
@@ -93,6 +94,12 @@ class EditorMenuBar extends StatelessWidget {
         onPressed: () => context.read<CodeCubit>().export(),
         child: Text(l10n.menuExportCode),
       ),
+      const Divider(),
+      MenuItemButton(
+        shortcut: commandKey(LogicalKeyboardKey.comma),
+        onPressed: () => openSettings(context),
+        child: Text(l10n.menuSettings),
+      ),
     ];
   }
 
@@ -134,7 +141,7 @@ class EditorMenuBar extends StatelessWidget {
   List<Widget> _viewItems(BuildContext context) {
     final l10n = context.l10n;
     final workspace = context.read<WorkspaceCubit>();
-    final theme = context.read<ThemeCubit>();
+    final theme = context.read<SettingsCubit>();
     final state = workspace.state;
     return [
       _CheckedItem(
@@ -194,8 +201,8 @@ class EditorMenuBar extends StatelessWidget {
           ])
             _CheckedItem(
               label: label,
-              checked: theme.state.mode == mode,
-              onPressed: () => theme.setMode(mode),
+              checked: theme.themeMode == mode,
+              onPressed: () => theme.setThemeMode(mode),
             ),
         ],
         child: Text(l10n.menuTheme),

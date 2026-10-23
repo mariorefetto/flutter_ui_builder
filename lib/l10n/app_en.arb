@@ -1287,5 +1287,61 @@
   "screenNewScreen": "New screen",
   "@screenNewScreen": {
     "description": "Label: New screen"
+  },
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Label: Settings"
+  },
+  "settingsGeneral": "General",
+  "@settingsGeneral": {
+    "description": "Label: General"
+  },
+  "settingsDesigner": "Designer",
+  "@settingsDesigner": {
+    "description": "Label: Designer"
+  },
+  "settingsEditor": "Editor",
+  "@settingsEditor": {
+    "description": "Label: Editor"
+  },
+  "settingsLanguage": "Language",
+  "@settingsLanguage": {
+    "description": "Label: Language"
+  },
+  "settingsLanguageSystem": "Follow the system",
+  "@settingsLanguageSystem": {
+    "description": "Label: Follow the system"
+  },
+  "settingsTheme": "Theme",
+  "@settingsTheme": {
+    "description": "Label: Theme"
+  },
+  "settingsDevice": "Device",
+  "@settingsDevice": {
+    "description": "Label: Device"
+  },
+  "settingsStatusBar": "Status bar",
+  "@settingsStatusBar": {
+    "description": "Label: Status bar"
+  },
+  "settingsShowFrame": "Draw the device frame",
+  "@settingsShowFrame": {
+    "description": "Label: Draw the device frame"
+  },
+  "settingsShowSafeArea": "Show the safe area",
+  "@settingsShowSafeArea": {
+    "description": "Label: Show the safe area"
+  },
+  "settingsCodePlacement": "Code panel",
+  "@settingsCodePlacement": {
+    "description": "Label: Code panel"
+  },
+  "menuSettings": "Settings...",
+  "@menuSettings": {
+    "description": "Label: Settings..."
+  },
+  "commonClose": "Close",
+  "@commonClose": {
+    "description": "Label: Close"
   }
 }

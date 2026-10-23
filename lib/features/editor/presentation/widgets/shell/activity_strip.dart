@@ -6,6 +6,7 @@ import 'package:flutter_ui_builder/core/theme/theme_extensions.dart';
 import 'package:flutter_ui_builder/core/utils/l10n_extension.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_state.dart';
+import 'package:flutter_ui_builder/features/settings/presentation/widgets/open_settings.dart';
 
 /// Vertical strip of buttons that open and close the left panels.
 class ActivityStrip extends StatelessWidget {
@@ -32,6 +33,13 @@ class ActivityStrip extends StatelessWidget {
               tooltip: context.l10n.panelOutline,
               selected: open == LeftPanel.outline,
               onPressed: () => cubit.toggleLeftPanel(LeftPanel.outline),
+            ),
+            const Spacer(),
+            _StripButton(
+              icon: AppIcons.settings,
+              tooltip: context.l10n.settingsTitle,
+              selected: false,
+              onPressed: () => openSettings(context),
             ),
           ],
         ),

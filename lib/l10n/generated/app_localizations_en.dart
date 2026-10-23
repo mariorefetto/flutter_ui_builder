@@ -1012,4 +1012,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get screenNewScreen => 'New screen';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsGeneral => 'General';
+
+  @override
+  String get settingsDesigner => 'Designer';
+
+  @override
+  String get settingsEditor => 'Editor';
+
+  @override
+  String get settingsLanguage => 'Language';
+
+  @override
+  String get settingsLanguageSystem => 'Follow the system';
+
+  @override
+  String get settingsTheme => 'Theme';
+
+  @override
+  String get settingsDevice => 'Device';
+
+  @override
+  String get settingsStatusBar => 'Status bar';
+
+  @override
+  String get settingsShowFrame => 'Draw the device frame';
+
+  @override
+  String get settingsShowSafeArea => 'Show the safe area';
+
+  @override
+  String get settingsCodePlacement => 'Code panel';
+
+  @override
+  String get menuSettings => 'Settings...';
+
+  @override
+  String get commonClose => 'Close';
 }

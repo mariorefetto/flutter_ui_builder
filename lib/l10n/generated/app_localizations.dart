@@ -1873,6 +1873,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New screen'**
   String get screenNewScreen;
+
+  /// Label: Settings
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// Label: General
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get settingsGeneral;
+
+  /// Label: Designer
+  ///
+  /// In en, this message translates to:
+  /// **'Designer'**
+  String get settingsDesigner;
+
+  /// Label: Editor
+  ///
+  /// In en, this message translates to:
+  /// **'Editor'**
+  String get settingsEditor;
+
+  /// Label: Language
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguage;
+
+  /// Label: Follow the system
+  ///
+  /// In en, this message translates to:
+  /// **'Follow the system'**
+  String get settingsLanguageSystem;
+
+  /// Label: Theme
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get settingsTheme;
+
+  /// Label: Device
+  ///
+  /// In en, this message translates to:
+  /// **'Device'**
+  String get settingsDevice;
+
+  /// Label: Status bar
+  ///
+  /// In en, this message translates to:
+  /// **'Status bar'**
+  String get settingsStatusBar;
+
+  /// Label: Draw the device frame
+  ///
+  /// In en, this message translates to:
+  /// **'Draw the device frame'**
+  String get settingsShowFrame;
+
+  /// Label: Show the safe area
+  ///
+  /// In en, this message translates to:
+  /// **'Show the safe area'**
+  String get settingsShowSafeArea;
+
+  /// Label: Code panel
+  ///
+  /// In en, this message translates to:
+  /// **'Code panel'**
+  String get settingsCodePlacement;
+
+  /// Label: Settings...
+  ///
+  /// In en, this message translates to:
+  /// **'Settings...'**
+  String get menuSettings;
+
+  /// Label: Close
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get commonClose;
 }
 
 class _AppLocalizationsDelegate
