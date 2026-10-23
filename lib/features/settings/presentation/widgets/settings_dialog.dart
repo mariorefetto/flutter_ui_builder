@@ -40,6 +40,13 @@ class SettingsDialog extends StatelessWidget {
                 _Heading(l10n.settingsGeneral),
                 _language(context, settings),
                 _theme(context, settings),
+                _switch(
+                  label: l10n.settingsCheckForUpdates,
+                  value: settings.checkForUpdates,
+                  onChanged: (value) => context.read<SettingsCubit>().update(
+                    (s) => s.copyWith(checkForUpdates: value),
+                  ),
+                ),
                 _Heading(l10n.settingsDesigner),
                 _device(context, settings),
                 _status(context, settings),

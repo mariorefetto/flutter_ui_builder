@@ -19,6 +19,7 @@ abstract class AppSettingsModel with _$AppSettingsModel {
     @Default('tab') String codePlacement,
     @Default(false) bool paletteGrid,
     @Default(false) bool tourSeen,
+    @Default(true) bool checkForUpdates,
   }) = _AppSettingsModel;
 
   factory AppSettingsModel.fromJson(Map<String, dynamic> json) =>
@@ -32,6 +33,9 @@ abstract class AppSettingsModel with _$AppSettingsModel {
     statusBar: settings.statusBar,
     showSafeArea: settings.showSafeArea,
     codePlacement: settings.codePlacement,
+    paletteGrid: settings.paletteGrid,
+    tourSeen: settings.tourSeen,
+    checkForUpdates: settings.checkForUpdates,
   );
 
   const AppSettingsModel._();
@@ -46,5 +50,6 @@ abstract class AppSettingsModel with _$AppSettingsModel {
     codePlacement: codePlacement,
     paletteGrid: paletteGrid,
     tourSeen: tourSeen,
+    checkForUpdates: checkForUpdates,
   );
 }

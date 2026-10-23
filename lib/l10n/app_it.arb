@@ -467,5 +467,13 @@
   "themeLight": "Chiaro",
   "themeDark": "Scuro",
   "menuNamedRoutes": "Apri le schermate per nome di rotta",
-  "designerGuidelines": "Mostra le linee guida dei widget: i loro riquadri e, per il selezionato, margine, padding e dimensioni"
+  "designerGuidelines": "Mostra le linee guida dei widget: i loro riquadri e, per il selezionato, margine, padding e dimensioni",
+  "errorNetwork": "Impossibile raggiungere il server. Controlla la connessione e riprova.",
+  "errorLaunch": "Impossibile aprire il browser.",
+  "menuCheckForUpdates": "Cerca aggiornamenti",
+  "updateAvailableMessage": "La versione {version} è disponibile.",
+  "updateAvailableTooltip": "La versione {version} è disponibile. Clicca per aprire la pagina di download.",
+  "updateDownload": "Scarica",
+  "updateUpToDate": "Hai l'ultima versione ({version}).",
+  "settingsCheckForUpdates": "Cerca aggiornamenti all'avvio (contatta github.com)"
 }

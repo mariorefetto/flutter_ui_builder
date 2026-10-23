@@ -97,4 +97,28 @@ void main() {
 
     expect(result.isLeft(), isTrue);
   });
+
+  test('every setting survives being saved and read again', () async {
+    String? saved;
+    when(() => files.write(any(), any())).thenAnswer((invocation) async {
+      saved = invocation.positionalArguments[1] as String;
+    });
+    when(() => files.readIfExists(any())).thenAnswer((_) async => saved);
+    const changed = AppSettings(
+      theme: ThemeChoice.dark,
+      languageCode: 'it',
+      device: 'tablet',
+      showFrame: false,
+      statusBar: 'dark',
+      showSafeArea: true,
+      codePlacement: 'right',
+      paletteGrid: true,
+      tourSeen: true,
+      checkForUpdates: false,
+    );
+
+    await repository.save(changed);
+
+    expect(await repository.load(), changed);
+  });
 }

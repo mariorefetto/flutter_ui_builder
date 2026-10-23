@@ -33,5 +33,8 @@ abstract class AppSettings with _$AppSettings {
 
     /// Whether the welcome tour has been seen, so it is not shown again.
     @Default(false) bool tourSeen,
+
+    /// Whether the app asks GitHub for a newer version when it starts.
+    @Default(true) bool checkForUpdates,
   }) = _AppSettings;
 }

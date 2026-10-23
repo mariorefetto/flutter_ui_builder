@@ -17,6 +17,7 @@ _AppSettingsModel _$AppSettingsModelFromJson(Map<String, dynamic> json) =>
       codePlacement: json['codePlacement'] as String? ?? 'tab',
       paletteGrid: json['paletteGrid'] as bool? ?? false,
       tourSeen: json['tourSeen'] as bool? ?? false,
+      checkForUpdates: json['checkForUpdates'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$AppSettingsModelToJson(_AppSettingsModel instance) =>
@@ -30,4 +31,5 @@ Map<String, dynamic> _$AppSettingsModelToJson(_AppSettingsModel instance) =>
       'codePlacement': instance.codePlacement,
       'paletteGrid': instance.paletteGrid,
       'tourSeen': instance.tourSeen,
+      'checkForUpdates': instance.checkForUpdates,
     };

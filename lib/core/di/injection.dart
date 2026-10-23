@@ -43,6 +43,14 @@ import 'package:flutter_ui_builder/features/settings/data/repositories/settings_
 import 'package:flutter_ui_builder/features/settings/domain/repositories/settings_repository.dart';
 import 'package:flutter_ui_builder/features/settings/domain/usecases/settings_usecases.dart';
 import 'package:flutter_ui_builder/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:flutter_ui_builder/features/updates/data/datasources/external_link_data_source.dart';
+import 'package:flutter_ui_builder/features/updates/data/datasources/release_data_source.dart';
+import 'package:flutter_ui_builder/features/updates/data/repositories/external_link_repository_impl.dart';
+import 'package:flutter_ui_builder/features/updates/data/repositories/release_repository_impl.dart';
+import 'package:flutter_ui_builder/features/updates/domain/repositories/external_link_repository.dart';
+import 'package:flutter_ui_builder/features/updates/domain/repositories/release_repository.dart';
+import 'package:flutter_ui_builder/features/updates/domain/usecases/update_usecases.dart';
+import 'package:flutter_ui_builder/features/updates/presentation/cubit/update_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:talker/talker.dart';
 
@@ -51,6 +59,7 @@ final GetIt sl = GetIt.instance;
 /// Registers every dependency of the app, one init function per feature.
 Future<void> configureDependencies() async {
   _initCore();
+  _initUpdates();
   _initEditor();
 }
 
@@ -64,6 +73,27 @@ void _initCore() {
     ..registerLazySingleton(() => SaveSettings(sl()))
     ..registerLazySingleton(
       () => SettingsCubit(loadSettings: sl(), saveSettings: sl()),
+    );
+}
+
+void _initUpdates() {
+  sl
+    ..registerLazySingleton(
+      () => UpdateCubit(checkForUpdate: sl(), openLink: sl()),
+    )
+    ..registerLazySingleton(() => CheckForUpdate(sl()))
+    ..registerLazySingleton(() => OpenLink(sl()))
+    ..registerLazySingleton<ReleaseRepository>(
+      () => ReleaseRepositoryImpl(sl(), sl()),
+    )
+    ..registerLazySingleton<ExternalLinkRepository>(
+      () => ExternalLinkRepositoryImpl(sl(), sl()),
+    )
+    ..registerLazySingleton<ReleaseDataSource>(
+      () => const GithubReleaseDataSource(),
+    )
+    ..registerLazySingleton<ExternalLinkDataSource>(
+      () => const SystemLinkDataSource(),
     );
 }
 

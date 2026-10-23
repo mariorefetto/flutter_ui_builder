@@ -67,4 +67,5 @@ abstract final class AppIcons {
   static const IconData link = LucideIcons.link;
   static const IconData unlink = LucideIcons.unlink;
   static const IconData guidelines = LucideIcons.squareDashed;
+  static const IconData update = LucideIcons.circleArrowUp;
 }

@@ -2031,5 +2031,52 @@
   "designerGuidelines": "Show the guidelines of the widgets: their boxes, and the margin, padding and size of the selected one",
   "@designerGuidelines": {
     "description": "Tooltip: show layout guidelines"
+  },
+  "errorNetwork": "Could not reach the server. Check the connection and try again.",
+  "@errorNetwork": {
+    "description": "Error: a network request failed"
+  },
+  "errorLaunch": "Could not open the browser.",
+  "@errorLaunch": {
+    "description": "Error: a link could not be opened"
+  },
+  "menuCheckForUpdates": "Check for updates",
+  "@menuCheckForUpdates": {
+    "description": "Help menu: look for a newer version"
+  },
+  "updateAvailableMessage": "Version {version} is available.",
+  "@updateAvailableMessage": {
+    "description": "Message: a newer version exists",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateAvailableTooltip": "Version {version} is available. Click to open the download page.",
+  "@updateAvailableTooltip": {
+    "description": "Tooltip of the update notice in the status bar",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateDownload": "Download",
+  "@updateDownload": {
+    "description": "Action: open the download page of the new version"
+  },
+  "updateUpToDate": "You have the latest version ({version}).",
+  "@updateUpToDate": {
+    "description": "Message: the app is up to date",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsCheckForUpdates": "Check for updates at startup (contacts github.com)",
+  "@settingsCheckForUpdates": {
+    "description": "Setting: look for a newer version when the app starts"
   }
 }

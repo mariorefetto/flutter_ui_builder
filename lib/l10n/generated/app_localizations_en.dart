@@ -1604,4 +1604,36 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get designerGuidelines =>
       'Show the guidelines of the widgets: their boxes, and the margin, padding and size of the selected one';
+
+  @override
+  String get errorNetwork =>
+      'Could not reach the server. Check the connection and try again.';
+
+  @override
+  String get errorLaunch => 'Could not open the browser.';
+
+  @override
+  String get menuCheckForUpdates => 'Check for updates';
+
+  @override
+  String updateAvailableMessage(String version) {
+    return 'Version $version is available.';
+  }
+
+  @override
+  String updateAvailableTooltip(String version) {
+    return 'Version $version is available. Click to open the download page.';
+  }
+
+  @override
+  String get updateDownload => 'Download';
+
+  @override
+  String updateUpToDate(String version) {
+    return 'You have the latest version ($version).';
+  }
+
+  @override
+  String get settingsCheckForUpdates =>
+      'Check for updates at startup (contacts github.com)';
 }

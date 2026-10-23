@@ -13,6 +13,16 @@ final class FileAccessException extends AppException {
   const FileAccessException([super.message = 'File access failed']);
 }
 
+/// A request to another computer failed or was answered with nonsense.
+final class NetworkException extends AppException {
+  const NetworkException([super.message = 'Network request failed']);
+}
+
+/// The browser could not be opened.
+final class LaunchException extends AppException {
+  const LaunchException([super.message = 'Could not open the link']);
+}
+
 /// A saved document could not be understood.
 final class InvalidDocumentException extends AppException {
   const InvalidDocumentException(
@@ -29,6 +39,8 @@ extension AppExceptionX on AppException {
       StorageFailureReason.access,
       message,
     ),
+    NetworkException(:final message) => NetworkFailure(message),
+    LaunchException(:final message) => LaunchFailure(message),
     InvalidDocumentException(:final reason, :final message) => DocumentFailure(
       reason,
       message,

@@ -95,10 +95,30 @@ void main() {
   testWidgets('a switch is saved and applied', (tester) async {
     await pump(tester);
 
-    await tester.tap(find.byType(Switch).first);
+    await tester.tap(_switchOf('Draw the device frame'));
     await tester.pumpAndSettle();
 
     expect(settings.state.showFrame, isFalse);
     expect(workspace.state.showFrame, isFalse);
   });
+
+  testWidgets('looking for updates at startup can be turned off', (
+    tester,
+  ) async {
+    await pump(tester);
+    expect(settings.state.checkForUpdates, isTrue);
+
+    await tester.tap(
+      _switchOf('Check for updates at startup (contacts github.com)'),
+    );
+    await tester.pumpAndSettle();
+
+    expect(settings.state.checkForUpdates, isFalse);
+  });
 }
+
+/// The switch in the row with [label].
+Finder _switchOf(String label) => find.descendant(
+  of: find.ancestor(of: find.text(label), matching: find.byType(Row)).first,
+  matching: find.byType(Switch),
+);

@@ -21,6 +21,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/widgets/help/wid
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/node_menu_items.dart';
 import 'package:flutter_ui_builder/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:flutter_ui_builder/features/settings/presentation/widgets/open_settings.dart';
+import 'package:flutter_ui_builder/features/updates/presentation/cubit/update_cubit.dart';
 
 /// The File, Edit and View menus. The shortcuts shown next to the entries are
 /// active for the whole window.
@@ -92,6 +93,11 @@ class EditorMenuBar extends StatelessWidget {
                     shortcut: const SingleActivator(LogicalKeyboardKey.f1),
                     onPressed: () => showShortcuts(context),
                     child: Text(l10n.menuShortcuts),
+                  ),
+                  const Divider(),
+                  MenuItemButton(
+                    onPressed: () => context.read<UpdateCubit>().check(),
+                    child: Text(l10n.menuCheckForUpdates),
                   ),
                 ],
                 child: Text(l10n.menuHelp),

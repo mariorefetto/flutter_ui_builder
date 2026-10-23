@@ -11,6 +11,7 @@ import 'package:flutter_ui_builder/features/editor/presentation/cubit/editor_sta
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/problems_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/project_cubit.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/cubit/workspace_cubit.dart';
+import 'package:flutter_ui_builder/features/updates/presentation/widgets/update_notice.dart';
 
 const String _pathSeparator = ' > ';
 
@@ -59,6 +60,7 @@ class StatusBar extends StatelessWidget {
         Text(isSaved ? l10n.statusSaved : l10n.statusModified),
         const SizedBox(width: AppConstants.spacingMD),
         Expanded(child: Text(path, overflow: TextOverflow.ellipsis)),
+        const UpdateNotice(),
         const _ProblemsSummary(),
         const SizedBox(width: AppConstants.spacingMD),
         Text(l10n.statusWidgets(root.countNodes())),

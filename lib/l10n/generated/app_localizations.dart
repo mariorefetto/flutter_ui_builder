@@ -2905,6 +2905,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show the guidelines of the widgets: their boxes, and the margin, padding and size of the selected one'**
   String get designerGuidelines;
+
+  /// Error: a network request failed
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach the server. Check the connection and try again.'**
+  String get errorNetwork;
+
+  /// Error: a link could not be opened
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the browser.'**
+  String get errorLaunch;
+
+  /// Help menu: look for a newer version
+  ///
+  /// In en, this message translates to:
+  /// **'Check for updates'**
+  String get menuCheckForUpdates;
+
+  /// Message: a newer version exists
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} is available.'**
+  String updateAvailableMessage(String version);
+
+  /// Tooltip of the update notice in the status bar
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} is available. Click to open the download page.'**
+  String updateAvailableTooltip(String version);
+
+  /// Action: open the download page of the new version
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get updateDownload;
+
+  /// Message: the app is up to date
+  ///
+  /// In en, this message translates to:
+  /// **'You have the latest version ({version}).'**
+  String updateUpToDate(String version);
+
+  /// Setting: look for a newer version when the app starts
+  ///
+  /// In en, this message translates to:
+  /// **'Check for updates at startup (contacts github.com)'**
+  String get settingsCheckForUpdates;
 }
 
 class _AppLocalizationsDelegate

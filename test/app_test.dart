@@ -1,10 +1,13 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_ui_builder/app.dart';
+import 'package:flutter_ui_builder/core/app_info.dart';
 import 'package:flutter_ui_builder/core/di/injection.dart';
+import 'package:flutter_ui_builder/core/error/failures.dart';
 import 'package:flutter_ui_builder/core/theme/app_icons.dart';
 import 'package:flutter_ui_builder/core/widgets/app_select.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/screen_templates.dart';
@@ -27,6 +30,12 @@ import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/ed
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/tree/tree_row.dart';
 import 'package:flutter_ui_builder/features/settings/domain/repositories/settings_repository.dart';
 import 'package:flutter_ui_builder/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:flutter_ui_builder/features/updates/domain/entities/app_release.dart';
+import 'package:flutter_ui_builder/features/updates/domain/entities/app_version.dart';
+import 'package:flutter_ui_builder/features/updates/domain/repositories/external_link_repository.dart';
+import 'package:flutter_ui_builder/features/updates/domain/repositories/release_repository.dart';
+import 'package:flutter_ui_builder/features/updates/presentation/widgets/update_notice.dart';
+import 'support/fake_release_repository.dart';
 import 'support/memory_settings_repository.dart';
 
 void main() {
@@ -1759,5 +1768,91 @@ class UntitledView extends StatelessWidget {
     await tester.tap(find.byTooltip(RegExp('^Show the guidelines')));
     await tester.pumpAndSettle();
     expect(find.byType(GuidelinesOverlay), findsNothing);
+  });
+
+  group('updates', () {
+    late FakeExternalLinks links;
+
+    Future<void> withReleases(Either<Failure, AppRelease?> result) async {
+      links = FakeExternalLinks();
+      await sl.unregister<ReleaseRepository>();
+      await sl.unregister<ExternalLinkRepository>();
+      sl
+        ..registerSingleton<ReleaseRepository>(FakeReleaseRepository(result))
+        ..registerSingleton<ExternalLinkRepository>(links);
+    }
+
+    Future<void> checkFromMenu(WidgetTester tester) async {
+      await tester.tap(find.text('Help'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Check for updates'));
+      await tester.pumpAndSettle();
+    }
+
+    const newer = AppRelease(
+      version: AppVersion(9, 9, 9),
+      url: 'https://github.com/o/r/releases/tag/v9.9.9',
+    );
+
+    testWidgets('a newer version is announced and can be downloaded', (
+      tester,
+    ) async {
+      await withReleases(const Right(newer));
+      await pumpApp(tester);
+      expect(find.byType(UpdateNotice), findsOneWidget);
+      expect(find.text(' 9.9.9'), findsNothing);
+
+      await checkFromMenu(tester);
+
+      expect(find.text('Version 9.9.9 is available.'), findsOneWidget);
+      expect(find.text(' 9.9.9'), findsOneWidget);
+
+      await tester.tap(find.text('Download'));
+      await tester.pumpAndSettle();
+      expect(links.opened, [newer.url]);
+    });
+
+    testWidgets('the notice in the status bar opens the download page', (
+      tester,
+    ) async {
+      await withReleases(const Right(newer));
+      await pumpApp(tester);
+      await checkFromMenu(tester);
+      // The message covers the notice until it goes away.
+      await tester.pump(const Duration(seconds: 6));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text(' 9.9.9'));
+      await tester.pumpAndSettle();
+
+      expect(links.opened, [newer.url]);
+    });
+
+    testWidgets('being up to date is said, too', (tester) async {
+      await withReleases(const Right(null));
+      await pumpApp(tester);
+
+      await checkFromMenu(tester);
+
+      expect(
+        find.text('You have the latest version ($appVersion).'),
+        findsOneWidget,
+      );
+      expect(find.text(' 9.9.9'), findsNothing);
+    });
+
+    testWidgets('a check that fails says so', (tester) async {
+      await withReleases(const Left(NetworkFailure()));
+      await pumpApp(tester);
+
+      await checkFromMenu(tester);
+
+      expect(
+        find.text(
+          'Could not reach the server. Check the connection and try again.',
+        ),
+        findsOneWidget,
+      );
+    });
   });
 }

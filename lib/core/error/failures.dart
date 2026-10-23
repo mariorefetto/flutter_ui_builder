@@ -87,6 +87,17 @@ final class CodeGenerationFailure extends Failure {
   const CodeGenerationFailure([super.message = 'Code generation failed']);
 }
 
+/// A request to another computer did not go through: no connection, no answer
+/// in time, or an answer that cannot be understood.
+final class NetworkFailure extends Failure {
+  const NetworkFailure([super.message = 'Network request failed']);
+}
+
+/// The system could not open a link in the browser.
+final class LaunchFailure extends Failure {
+  const LaunchFailure([super.message = 'Could not open the link']);
+}
+
 enum DocumentFailureReason {
   /// The file is not a document written by this app.
   invalidFormat,

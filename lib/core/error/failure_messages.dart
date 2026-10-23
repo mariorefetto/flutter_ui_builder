@@ -45,4 +45,6 @@ String messageFor(AppLocalizations l10n, Failure failure) => switch (failure) {
     DocumentFailureReason.codeNoWidget => l10n.errorCodeNoWidget,
   },
   CodeGenerationFailure() => l10n.errorCodeGeneration,
+  NetworkFailure() => l10n.errorNetwork,
+  LaunchFailure() => l10n.errorLaunch,
 };

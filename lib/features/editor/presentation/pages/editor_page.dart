@@ -38,6 +38,8 @@ import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/sp
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/shell/status_bar.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/theme/theme_panel.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/widgets/tree/widget_tree_panel.dart';
+import 'package:flutter_ui_builder/features/updates/presentation/cubit/update_cubit.dart';
+import 'package:flutter_ui_builder/features/updates/presentation/widgets/update_listener.dart';
 
 /// The editor window, laid out like an IDE: menu bar and toolbar on top, a
 /// toolbox or outline on the left, the designer and the code in the middle,
@@ -67,6 +69,7 @@ class EditorPage extends StatelessWidget {
         ),
         BlocProvider(create: (_) => sl<WorkspaceCubit>()),
         BlocProvider(create: (_) => sl<DragSessionCubit>()),
+        BlocProvider.value(value: sl<UpdateCubit>()),
       ],
       child: MultiBlocListener(
         listeners: [
@@ -87,6 +90,7 @@ class EditorPage extends StatelessWidget {
             listener: _onProjectEvent,
           ),
           BlocListener<CodeCubit, CodeState>(listener: _onCodeEvent),
+          UpdateListener(),
         ],
         child: EditorShortcuts(
           child: FirstRunTour(

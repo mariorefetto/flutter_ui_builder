@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppSettingsModel {
 
- String get theme; String? get languageCode; String get device; bool get showFrame; String get statusBar; bool get showSafeArea; String get codePlacement; bool get paletteGrid; bool get tourSeen;
+ String get theme; String? get languageCode; String get device; bool get showFrame; String get statusBar; bool get showSafeArea; String get codePlacement; bool get paletteGrid; bool get tourSeen; bool get checkForUpdates;
 /// Create a copy of AppSettingsModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $AppSettingsModelCopyWith<AppSettingsModel> get copyWith => _$AppSettingsModelCo
 @override
 bool operator ==(Object other) {
   final _this = this as AppSettingsModel;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettingsModel&&(identical(other.theme, _this.theme) || other.theme == _this.theme)&&(identical(other.languageCode, _this.languageCode) || other.languageCode == _this.languageCode)&&(identical(other.device, _this.device) || other.device == _this.device)&&(identical(other.showFrame, _this.showFrame) || other.showFrame == _this.showFrame)&&(identical(other.statusBar, _this.statusBar) || other.statusBar == _this.statusBar)&&(identical(other.showSafeArea, _this.showSafeArea) || other.showSafeArea == _this.showSafeArea)&&(identical(other.codePlacement, _this.codePlacement) || other.codePlacement == _this.codePlacement)&&(identical(other.paletteGrid, _this.paletteGrid) || other.paletteGrid == _this.paletteGrid)&&(identical(other.tourSeen, _this.tourSeen) || other.tourSeen == _this.tourSeen));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettingsModel&&(identical(other.theme, _this.theme) || other.theme == _this.theme)&&(identical(other.languageCode, _this.languageCode) || other.languageCode == _this.languageCode)&&(identical(other.device, _this.device) || other.device == _this.device)&&(identical(other.showFrame, _this.showFrame) || other.showFrame == _this.showFrame)&&(identical(other.statusBar, _this.statusBar) || other.statusBar == _this.statusBar)&&(identical(other.showSafeArea, _this.showSafeArea) || other.showSafeArea == _this.showSafeArea)&&(identical(other.codePlacement, _this.codePlacement) || other.codePlacement == _this.codePlacement)&&(identical(other.paletteGrid, _this.paletteGrid) || other.paletteGrid == _this.paletteGrid)&&(identical(other.tourSeen, _this.tourSeen) || other.tourSeen == _this.tourSeen)&&(identical(other.checkForUpdates, _this.checkForUpdates) || other.checkForUpdates == _this.checkForUpdates));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as AppSettingsModel;
-  return Object.hash(runtimeType,_this.theme,_this.languageCode,_this.device,_this.showFrame,_this.statusBar,_this.showSafeArea,_this.codePlacement,_this.paletteGrid,_this.tourSeen);
+  return Object.hash(runtimeType,_this.theme,_this.languageCode,_this.device,_this.showFrame,_this.statusBar,_this.showSafeArea,_this.codePlacement,_this.paletteGrid,_this.tourSeen,_this.checkForUpdates);
 }
 
 @override
 String toString() {
   final _this = this as AppSettingsModel;
-  return 'AppSettingsModel(theme: ${_this.theme}, languageCode: ${_this.languageCode}, device: ${_this.device}, showFrame: ${_this.showFrame}, statusBar: ${_this.statusBar}, showSafeArea: ${_this.showSafeArea}, codePlacement: ${_this.codePlacement}, paletteGrid: ${_this.paletteGrid}, tourSeen: ${_this.tourSeen})';
+  return 'AppSettingsModel(theme: ${_this.theme}, languageCode: ${_this.languageCode}, device: ${_this.device}, showFrame: ${_this.showFrame}, statusBar: ${_this.statusBar}, showSafeArea: ${_this.showSafeArea}, codePlacement: ${_this.codePlacement}, paletteGrid: ${_this.paletteGrid}, tourSeen: ${_this.tourSeen}, checkForUpdates: ${_this.checkForUpdates})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $AppSettingsModelCopyWith<$Res>  {
   factory $AppSettingsModelCopyWith(AppSettingsModel value, $Res Function(AppSettingsModel) _then) = _$AppSettingsModelCopyWithImpl;
 @useResult
 $Res call({
- String theme, String? languageCode, String device, bool showFrame, String statusBar, bool showSafeArea, String codePlacement, bool paletteGrid, bool tourSeen
+ String theme, String? languageCode, String device, bool showFrame, String statusBar, bool showSafeArea, String codePlacement, bool paletteGrid, bool tourSeen, bool checkForUpdates
 });
 
 
@@ -71,7 +71,7 @@ class _$AppSettingsModelCopyWithImpl<$Res>
 
 /// Create a copy of AppSettingsModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? theme = null,Object? languageCode = freezed,Object? device = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? codePlacement = null,Object? paletteGrid = null,Object? tourSeen = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? theme = null,Object? languageCode = freezed,Object? device = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? codePlacement = null,Object? paletteGrid = null,Object? tourSeen = null,Object? checkForUpdates = null,}) {
   return _then(AppSettingsModel(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as String,languageCode: freezed == languageCode ? _self.languageCode : languageCode // ignore: cast_nullable_to_non_nullable
@@ -82,6 +82,7 @@ as String,showSafeArea: null == showSafeArea ? _self.showSafeArea : showSafeArea
 as bool,codePlacement: null == codePlacement ? _self.codePlacement : codePlacement // ignore: cast_nullable_to_non_nullable
 as String,paletteGrid: null == paletteGrid ? _self.paletteGrid : paletteGrid // ignore: cast_nullable_to_non_nullable
 as bool,tourSeen: null == tourSeen ? _self.tourSeen : tourSeen // ignore: cast_nullable_to_non_nullable
+as bool,checkForUpdates: null == checkForUpdates ? _self.checkForUpdates : checkForUpdates // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -167,10 +168,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String theme,  String? languageCode,  String device,  bool showFrame,  String statusBar,  bool showSafeArea,  String codePlacement,  bool paletteGrid,  bool tourSeen)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String theme,  String? languageCode,  String device,  bool showFrame,  String statusBar,  bool showSafeArea,  String codePlacement,  bool paletteGrid,  bool tourSeen,  bool checkForUpdates)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppSettingsModel() when $default != null:
-return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.codePlacement,_that.paletteGrid,_that.tourSeen);case _:
+return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.codePlacement,_that.paletteGrid,_that.tourSeen,_that.checkForUpdates);case _:
   return orElse();
 
 }
@@ -188,10 +189,10 @@ return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String theme,  String? languageCode,  String device,  bool showFrame,  String statusBar,  bool showSafeArea,  String codePlacement,  bool paletteGrid,  bool tourSeen)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String theme,  String? languageCode,  String device,  bool showFrame,  String statusBar,  bool showSafeArea,  String codePlacement,  bool paletteGrid,  bool tourSeen,  bool checkForUpdates)  $default,) {final _that = this;
 switch (_that) {
 case _AppSettingsModel():
-return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.codePlacement,_that.paletteGrid,_that.tourSeen);case _:
+return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.codePlacement,_that.paletteGrid,_that.tourSeen,_that.checkForUpdates);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -208,10 +209,10 @@ return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String theme,  String? languageCode,  String device,  bool showFrame,  String statusBar,  bool showSafeArea,  String codePlacement,  bool paletteGrid,  bool tourSeen)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String theme,  String? languageCode,  String device,  bool showFrame,  String statusBar,  bool showSafeArea,  String codePlacement,  bool paletteGrid,  bool tourSeen,  bool checkForUpdates)?  $default,) {final _that = this;
 switch (_that) {
 case _AppSettingsModel() when $default != null:
-return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.codePlacement,_that.paletteGrid,_that.tourSeen);case _:
+return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_that.statusBar,_that.showSafeArea,_that.codePlacement,_that.paletteGrid,_that.tourSeen,_that.checkForUpdates);case _:
   return null;
 
 }
@@ -223,7 +224,7 @@ return $default(_that.theme,_that.languageCode,_that.device,_that.showFrame,_tha
 
 @JsonSerializable(includeIfNull: false)
 class _AppSettingsModel extends AppSettingsModel {
-  const _AppSettingsModel({this.theme = 'system', this.languageCode, this.device = 'phone', this.showFrame = true, this.statusBar = 'auto', this.showSafeArea = false, this.codePlacement = 'tab', this.paletteGrid = false, this.tourSeen = false}): super._();
+  const _AppSettingsModel({this.theme = 'system', this.languageCode, this.device = 'phone', this.showFrame = true, this.statusBar = 'auto', this.showSafeArea = false, this.codePlacement = 'tab', this.paletteGrid = false, this.tourSeen = false, this.checkForUpdates = true}): super._();
   factory _AppSettingsModel.fromJson(Map<String, dynamic> json) => _$AppSettingsModelFromJson(json);
 
 @override@JsonKey() final  String theme;
@@ -235,6 +236,7 @@ class _AppSettingsModel extends AppSettingsModel {
 @override@JsonKey() final  String codePlacement;
 @override@JsonKey() final  bool paletteGrid;
 @override@JsonKey() final  bool tourSeen;
+@override@JsonKey() final  bool checkForUpdates;
 
 /// Create a copy of AppSettingsModel
 /// with the given fields replaced by the non-null parameter values.
@@ -249,18 +251,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettingsModel&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode)&&(identical(other.device, device) || other.device == device)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.paletteGrid, paletteGrid) || other.paletteGrid == paletteGrid)&&(identical(other.tourSeen, tourSeen) || other.tourSeen == tourSeen));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettingsModel&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode)&&(identical(other.device, device) || other.device == device)&&(identical(other.showFrame, showFrame) || other.showFrame == showFrame)&&(identical(other.statusBar, statusBar) || other.statusBar == statusBar)&&(identical(other.showSafeArea, showSafeArea) || other.showSafeArea == showSafeArea)&&(identical(other.codePlacement, codePlacement) || other.codePlacement == codePlacement)&&(identical(other.paletteGrid, paletteGrid) || other.paletteGrid == paletteGrid)&&(identical(other.tourSeen, tourSeen) || other.tourSeen == tourSeen)&&(identical(other.checkForUpdates, checkForUpdates) || other.checkForUpdates == checkForUpdates));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,theme,languageCode,device,showFrame,statusBar,showSafeArea,codePlacement,paletteGrid,tourSeen);
+    return Object.hash(runtimeType,theme,languageCode,device,showFrame,statusBar,showSafeArea,codePlacement,paletteGrid,tourSeen,checkForUpdates);
 }
 
 @override
 String toString() {
-    return 'AppSettingsModel(theme: $theme, languageCode: $languageCode, device: $device, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, codePlacement: $codePlacement, paletteGrid: $paletteGrid, tourSeen: $tourSeen)';
+    return 'AppSettingsModel(theme: $theme, languageCode: $languageCode, device: $device, showFrame: $showFrame, statusBar: $statusBar, showSafeArea: $showSafeArea, codePlacement: $codePlacement, paletteGrid: $paletteGrid, tourSeen: $tourSeen, checkForUpdates: $checkForUpdates)';
 }
 
 
@@ -271,7 +273,7 @@ abstract mixin class _$AppSettingsModelCopyWith<$Res> implements $AppSettingsMod
   factory _$AppSettingsModelCopyWith(_AppSettingsModel value, $Res Function(_AppSettingsModel) _then) = __$AppSettingsModelCopyWithImpl;
 @override @useResult
 $Res call({
- String theme, String? languageCode, String device, bool showFrame, String statusBar, bool showSafeArea, String codePlacement, bool paletteGrid, bool tourSeen
+ String theme, String? languageCode, String device, bool showFrame, String statusBar, bool showSafeArea, String codePlacement, bool paletteGrid, bool tourSeen, bool checkForUpdates
 });
 
 
@@ -288,7 +290,7 @@ class __$AppSettingsModelCopyWithImpl<$Res>
 
 /// Create a copy of AppSettingsModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? theme = null,Object? languageCode = freezed,Object? device = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? codePlacement = null,Object? paletteGrid = null,Object? tourSeen = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? theme = null,Object? languageCode = freezed,Object? device = null,Object? showFrame = null,Object? statusBar = null,Object? showSafeArea = null,Object? codePlacement = null,Object? paletteGrid = null,Object? tourSeen = null,Object? checkForUpdates = null,}) {
   return _then(_AppSettingsModel(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as String,languageCode: freezed == languageCode ? _self.languageCode : languageCode // ignore: cast_nullable_to_non_nullable
@@ -299,6 +301,7 @@ as String,showSafeArea: null == showSafeArea ? _self.showSafeArea : showSafeArea
 as bool,codePlacement: null == codePlacement ? _self.codePlacement : codePlacement // ignore: cast_nullable_to_non_nullable
 as String,paletteGrid: null == paletteGrid ? _self.paletteGrid : paletteGrid // ignore: cast_nullable_to_non_nullable
 as bool,tourSeen: null == tourSeen ? _self.tourSeen : tourSeen // ignore: cast_nullable_to_non_nullable
+as bool,checkForUpdates: null == checkForUpdates ? _self.checkForUpdates : checkForUpdates // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
