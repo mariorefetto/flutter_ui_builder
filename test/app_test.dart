@@ -1427,4 +1427,42 @@ class UntitledView extends StatelessWidget {
       expect(cubit.state.document.root.props['text'], 'Hello');
     });
   });
+
+  group('sample data', () {
+    testWidgets('a list with a count draws its first widget that many times', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..addNode(type: 'ListView', parentId: 'node_2');
+      // A list in a column is put in an Expanded, so it is not node_3.
+      final list = cubit.state.selectedId!;
+      cubit
+        ..addNode(type: 'Text', parentId: list)
+        ..updateProp(cubit.state.selectedId!, 'text', 'Item {n}')
+        ..updateProp(list, 'sampleCount', 3);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Item 1'), findsOneWidget);
+      expect(find.text('Item 2'), findsOneWidget);
+      expect(find.text('Item 3'), findsOneWidget);
+      expect(find.text('Item 4'), findsNothing);
+    });
+
+    testWidgets('the count shows in the code as a builder', (tester) async {
+      await pumpApp(tester);
+      final cubit = editorOf(tester)
+        ..addNode(type: 'ListView', parentId: 'node_2');
+      final list = cubit.state.selectedId!;
+      cubit
+        ..addNode(type: 'Text', parentId: list)
+        ..updateProp(list, 'sampleCount', 3);
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Code'));
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('ListView.builder'), findsOneWidget);
+    });
+  });
 }

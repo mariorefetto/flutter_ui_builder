@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/code_parser.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/code_value.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/sample_data.dart';
 
 const String _buildMethod = 'build';
 const String _wrapperVariable = '__widget';
@@ -78,6 +79,7 @@ class AnalyzerCodeParser implements CodeParser {
         CodeString(
           strings.cast<SimpleStringLiteral>().map((s) => s.value).join(),
         ),
+      StringInterpolation() => _interpolated(expression),
       IntegerLiteral(:final value) when value != null => CodeNumber(
         value.toDouble(),
         isInteger: true,
@@ -112,6 +114,24 @@ class AnalyzerCodeParser implements CodeParser {
       if (only is ExpressionStatement) return _toValue(only.expression);
     }
     return null;
+  }
+
+  // `'Item ${index + 1}'` is the text "Item {n}": the number of the item in a
+  // list that repeats a widget. Any other interpolation is not read.
+  CodeValue _interpolated(StringInterpolation text) {
+    final buffer = StringBuffer();
+    for (final element in text.elements) {
+      switch (element) {
+        case InterpolationString(:final value):
+          buffer.write(value);
+        case InterpolationExpression(:final expression)
+            when expression.toSource().replaceAll(' ', '') == 'index+1':
+          buffer.write(sampleNumberToken);
+        default:
+          return CodeUnknown(text.toSource());
+      }
+    }
+    return CodeString(buffer.toString());
   }
 
   CodeValue _negate(CodeValue value, Expression original) => value is CodeNumber

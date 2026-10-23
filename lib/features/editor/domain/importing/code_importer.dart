@@ -16,6 +16,7 @@ import 'package:flutter_ui_builder/features/editor/domain/importing/value_reader
 import 'package:flutter_ui_builder/features/editor/domain/services/component_binding.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/identifier_names.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/sample_data.dart';
 
 const String _defaultName = 'imported';
 const String _classSuffix = screenClassSuffix;
@@ -127,6 +128,7 @@ class CodeImporter {
       consumed,
     );
     _readNavigation(definition, value, props);
+    _readBuilder(definition, value, props, children, consumed, issues);
     for (final MapEntry(:key, value: argument) in value.named.entries) {
       if (consumed.contains(key) || argument is CodeFunction) continue;
       final child = _childrenOf(definition, key, argument, issues);
@@ -170,6 +172,38 @@ class CodeImporter {
           '$argumentPrefix$key': ?_argument(value),
       },
     );
+  }
+
+  // `ListView.builder(itemCount: n, itemBuilder: (context, index) => item)`
+  // is a list that repeats its one widget; a grid also has its columns in a
+  // `gridDelegate`.
+  void _readBuilder(
+    WidgetDefinition definition,
+    CodeCall call,
+    Map<String, Object?> props,
+    List<WidgetNode> children,
+    Set<String> consumed,
+    List<ImportIssue> issues,
+  ) {
+    if (call.constructor != 'builder' ||
+        !definition.props.any((p) => p.name == sampleCountProp)) {
+      return;
+    }
+    final builder = call.named['itemBuilder'];
+    final item = builder is CodeFunction ? builder.body : null;
+    if (item != null) {
+      final child = _childNode(definition, item, issues);
+      if (child != null) children.add(child);
+    }
+    final delegate = call.named['gridDelegate'];
+    if (delegate is CodeCall) {
+      for (final MapEntry(:key, :value) in delegate.named.entries) {
+        _readProp(definition, key, value, props, issues);
+      }
+    }
+    consumed
+      ..add('itemBuilder')
+      ..add('gridDelegate');
   }
 
   // The value of an argument of a component: a text, a number (always kept as

@@ -100,6 +100,33 @@ class WidgetDefinition {
   /// uses an empty box, and the problems panel says so.
   final bool requiresChild;
 
+  /// The definition with [props] and [generateCode] replaced, for a widget
+  /// that is another one plus something of its own.
+  WidgetDefinition copyWith({
+    List<PropSchema>? props,
+    CodeGenerator? generateCode,
+    Set<String>? aliases,
+  }) => WidgetDefinition(
+    type: type,
+    label: label,
+    category: category,
+    props: props ?? this.props,
+    childPolicy: childPolicy,
+    generateCode: generateCode ?? this.generateCode,
+    allowedParents: allowedParents,
+    forbiddenParents: forbiddenParents,
+    requiredAncestors: requiredAncestors,
+    autoWrap: autoWrap,
+    childFilter: childFilter,
+    imports: imports,
+    importsWhen: importsWhen,
+    requiresChild: requiresChild,
+    constructor: constructor,
+    childArgument: childArgument,
+    slotLayout: slotLayout,
+    aliases: aliases ?? this.aliases,
+  );
+
   /// The name the widget is called by in code.
   String get constructorName => constructor ?? type;
 

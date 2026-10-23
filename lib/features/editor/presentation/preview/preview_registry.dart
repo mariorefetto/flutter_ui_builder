@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_ui_builder/core/theme/app_constants.dart';
 import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_registry.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/sample_data.dart';
 import 'package:flutter_ui_builder/features/editor/presentation/preview/preview_builder.dart';
 
 /// Decorates the preview of one node, for example to make it selectable.
@@ -34,13 +35,16 @@ class PreviewRegistry {
       throw StateError('No preview registered for widget type: ${node.type}');
     }
     final definition = _registry.definitionFor(node.type);
-    final children = [
-      for (final child in node.children)
-        PreviewChild(
-          type: child.type,
-          widget: build(context, child, wrapper: wrapper),
-        ),
-    ];
+    final copies = sampleCountOf(node);
+    final children = copies == null
+        ? [
+            for (final child in node.children)
+              PreviewChild(
+                type: child.type,
+                widget: build(context, child, wrapper: wrapper),
+              ),
+          ]
+        : _repeated(context, node.children.first, copies, wrapper);
     final props = definition.resolve(node);
     if (_parentDataTypes.contains(node.type)) {
       return builder(
@@ -52,6 +56,25 @@ class PreviewRegistry {
     final built = builder(context, props, children);
     return wrapper == null ? built : wrapper(context, node, built);
   }
+
+  // A list or grid that repeats its first widget, as it looks with data. Only
+  // the first copy can be picked: the others are the same widget again.
+  List<PreviewChild> _repeated(
+    BuildContext context,
+    WidgetNode template,
+    int copies,
+    NodeWrapper? wrapper,
+  ) => [
+    for (var number = 1; number <= copies; number++)
+      PreviewChild(
+        type: template.type,
+        widget: build(
+          context,
+          withSampleNumber(template, number),
+          wrapper: number == 1 ? wrapper : null,
+        ),
+      ),
+  ];
 
   // The wrapper goes around the content of a widget such as Expanded, because
   // wrapping the widget itself would hide it from its Row, Column or Stack.
