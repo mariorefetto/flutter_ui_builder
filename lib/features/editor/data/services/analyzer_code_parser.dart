@@ -30,6 +30,23 @@ class AnalyzerCodeParser implements CodeParser {
   }
 
   @override
+  List<ParsedSource> parseAll(String source) {
+    final unit = parseString(content: source, throwIfDiagnostics: false);
+    final errors = _errors(unit);
+    final found = <ParsedSource>[
+      for (final declaration in unit.unit.declarations)
+        if (declaration is ClassDeclaration)
+          if (_BuildFinder.findIn(declaration) case final widget?)
+            ParsedSource(
+              widget: _toValue(widget),
+              className: declaration.namePart.typeName.lexeme,
+              errors: errors,
+            ),
+    ];
+    return found.isEmpty ? [parse(source)] : found;
+  }
+
+  @override
   CodeValue? parseExpression(String source) {
     final result = _parseAsInitializer(source);
     return result.errors.isEmpty && result.expression != null
@@ -195,6 +212,13 @@ class _BuildFinder extends RecursiveAstVisitor<void> {
   static Expression? find(CompilationUnit unit) {
     final finder = _BuildFinder();
     unit.accept(finder);
+    return finder._found;
+  }
+
+  /// The expression the build method of [declaration] returns, or null.
+  static Expression? findIn(ClassDeclaration declaration) {
+    final finder = _BuildFinder();
+    declaration.accept(finder);
     return finder._found;
   }
 

@@ -21,6 +21,10 @@ abstract interface class CodeParser {
   /// Finds the widget in [source], a widget class or a single expression.
   ParsedSource parse(String source);
 
+  /// Finds the widget of every class in [source] that has a build method, in
+  /// the order of the file. A source without one is read as [parse] does.
+  List<ParsedSource> parseAll(String source);
+
   /// Reads one expression, or returns null when it is not valid Dart.
   CodeValue? parseExpression(String source);
 }

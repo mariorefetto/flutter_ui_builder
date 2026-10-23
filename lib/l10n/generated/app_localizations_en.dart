@@ -1586,4 +1586,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String multiSelectionNote(int count) {
     return 'Editing $count widgets at once';
   }
+
+  @override
+  String importAlsoFound(int screens, int components) {
+    return 'Also found $screens other screens and $components components, which join the project';
+  }
 }

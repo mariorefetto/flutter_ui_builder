@@ -41,6 +41,8 @@ class CodeImporter {
   final ValueReader _reader;
 
   Either<Failure, ImportResult> import(String source) {
+    final all = _parser.parseAll(source);
+    if (all.length > 1) return _importMany(all);
     final parsed = _parser.parse(source);
     if (parsed.errors.isNotEmpty) {
       return Left(
@@ -59,15 +61,60 @@ class CodeImporter {
     return _finish(root.renumbered(0), parsed.className, issues);
   }
 
+  // A file with several widget classes: the first screen is the result, and
+  // the rest, screens and components, come with it. A class that cannot be
+  // read is left out; the first one must be readable.
+  Either<Failure, ImportResult> _importMany(List<ParsedSource> all) {
+    final errors = all.first.errors;
+    if (errors.isNotEmpty) {
+      return Left(
+        DocumentFailure(DocumentFailureReason.codeSyntax, errors.join('\n')),
+      );
+    }
+    final results = <ImportResult>[];
+    for (final parsed in all) {
+      final widget = parsed.widget;
+      final issues = <ImportIssue>[];
+      final root = widget == null ? null : _convert(widget, issues);
+      if (root == null) continue;
+      _finish(
+        root.renumbered(0),
+        parsed.className,
+        issues,
+      ).fold((_) {}, results.add);
+    }
+    if (results.isEmpty) {
+      return const Left(DocumentFailure(DocumentFailureReason.codeNoWidget));
+    }
+    // The project starts on a screen, so the first one leads.
+    final main =
+        results.where((r) => !r.document.component).firstOrNull ??
+        results.first;
+    return Right(
+      ImportResult(
+        document: main.document,
+        issues: main.issues,
+        named: main.named,
+        extras: [
+          for (final result in results)
+            if (!identical(result, main)) result,
+        ],
+      ),
+    );
+  }
+
   Either<Failure, ImportResult> _finish(
     WidgetNode root,
     String? className,
     List<ImportIssue> issues,
   ) {
     var tree = root;
-    var broken = _registry.violation(tree);
+    // A class named like a component is one: it is built apart, and what it
+    // needs from its surroundings is whatever it is used in.
+    final component = _isComponentClass(className);
+    var broken = _registry.violation(tree, detached: component);
     // Code for a Material widget often leaves out the Scaffold around it.
-    if (broken != null && _registry.contains(_scaffold)) {
+    if (!component && broken != null && _registry.contains(_scaffold)) {
       final wrapped = WidgetNode(
         id: '',
         type: _scaffold,
@@ -94,21 +141,32 @@ class CodeImporter {
     }
     return Right(
       ImportResult(
-        document: EditorDocument(name: _nameFor(className), root: tree),
+        document: EditorDocument(
+          name: _nameFor(className),
+          root: tree,
+          component: component,
+        ),
         issues: issues,
         named: className != null,
       ),
     );
   }
 
+  bool _isComponentClass(String? className) =>
+      className != null &&
+      className.endsWith(componentClassSuffix) &&
+      className.length > componentClassSuffix.length;
+
   String _nameFor(String? className) {
     if (className == null) return _defaultName;
-    final name =
-        className.endsWith(_classSuffix) &&
-            className.length > _classSuffix.length
-        ? className.substring(0, className.length - _classSuffix.length)
-        : className;
-    return pascalCase(name);
+    for (final suffix in [_classSuffix, componentClassSuffix]) {
+      if (className.endsWith(suffix) && className.length > suffix.length) {
+        return pascalCase(
+          className.substring(0, className.length - suffix.length),
+        );
+      }
+    }
+    return pascalCase(className);
   }
 
   WidgetNode? _convert(CodeValue value, List<ImportIssue> issues) {

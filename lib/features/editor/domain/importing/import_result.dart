@@ -37,6 +37,7 @@ class ImportResult {
     required this.document,
     required this.issues,
     this.named = false,
+    this.extras = const [],
   });
 
   final EditorDocument document;
@@ -45,4 +46,8 @@ class ImportResult {
   /// The name of the document comes from a class in the code. Without one the
   /// document has a default name that should not replace a real one.
   final bool named;
+
+  /// The other screens and components of a file that has several widget
+  /// classes, built the same way. [document] is the first screen.
+  final List<ImportResult> extras;
 }

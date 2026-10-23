@@ -74,6 +74,6 @@ Future<void> importCode(BuildContext context) async {
   if (result == null || !context.mounted) return;
   // The project is no longer the file it was, and differs from an empty one.
   context.read<ProjectCubit>().startNew(createEmptyDocument());
-  context.read<EditorCubit>().replaceDocument(result.document);
+  context.read<EditorCubit>().replaceWithImport(result);
   context.read<WorkspaceCubit>().showCenterTab(CenterTab.design);
 }

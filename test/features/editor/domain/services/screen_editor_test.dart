@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_ui_builder/core/error/failures.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/editor_document.dart';
+import 'package:flutter_ui_builder/features/editor/domain/entities/project_screen.dart';
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
 
@@ -146,5 +147,57 @@ void main() {
     expect(editor.namesOf(moved), ['Settings', 'Home']);
     expect(moved.name, 'Settings', reason: 'the open screen stays open');
     expect(moved.activeIndex, 0);
+  });
+
+  group('include', () {
+    ProjectScreen entry(
+      String name, {
+      bool component = false,
+      String? target,
+    }) => ProjectScreen(
+      name: name,
+      component: component,
+      root: WidgetNode(
+        id: 'node_0',
+        type: 'Column',
+        children: [
+          if (target != null)
+            WidgetNode(
+              id: 'node_1',
+              type: 'ElevatedButton',
+              props: {'navigateTo': target},
+            ),
+        ],
+      ),
+    );
+
+    test('screens and components are added after the others', () {
+      final doc = editor.include(project(), [
+        entry('Profile'),
+        entry('Badge', component: true),
+      ]);
+
+      expect(editor.namesOf(doc), ['Home', 'Profile', 'Badge']);
+      expect(editor.componentsOf(doc), ['Badge']);
+      expect(doc.name, 'Home', reason: 'the open screen stays open');
+    });
+
+    test('a name that is taken gets a number', () {
+      final doc = editor.include(project(), [entry('home'), entry('Home')]);
+
+      expect(editor.namesOf(doc), ['Home', 'home 2', 'Home 3']);
+    });
+
+    test('a widget that names a screen by its class is pointed at it', () {
+      final doc = editor.include(project(), [
+        entry('my screen'),
+        entry('Other', target: 'MyScreen'),
+      ]);
+
+      expect(
+        editor.rootOf(doc, 'Other')?.children.single.props['navigateTo'],
+        'my screen',
+      );
+    });
   });
 }

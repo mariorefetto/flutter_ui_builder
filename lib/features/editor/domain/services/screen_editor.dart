@@ -171,6 +171,27 @@ class ScreenEditor {
     return Right(document.copyWith(root: root));
   }
 
+  /// The project with [others] added after its screens and components, each
+  /// under its own name: one whose name another already has gets a number.
+  /// The widgets that name a screen or component by its class are pointed at
+  /// the entry of that name. The open one stays open.
+  EditorDocument include(EditorDocument document, List<ProjectScreen> others) {
+    final all = [..._all(document)];
+    for (final other in others) {
+      final taken = all.map((e) => pascalCase(e.name)).toSet();
+      var name = other.name;
+      for (var n = 2; taken.contains(pascalCase(name)); n++) {
+        name = '${other.name} $n';
+      }
+      all.add(other.copyWith(name: name));
+    }
+    final relinked = [
+      for (final entry in all)
+        entry.copyWith(root: _relink(entry.root, all.map((e) => e.name))),
+    ];
+    return _build(document, relinked, document.activeIndex);
+  }
+
   /// Opens the screen called [name].
   Either<Failure, EditorDocument> open(EditorDocument document, String name) {
     final all = _all(document);
@@ -386,5 +407,24 @@ class ScreenEditor {
       if (found != null) return found;
     }
     return null;
+  }
+
+  // A widget that names a screen or a component by its class, `Settings`, is
+  // pointed at the entry written the same way, `settings`.
+  WidgetNode _relink(WidgetNode node, Iterable<String> names) {
+    var props = node.props;
+    for (final key in const [navigateToProp, componentProp]) {
+      final target = props[key];
+      if (target is! String || target == navigateBack) continue;
+      if (names.contains(target)) continue;
+      final match = names
+          .where((n) => pascalCase(n) == pascalCase(target))
+          .firstOrNull;
+      if (match != null) props = {...props, key: match};
+    }
+    return node.copyWith(
+      props: props,
+      children: [for (final c in node.children) _relink(c, names)],
+    );
   }
 }

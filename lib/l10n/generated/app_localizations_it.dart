@@ -1609,4 +1609,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String multiSelectionNote(int count) {
     return 'Modifica di $count widget insieme';
   }
+
+  @override
+  String importAlsoFound(int screens, int components) {
+    return 'Trovate anche altre $screens schermate e $components componenti, che entrano nel progetto';
+  }
 }

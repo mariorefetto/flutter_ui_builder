@@ -3,6 +3,12 @@ part of 'editor_cubit.dart';
 /// Operations on the screens of the project.
 extension EditorScreens on EditorCubit {
   /// Renames the open screen. Widgets that open it follow its new name.
+  /// Replaces the project with what an import made: its first screen and, for
+  /// a file with several widget classes, the other screens and components.
+  void replaceWithImport(ImportResult imported) => _useCases
+      .buildImportedProject(imported)
+      .fold(_reportFailure, replaceDocument);
+
   void renameDocument(String name) => renameScreen(state.document.name, name);
 
   // A new name changes no widget, so the selection stays.

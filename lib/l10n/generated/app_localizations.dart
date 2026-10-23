@@ -2875,6 +2875,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Editing {count} widgets at once'**
   String multiSelectionNote(int count);
+
+  /// Import: other widget classes in the file
+  ///
+  /// In en, this message translates to:
+  /// **'Also found {screens} other screens and {components} components, which join the project'**
+  String importAlsoFound(int screens, int components);
 }
 
 class _AppLocalizationsDelegate

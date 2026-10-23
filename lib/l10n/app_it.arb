@@ -462,5 +462,6 @@
   "errorStorageAssetMissing": "Un'immagine non è più dove era stata presa, quindi non si può copiare. Non è stato scritto nulla.",
   "errorNotSiblings": "Si possono avvolgere insieme solo widget affiancati, nello stesso genitore",
   "statusSelected": "{count} widget selezionati",
-  "multiSelectionNote": "Modifica di {count} widget insieme"
+  "multiSelectionNote": "Modifica di {count} widget insieme",
+  "importAlsoFound": "Trovate anche altre {screens} schermate e {components} componenti, che entrano nel progetto"
 }

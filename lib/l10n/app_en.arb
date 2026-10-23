@@ -2003,5 +2003,17 @@
         "type": "int"
       }
     }
+  },
+  "importAlsoFound": "Also found {screens} other screens and {components} components, which join the project",
+  "@importAlsoFound": {
+    "description": "Import: other widget classes in the file",
+    "placeholders": {
+      "screens": {
+        "type": "int"
+      },
+      "components": {
+        "type": "int"
+      }
+    }
   }
 }

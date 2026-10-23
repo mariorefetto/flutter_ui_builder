@@ -43,6 +43,15 @@ class ImportOutcomeView extends StatelessWidget {
           color: context.colorScheme.primary,
           text: l10n.importFound(result.document.root.countNodes()),
         ),
+        if (result.extras.isNotEmpty)
+          _Message(
+            icon: AppIcons.screens,
+            color: context.colorScheme.primary,
+            text: l10n.importAlsoFound(
+              result.extras.where((e) => !e.document.component).length,
+              result.extras.where((e) => e.document.component).length,
+            ),
+          ),
         if (result.issues.isNotEmpty) ...[
           const SizedBox(height: AppConstants.spacingSM),
           Text(l10n.importIssuesTitle, style: context.textTheme.titleSmall),

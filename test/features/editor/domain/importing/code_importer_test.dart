@@ -6,6 +6,9 @@ import 'package:flutter_ui_builder/features/editor/domain/definitions/widget_reg
 import 'package:flutter_ui_builder/features/editor/domain/entities/widget_node.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/code_importer.dart';
 import 'package:flutter_ui_builder/features/editor/domain/importing/import_result.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/node_queries.dart';
+import 'package:flutter_ui_builder/features/editor/domain/services/screen_editor.dart';
+import 'package:flutter_ui_builder/features/editor/domain/usecases/import_usecases.dart';
 
 void main() {
   final importer = CodeImporter(
@@ -250,6 +253,107 @@ class HomeView extends StatelessWidget {
         result.document.root.children.where((c) => c.type == 'Component'),
         isEmpty,
       );
+    });
+  });
+
+  group('a file with several widget classes', () {
+    const file = '''
+class HomeView extends StatelessWidget {
+  const HomeView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          const BadgeWidget(title: 'New'),
+          TextButton(
+            onPressed: () => Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const SettingsView())),
+            child: Text('Settings'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BadgeWidget extends StatelessWidget {
+  const BadgeWidget({super.key, this.title = 'Hi'});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(child: Text('Badge'));
+  }
+}
+
+class SettingsView extends StatelessWidget {
+  const SettingsView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: Text('Settings'));
+  }
+}
+''';
+
+    test('the first screen leads and the rest come with it', () {
+      final result = import(file);
+
+      expect(result.document.name, 'Home');
+      expect(result.document.component, isFalse);
+      expect(result.extras.map((e) => e.document.name), ['Badge', 'Settings']);
+      expect(result.extras.map((e) => e.document.component), [true, false]);
+    });
+
+    test(
+      'a component class is read as a component, apart from its context',
+      () {
+        final badge = import(file).extras.first.document;
+
+        expect(badge.component, isTrue);
+        expect(badge.root.type, 'Container');
+      },
+    );
+
+    test('a screen leads even when a component comes first in the file', () {
+      final result = import('''
+class BadgeWidget extends StatelessWidget {
+  const BadgeWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) => Container();
+}
+
+class HomeView extends StatelessWidget {
+  const HomeView({super.key});
+
+  @override
+  Widget build(BuildContext context) => Scaffold(body: Text('x'));
+}
+''');
+
+      expect(result.document.name, 'Home');
+      expect(result.extras.single.document.name, 'Badge');
+    });
+
+    test('the project joins the screens and points them at each other', () {
+      final project = const BuildImportedProject()(
+        import(file),
+      ).getOrElse(() => throw StateError('build failed'));
+
+      expect(const ScreenEditor().screensOf(project), ['Home', 'Settings']);
+      expect(const ScreenEditor().componentsOf(project), ['Badge']);
+      expect(project.name, 'Home');
+      final use = project.root.find('node_2');
+      expect(use?.props['component'], 'Badge');
+    });
+
+    test('a file with a single class is as it was', () {
+      final result = import(screen);
+
+      expect(result.extras, isEmpty);
     });
   });
 }

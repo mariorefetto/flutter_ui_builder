@@ -50,6 +50,7 @@ class EditorUseCases {
     required this.resetThemePart,
     required this.bindProp,
     required this.unbindProp,
+    required this.buildImportedProject,
   });
 
   /// Builds the use cases over one tree editor and one drop planner.
@@ -88,6 +89,7 @@ class EditorUseCases {
     resetThemePart: const ResetThemePart(ThemeEditor()),
     bindProp: BindProp(ComponentParamsEditor(registry)),
     unbindProp: UnbindProp(ComponentParamsEditor(registry)),
+    buildImportedProject: const BuildImportedProject(),
   );
 
   final AddNode addNode;
@@ -120,4 +122,5 @@ class EditorUseCases {
   final ResetThemePart resetThemePart;
   final BindProp bindProp;
   final UnbindProp unbindProp;
+  final BuildImportedProject buildImportedProject;
 }
